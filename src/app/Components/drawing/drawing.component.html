@@ -1,27 +1,37 @@
 
 <div class="container">
-  <app-conf-mat (changeActiveClass)="changeActiveClass($event)">
-  </app-conf-mat>
+  <mat-toolbar color="accent">
+    <button mat-button (click)="buildGroundtruth(0)">Preset 1</button>
+    <button mat-button (click)="buildGroundtruth(1)">Preset 2</button>
+    <button mat-button (click)="buildGroundtruth(2)">Preset 3</button>
+
+  </mat-toolbar>
+
+  <app-conf-mat (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
   <app-metrics (changeActiveClass)="changeActiveClass($event)"></app-metrics>
 
-  <div>
-    <button mat-button (click)="buildGroundtruth(0)">Scenario 1</button>
-    <button mat-button (click)="buildGroundtruth(1)">Scenario 2</button>
-    <button mat-button (click)="buildGroundtruth(2)">Scenario 3</button>
-  </div>
   <div class="flex-horizontal">
     <div class="active-color" [ngStyle]="{'background-color':classService.getRGBStyleFromClass(classService.currentClass)}">
       Active Color
     </div>
+
     <button mat-button (click)="changeTool('draw')">Draw</button>
     <button mat-button (click)="changeTool('fill')">Fill</button>
   </div>
+
+
   <label for="sliderRadius">Radius</label>
   <mat-slider id="sliderRadius" valueText="Radius" min="1" max="25" value="5"
   (input)="resizeBrush($event)" thumbLabel step="0.5"></mat-slider>
+
+
   <label for="canvasVisu">Groundtruth</label>
+
+
   <div class="drawZone flex-horizontal">
+
     <canvas #canvasVisu id="canvasVisu"></canvas>
+
     <div class="flex-horizontal">
       <div class="color-panel">
         <button mat-button *ngFor="let class of classService.classes, let i = index"

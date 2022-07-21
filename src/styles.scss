@@ -9,9 +9,15 @@ body
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
 .flex-horizontal{
   display: flex;
   flex-direction: row;
   width: fit-content;
+}
+
+.flex-vertical{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
 }

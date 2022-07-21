@@ -1,9 +1,26 @@
+<app-tooltips></app-tooltips>
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="statsDrawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <mat-slide-toggle class="example-margin" ngModel="isChecked">Tooltip</mat-slide-toggle>
+  Options
+  <span class="flexExpand"></span>
+  <h1>Segmentation Metric Tutorial</h1>
+  <span class="flexExpand"></span>
+  <mat-slide-toggle class="example-margin" (change)="UICtrlService.tooltipsActivated=!UICtrlService.tooltipsActivated">Tooltip</mat-slide-toggle>
+
 </mat-toolbar>
 
-<app-drawing [showTooltip]="isChecked">
-</app-drawing>
+<mat-drawer-container class="example-container" hasBackdrop="false" >
+  <mat-drawer #statsDrawer opened="true">
+    <div class="flex-vertical metric-options">
+      Metrics
+      <mat-slide-toggle *ngFor="let score of scoresService.scores; let i=index"
+      class="example-margin"
+      [checked]="true"
+      (change)="scoresService.visibleScores[i]=!scoresService.visibleScores[i]"
+      >{{score.name}} </mat-slide-toggle>
+    </div>
+  </mat-drawer>
+    <app-drawing></app-drawing>
+</mat-drawer-container>

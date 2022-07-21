@@ -13,6 +13,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ConfMatComponent } from './Components/conf-mat/conf-mat.component';
 import { MetricsComponent } from './Components/metrics/metrics.component';
 import { ClassesService } from './Services/classes.service';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ClassesService } from './Services/classes.service';
   ],
   imports: [
     MatIconModule,
+    MatSidenavModule,
     MatSlideToggleModule,
     MatToolbarModule,
     MatSliderModule,

@@ -7,9 +7,9 @@ import { ClassesService } from './classes.service';
 })
 export class ScoresService {
   scores:Array<Score>;
+  visibleScores:Array<boolean>
   confusionMatrix:Array<Array<number>>;
   stateCMatrix: Array<Array<string>>
-
 
   constructor(private classService:ClassesService) { }
 
@@ -19,10 +19,12 @@ export class ScoresService {
 
   setScores(scores:Array<Score>){
     this.scores = scores
+    this.visibleScores = new Array<boolean>(this.scores.length).fill(true);
+    console.log(this.visibleScores)
   }
   updateScore(){
     let statsComputer = new Stats(this.confusionMatrix)
-    this.scores = statsComputer.updateScore()
+    this.setScores(statsComputer.updateScore())
 
   }
   initConfMat(){

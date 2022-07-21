@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ControlUIService } from 'src/app/Services/control-ui.service';
 
 @Component({
   selector: 'app-tooltips',
@@ -7,10 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TooltipsComponent implements OnInit {
 
-  @Input() typeTooltip:string
-  @Input() visible:boolean
-
-  constructor() { }
+  @Input() type:string
+  constructor(public controlUIService:ControlUIService) { }
 
   ngOnInit(): void {
   }

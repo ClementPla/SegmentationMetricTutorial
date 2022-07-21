@@ -1,26 +1,29 @@
-<div *ngIf="visible" class="container" [ngSwitch]="typeTooltip">
-
+<div *ngIf="controlUIService.showTooltip" class="container" [ngSwitch]="controlUIService.tooltipType"
+  [ngStyle]="{'top':controlUIService.pos.y+'px', 'left':controlUIService.pos.x+'px'}">
   <div *ngSwitchCase="'Groundtruth'">
     La description de la groundtruth
   </div>
 
   <div *ngSwitchCase="'Precision'">
-    La description de la groundtruth
-
+    La description de la precision
   </div>
 
   <div *ngSwitchCase="'Accuracy'">
-    La description de la groundtruth
+    La description de l'accuracy
   </div>
   <div *ngSwitchCase="'Dice'">
-    La description de la groundtruth
-  </div>
-  <div *ngSwitchCase="'Precision'">
-    La description de la groundtruth
+    La description du Dice
   </div>
   <div *ngSwitchCase="'Specificity'">
-    La description de la groundtruth
+    La description de la Specificity
   </div>
-
-
+  <div *ngSwitchCase="'Sensitivity'">
+    La description de la Sensitivity
+  </div>
+  <div *ngSwitchCase="'Kappa'">
+    La description du Kappa
+  </div>
+  <div *ngSwitchCase="'IoU'">
+    La description du IOU
+  </div>
 </div>

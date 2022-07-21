@@ -7,8 +7,10 @@
       <th>Macro-average</th>
       <th *ngFor="let c of classService.classes">C. {{c}}</th>
     </tr>
-    <tr *ngFor="let score of scoresService.scores; let i=index">
-      <th>{{score.name}}</th>
+    <tr *ngFor="let score of scoresService.scores; let i=index" [ngStyle]="{'display':scoresService.visibleScores[i]? '':'none'}">
+      <th (mouseenter)="UICtrlService.activate($event, score.name)"
+      (mouseleave)="UICtrlService.deactivate()"
+      >{{score.name}}</th>
       <td>{{formatScore(score.score, (score.name=='Kappa')? false: true, (score.name=='Kappa')? 2: 1)}}</td>
       <td>{{formatScore(score.microAverage)}}</td>
       <td (mouseenter)="boldMacro=i"
@@ -16,7 +18,6 @@
       </td>
       <td *ngFor="let s of score.perClassScore; let j=index" [ngStyle]="{'font-weight':boldMacro==i ? 'bold': ''}"
       (mouseenter)="changeActiveClass.emit(j)">{{formatScore(s)}}</td>
-
     </tr>
   </table>
 </div>

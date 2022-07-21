@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ControlUIService } from './Services/control-ui.service';
+import { ScoresService } from './Services/scores.service';
 
 
 @Component({
@@ -7,6 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent{
-  isChecked:boolean=true
+  constructor(public scoresService:ScoresService, public UICtrlService:ControlUIService){}
+
 
 }

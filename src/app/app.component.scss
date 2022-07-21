@@ -1,3 +1,29 @@
-
-app-tooltips{
+.flexExpand {
+  flex: 1 1 auto;
 }
+
+mat-drawer{
+  padding: 2ch ;
+}
+.metric-options{
+  gap: 1rem;
+}
+.metric-options > mat-slide-toggle{
+  position: relative;
+}
+.metric-options > mat-slide-toggle::after{
+  content: '';
+  display: inline-block;
+  position: relative;
+  border-bottom: solid 1px white;
+  width: 50px;
+  top: -1ch;
+  transition: transform .2s; /* Animation */
+  transform-origin: center;
+}
+.metric-options > mat-slide-toggle:hover::after{
+  transform: scaleX(2);
+
+
+}
+
