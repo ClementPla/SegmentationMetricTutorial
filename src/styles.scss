@@ -8,3 +8,10 @@ body
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+
+.flex-horizontal{
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}

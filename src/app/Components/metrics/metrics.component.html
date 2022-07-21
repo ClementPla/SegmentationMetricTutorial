@@ -1,0 +1,22 @@
+<div class="metric-container">
+  <table>
+    <tr>
+      <th>Metric</th>
+      <th>Score</th>
+      <th>Micro-average</th>
+      <th>Macro-average</th>
+      <th *ngFor="let c of classService.classes">C. {{c}}</th>
+    </tr>
+    <tr *ngFor="let score of scoresService.scores; let i=index">
+      <th>{{score.name}}</th>
+      <td>{{formatScore(score.score, (score.name=='Kappa')? false: true, (score.name=='Kappa')? 2: 1)}}</td>
+      <td>{{formatScore(score.microAverage)}}</td>
+      <td (mouseenter)="boldMacro=i"
+          (mouseleave)="boldMacro=-1">{{formatScore(score.macroAverage)}}
+      </td>
+      <td *ngFor="let s of score.perClassScore; let j=index" [ngStyle]="{'font-weight':boldMacro==i ? 'bold': ''}"
+      (mouseenter)="changeActiveClass.emit(j)">{{formatScore(s)}}</td>
+
+    </tr>
+  </table>
+</div>

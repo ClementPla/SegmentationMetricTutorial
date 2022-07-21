@@ -1,7 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { from, fromEvent, Observable, merge } from 'rxjs';
+import { Component } from '@angular/core';
 
-import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 
 @Component({
   selector: 'app-root',
@@ -9,5 +7,6 @@ import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent{
+  isChecked:boolean=true
 
 }

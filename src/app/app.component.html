@@ -1,3 +1,9 @@
-<app-drawing>
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-slide-toggle class="example-margin" ngModel="isChecked">Tooltip</mat-slide-toggle>
+</mat-toolbar>
 
+<app-drawing [showTooltip]="isChecked">
 </app-drawing>

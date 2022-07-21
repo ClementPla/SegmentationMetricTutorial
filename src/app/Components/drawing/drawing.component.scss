@@ -10,24 +10,12 @@ mat-slider{
   width: 100%;
 }
 
-.TP{
-  background-color: $light-green;
+th > app-tooltips{
+  display: none;
 }
 
-.TN{
-  background-color: $dark-green;
-}
-.FP{
-  background-color: $light-red;
-}
-.FN{
-  background-color: $dark-red;
-
-
-}
-
-table > tr .predictedCell > div{
-    transform: rotate(-90deg);
+th:hover > app-tooltips{
+  display: inline-block;
 }
 
 td {
@@ -56,15 +44,8 @@ canvas{
   line-height: 2rem;
 
 }
-.metric-container{
-  display: flex;
-  flex-direction: column;
-}
-.flex-horizontal{
-  display: flex;
-  flex-direction: row;
-  width: fit-content;
-}
+
+
 .drawZone{
   position: relative;
   --width: 512px

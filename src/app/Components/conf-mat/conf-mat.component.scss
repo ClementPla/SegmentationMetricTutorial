@@ -1,0 +1,19 @@
+@import "src/variables.scss";
+
+.TP{
+  background-color: $light-green;
+}
+
+.TN{
+  background-color: $dark-green;
+}
+.FP{
+  background-color: $light-red;
+}
+.FN{
+  background-color: $dark-red;
+}
+
+table > tr .predictedCell > div{
+  transform: rotate(-90deg);
+}
