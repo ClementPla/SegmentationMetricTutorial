@@ -1,43 +1,64 @@
 
 <div class="container">
-  <table class="confusion-matrix">
-    <tr>
-      <td colspan="2" rowspan="2">
-      </td>
-      <th [attr.colspan]=classes.length>Groundtruth</th>
-    </tr>
-    <tr>
-      <th *ngFor="let class of classes">C. {{class}}</th>
-    </tr>
-    <tr *ngFor="let class of classes; let isFirst = first; let row = index">
-      <th class=predictedCell *ngIf="isFirst" [attr.rowspan]="classes.length">
-        <div>Predicted</div></th>
-      <th>C. {{class}}</th>
-      <td *ngFor="let class of classes; let col = index">{{confusionMatrix[row][col]}}</td>
-    </tr>
-  </table>
-
-  <div class="metric-container">
-    <table>
+  <div class="table-container flex-horizontal">
+    <table class="confusion-matrix">
       <tr>
-        <th>Metric</th>
-        <th>Score</th>
-        <th>Average Macro</th>
-        <th>Average Micro</th>
-        <th *ngFor="let c of classes">C. {{c}}</th>
+        <td colspan="2" rowspan="2">
+            <span></span>
+        </td>
+        <th [attr.colspan]=classes.length>Groundtruth</th>
       </tr>
-      <tr *ngFor="let score of scores; let i=index">
-        <th>{{score.name}}</th>
-        <td>{{formatScore(score.score)}}</td>
-        <td (mouseenter)="boldMacro=i"
-            (mouseleave)="boldMacro=-1">{{formatScore(score.macroAverage)}}
-          </td>
-        <td>{{formatScore(score.microAverage)}}</td>
-        <td *ngFor="let s of score.perClassScore" [ngStyle]="{'font-weight':boldMacro==i ? 'bold': ''}"
-        >{{formatScore(s)}}</td>
-
+      <tr>
+        <th *ngFor="let class of classes, let i = index" (mouseenter)="changeActiveClass(i)">C. {{class}}</th>
+      </tr>
+      <tr *ngFor="let class of classes; let isFirst = first; let row = index" (mouseenter)="changeActiveClass(row)">
+        <th class=predictedCell *ngIf="isFirst" [attr.rowspan]="classes.length">
+          <div>Predicted</div></th>
+        <th>C. {{class}}</th>
+        <td *ngFor="let class of classes; let col = index" [ngClass]="stateCMatrix[row][col]">{{confusionMatrix[row][col]}}</td>
       </tr>
     </table>
+
+    <table class="confusion-matrix">
+      <tr>
+        <td colspan="2" rowspan="2">
+            <span></span>
+        </td>
+        <th [attr.colspan]=classes.length>Groundtruth</th>
+      </tr>
+      <tr>
+        <th *ngFor="let class of classes, let i=index" (mouseenter)="changeActiveClass(i)">C. {{class}}</th>
+      </tr>
+      <tr *ngFor="let class of classes; let isFirst = first; let row = index" (mouseenter)="changeActiveClass(row)">
+        <th class=predictedCell *ngIf="isFirst" [attr.rowspan]="classes.length">
+          <div>Predicted</div></th>
+        <th>C. {{class}}</th>
+        <td *ngFor="let class of classes; let col = index" [ngClass]="stateCMatrix[row][col]">{{stateCMatrix[row][col]}}</td>
+      </tr>
+    </table>
+
+    <div class="metric-container">
+      <table>
+        <tr>
+          <th>Metric</th>
+          <th>Score</th>
+          <th>Micro-average</th>
+          <th>Macro-average</th>
+          <th *ngFor="let c of classes">C. {{c}}</th>
+        </tr>
+        <tr *ngFor="let score of scores; let i=index">
+          <th>{{score.name}}</th>
+          <td>{{formatScore(score.score, (score.name=='Kappa')? false: true, (score.name=='Kappa')? 2: 1)}}</td>
+          <td>{{formatScore(score.microAverage)}}</td>
+          <td (mouseenter)="boldMacro=i"
+              (mouseleave)="boldMacro=-1">{{formatScore(score.macroAverage)}}
+          </td>
+          <td *ngFor="let s of score.perClassScore; let j=index" [ngStyle]="{'font-weight':boldMacro==i ? 'bold': ''}"
+          (mouseenter)="changeActiveClass(j)">{{formatScore(s)}}</td>
+
+        </tr>
+      </table>
+    </div>
   </div>
 
   <div>
@@ -46,26 +67,25 @@
     <button mat-button (click)="buildGroundtruth(2)">Scenario 3</button>
 
   </div>
-
-  <mat-slider min="1" max="25" value="5" (input)="resizeBrush($event)" thumbLabel step="0.5"></mat-slider>
-
+  <label for="sliderRadius">Radius</label>
+  <mat-slider id="sliderRadius" valueText="Radius" min="1" max="25" value="5"
+  (input)="resizeBrush($event)" thumbLabel step="0.5"></mat-slider>
+  <label for="canvasVisu">Groundtruth</label>
   <div class="drawZone flex-horizontal">
     <canvas #canvasVisu id="canvasVisu"></canvas>
     <div class="flex-horizontal">
       <div class="color-panel">
         <button mat-button *ngFor="let class of classes, let i = index"
-          (click)="changeActiveColor(i)"
+          (click)="changeActiveClass(i)"
           [ngStyle]="{'background-color':getRGBStyleFromClass(i)}">{{class}}</button>
       </div>
-      <div class="canvas-container demo">
-
+      <div class="canvas-container demo" [ngStyle]="{'--width':canvasScreenSize+'px'}">
         <div #cursor class="cursor" [ngStyle]="{'border-color':getRGBStyleFromClass(currentClass),
-          'top':cursorPosition.y+'px',
-          'left':cursorPosition.x+'px',
+          'top':cursorPosition.y+4+'px',
+          'left':cursorPosition.x+4+'px',
           'width':  2*currentRadius*upscaleFactor +'px'
             }">
         </div>
-
         <canvas #canvasEvent id="canvasEvent"></canvas>
         <canvas #canvas id="canvasDraw"></canvas>
         <canvas #canvasGroundtruth id="canvasGroundtruth"></canvas>

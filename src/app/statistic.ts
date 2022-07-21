@@ -28,10 +28,11 @@ export class Stats{
 
   static getStats(P:number, N:number, TP:number, TN:number, FP:number):Map<string, number>{
     var statistics = new Map<string, number>()
-    statistics.set('Accuracy', (TP+TN) / (P+N+1))
-    statistics.set('Precision', TP / (TP+FP+1))
-    statistics.set('Sensitivity',  TP/(P+1))
-    statistics.set('Specificity', TN/(N+1))
+    statistics.set('Accuracy', (TP+TN) / (P+N+0.1))
+    statistics.set('Precision', TP / (TP+FP+0.1))
+    statistics.set('Sensitivity',  TP/(P+0.1))
+    statistics.set('Specificity', TN/(N+0.1))
+    statistics.set('Dice', (2*TP)/(2*TP+FP+(P-TP)+0.1))
     return statistics
 
   }
@@ -52,6 +53,7 @@ export class Stats{
     statistics.set('Precision', new Array<number>() )
     statistics.set('Sensitivity', new Array<number>() )
     statistics.set('Specificity', new Array<number>() )
+    statistics.set('Dice', new Array<number>() )
     statistics.set('IoU', new Array<number>())
     statistics.set('TP', new Array<number>())
     statistics.set('TN', new Array<number>())
@@ -71,6 +73,7 @@ export class Stats{
       statistics.get('Precision').push(stats.get('Precision'))
       statistics.get('Sensitivity').push(stats.get('Sensitivity'))
       statistics.get('Specificity').push(stats.get('Specificity'))
+      statistics.get('Dice').push(stats.get('Dice'))
       statistics.get('IoU').push(TP/(this.union[i]+1))
       statistics.get('TP').push(TP)
       statistics.get('TN').push(TN)
@@ -147,7 +150,6 @@ export class Score{
   microAverage:number
   constructor(setting:{name:string, score?:number, perClassScore?:Array<number>, macroAverage?:number, microAverage?:number}){
     this.name = setting.name
-    console.log(setting.perClassScore)
     if(setting.score !=undefined) this.score = setting.score
     if(setting.perClassScore) this.perClassScore = setting.perClassScore;
     if(setting.macroAverage!=undefined) this.macroAverage = setting.macroAverage

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
-import { RadioControlValueAccessor } from '@angular/forms';
 import { MatSliderChange } from '@angular/material/slider';
 import { fromEvent, merge } from 'rxjs';
 import { Point2D, Color, ArrayTool } from './utils';
 import { SharpBrush } from './drawtools';
 import { Stats, Score } from 'src/app/statistic';
-
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-drawing',
@@ -36,9 +35,12 @@ export class DrawingComponent implements OnInit {
 
 
   pos = { x: 0, y: 0 };
+  canvasScreenSize = 512
   width = 32
-  height = 32
-  upscaleFactor = 16
+  height = this.width
+  upscaleFactor = this.canvasScreenSize/this.width
+
+  sanitizer:DomSanitizer
 
   classes:Array<number | string>;
   scores:Array<Score>
@@ -47,6 +49,9 @@ export class DrawingComponent implements OnInit {
   currentRadius = 5
   cursorPosition: Point2D = {x:0,y:0}
   confusionMatrix: Array<Array<number>>;
+
+  stateCMatrix: Array<Array<string>>
+
   classToRGB: Array<Uint8ClampedArray>;
   sharpBrush:SharpBrush
 
@@ -69,10 +74,14 @@ export class DrawingComponent implements OnInit {
     this.ctxBg.canvas.width = this.width
     this.ctxBg.canvas.height = this.height
 
+
     this.ctxVisu = canvasVisu.getContext('2d')!;
     this.ctxVisu.canvas.width = this.width
     this.ctxVisu.canvas.height = this.height
 
+    this.ctxBg.imageSmoothingEnabled = false
+    this.ctx.imageSmoothingEnabled = false
+    this.ctxVisu.imageSmoothingEnabled = false
     this.buildGroundtruth(1)
     this.captureEvents(canvasEvent);
 
@@ -81,9 +90,11 @@ export class DrawingComponent implements OnInit {
   private initBackgroundConstruction(){
     this.ctx.fillRect(0, 0, this.width, this.height)
     this.ctxBg.fillRect(0, 0, this.width*2, this.height*2)
+    this.changeActiveClass(1)
     this.refreshBrush()
 
   }
+
 
   buildGroundtruth(index:number){
     let promises = []
@@ -91,24 +102,37 @@ export class DrawingComponent implements OnInit {
       case 0:
         this.classes = [0, 1]
         this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
-        this.initConfusionMatrix()
         this.initBackgroundConstruction()
-        promises.push(SharpBrush.drawCircle(this.ctxBg, 15,15,5,this.RGBFromClass(1)))
+        this.initConfusionMatrix()
+        promises.push(SharpBrush.drawCircle(this.ctxBg, 256/this.upscaleFactor,
+        256/this.upscaleFactor,50/this.upscaleFactor,this.RGBFromClass(1)))
         break;
       case 1:
         this.classes = [0, 1, 2, 3, 4]
         this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
-        this.initConfusionMatrix()
         this.initBackgroundConstruction()
-        promises.push(SharpBrush.drawCircle(this.ctxBg, 2,2,2,this.RGBFromClass(1)))
-        promises.push(SharpBrush.drawCircle(this.ctxBg, 11,11,10,this.RGBFromClass(2)))
-        promises.push(SharpBrush.drawCircle(this.ctxBg, 32,32,20,this.RGBFromClass(4)))
+        this.initConfusionMatrix()
+        promises.push(SharpBrush.drawCircle(this.ctxBg,
+        32/this.upscaleFactor,
+        32/this.upscaleFactor,
+        32/this.upscaleFactor,
+        this.RGBFromClass(1)))
+        promises.push(SharpBrush.drawCircle(this.ctxBg,
+          125/this.upscaleFactor,
+          125/this.upscaleFactor,
+          100/this.upscaleFactor,
+          this.RGBFromClass(2)))
+        promises.push(SharpBrush.drawCircle(this.ctxBg,
+          400/this.upscaleFactor,
+          400/this.upscaleFactor,
+          280/this.upscaleFactor,
+          this.RGBFromClass(4)))
         break;
         case 2:
           this.classes = [0,1,2,3,4]
           this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
-          this.initConfusionMatrix()
           this.initBackgroundConstruction()
+          this.initConfusionMatrix()
           promises.push(SharpBrush.drawCircle(this.ctxBg, 4,4,2,this.RGBFromClass(1)))
           promises.push(SharpBrush.drawCircle(this.ctxBg, 15,15,2,this.RGBFromClass(2)))
           promises.push(SharpBrush.drawCircle(this.ctxBg, 28,28,2,this.RGBFromClass(3)))
@@ -120,10 +144,6 @@ export class DrawingComponent implements OnInit {
       this.ctxVisu.drawImage(this.canvasBG.nativeElement, 0, 0)
       }
     )
-  }
-
-  highlightMacro(){
-
   }
 
   private getClassColor(index:number):Uint8ClampedArray{
@@ -190,6 +210,7 @@ export class DrawingComponent implements OnInit {
           const rect = canvas.getBoundingClientRect();
           const pos = this.getCoord(e, rect)
           this.drawOnCanvas(pos, pos)
+          this.inference()
           return moveEvents
             .pipe(
               takeUntil(endEvents),
@@ -219,9 +240,34 @@ export class DrawingComponent implements OnInit {
     this.currentRadius = event.value || 2
     this.refreshBrush()
   }
-  changeActiveColor(class_index:number){
+
+
+  changeActiveClass(class_index:number){
     this.currentClass = class_index
+    this.updateStateMatrix()
     this.refreshBrush()
+  }
+  private updateStateMatrix(){
+    this.stateCMatrix = new Array<Array<string>>()
+
+    for(let i=0;i<this.classes.length;i++){
+      let row = new Array<string>()
+      for(let j=0;j<this.classes.length;j++){
+        let val = 'TN'
+        if(i==this.currentClass){
+          val =  'FP'
+        }
+        if(j==this.currentClass){
+          val =  'FN'
+        }
+        if(j==this.currentClass && i == this.currentClass){
+          val =  'TP'
+        }
+        row.push(val)
+      }
+      this.stateCMatrix.push(row)
+    }
+
   }
 
   private refreshBrush(){
@@ -284,9 +330,9 @@ export class DrawingComponent implements OnInit {
   this.updateMetrics()
 }
 
-formatScore(score:number, percentage=true, digits=2):string{
+formatScore(score:number, percentage=true, digits=1):string{
   if(score==undefined){
-    return '-'
+    return ''
   }
   else{
     if(percentage) return (score*100).toFixed(digits)

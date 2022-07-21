@@ -1,12 +1,42 @@
+@import "../../../variables.scss";
+
 .container{
   position: relative;
-  width: calc(50% - 5vw);
+  margin: auto;
+  width: fit-content;
+  max-height: fit-content;
 }
 mat-slider{
   width: 100%;
 }
+
+.TP{
+  background-color: $light-green;
+}
+
+.TN{
+  background-color: $dark-green;
+}
+.FP{
+  background-color: $light-red;
+}
+.FN{
+  background-color: $dark-red;
+
+
+}
+
+table > tr .predictedCell > div{
+    transform: rotate(-90deg);
+}
+
 td {
   text-align: center;
+}
+td:empty {
+  background-color: $dark-red;
+  opacity: 50%;
+  border-radius: 1ch;
 }
 
 canvas{
@@ -25,11 +55,10 @@ canvas{
 }
 .drawZone{
   position: relative;
-  --width: 512px;
+  --width: 512px
 }
 .canvas-container{
   border: 1px solid rgb(170, 170, 170);
-  --width: 512px;
   position: relative;
   aspect-ratio: 1;
   width: var(--width);
@@ -60,7 +89,6 @@ canvas{
 
 #uniformBackground{
   z-index: -5;
-  background-color: rgb(2, 2, 2);
 }
 .canvas-container > .cursor{
   z-index: 5;
@@ -83,13 +111,7 @@ canvas{
   }
 }
 
-tr:nth-child(even) {
-  background-color: #D6EEEE;
-}
 
-table > tr .predictedCell > div{
-    transform: rotate(-90deg);
-}
 .draw-zone{
   display: flex;
 }
