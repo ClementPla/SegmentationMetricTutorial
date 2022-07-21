@@ -33,7 +33,11 @@ export class Color{
 }
 
 export class ArrayTool{
-  static unique<T>(array:Array<T>):Array<T>{
+  static unique<T>(array:Array<T> | Uint8ClampedArray){
+    if(array instanceof Uint8ClampedArray){
+      return Array.from(new Set(Array.from(array)))
+    }
     return Array.from(new Set(array))
   }
+
 }

@@ -24,8 +24,6 @@ export class SharpBrush{
   }
 
   drawLine(ctx:CanvasRenderingContext2D, point1:Point2D, point2:Point2D){
-
-
     const dist = this.distanceBetween(point1, point2)
     const angle = this.angleBetween(point1, point2)
     let halfSizeOfBrush = this.currentBrush.width/2

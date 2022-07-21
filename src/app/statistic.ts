@@ -1,4 +1,5 @@
 
+
 export class Stats{
   cm: Array<Array<number>>;
   n_classes: number;
@@ -49,11 +50,6 @@ export class Stats{
 
   getMultiClassStats():Map<string, Array<number>>{
     var statistics = new Map()
-    statistics.set('Accuracy', new Array<number>() )
-    statistics.set('Precision', new Array<number>() )
-    statistics.set('Sensitivity', new Array<number>() )
-    statistics.set('Specificity', new Array<number>() )
-    statistics.set('Dice', new Array<number>() )
     statistics.set('IoU', new Array<number>())
     statistics.set('TP', new Array<number>())
     statistics.set('TN', new Array<number>())
@@ -69,11 +65,10 @@ export class Stats{
       let TN = this.S - this.union[i]
       let FP = this.sumCols[i] - this.diagValues[i]
       let stats = Stats.getStats(P, N, TP, TN, FP)
-      statistics.get('Accuracy').push(stats.get('Accuracy'))
-      statistics.get('Precision').push(stats.get('Precision'))
-      statistics.get('Sensitivity').push(stats.get('Sensitivity'))
-      statistics.get('Specificity').push(stats.get('Specificity'))
-      statistics.get('Dice').push(stats.get('Dice'))
+      for(const  [key, value] of stats){
+        if(!statistics.has(key)) statistics.set(key, new Array<number>())
+        statistics.get(key).push(value)
+      }
       statistics.get('IoU').push(TP/(this.union[i]+1))
       statistics.get('TP').push(TP)
       statistics.get('TN').push(TN)

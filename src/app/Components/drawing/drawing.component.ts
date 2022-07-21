@@ -7,6 +7,7 @@ import { SharpBrush } from './drawtools';
 import { Stats, Score } from 'src/app/statistic';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { DomSanitizer } from '@angular/platform-browser';
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-drawing',
@@ -36,11 +37,9 @@ export class DrawingComponent implements OnInit {
 
   pos = { x: 0, y: 0 };
   canvasScreenSize = 512
-  width = 32
+  width = 256
   height = this.width
   upscaleFactor = this.canvasScreenSize/this.width
-
-  sanitizer:DomSanitizer
 
   classes:Array<number | string>;
   scores:Array<Score>
@@ -56,6 +55,8 @@ export class DrawingComponent implements OnInit {
   sharpBrush:SharpBrush
 
   boldMacro=-1
+
+  drawTool = 'draw'
 
   ngOnInit(): void {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
@@ -82,36 +83,30 @@ export class DrawingComponent implements OnInit {
     this.ctxBg.imageSmoothingEnabled = false
     this.ctx.imageSmoothingEnabled = false
     this.ctxVisu.imageSmoothingEnabled = false
-    this.buildGroundtruth(1)
+    this.buildGroundtruth(2)
     this.captureEvents(canvasEvent);
 
   }
 
   private initBackgroundConstruction(){
     this.ctx.fillRect(0, 0, this.width, this.height)
-    this.ctxBg.fillRect(0, 0, this.width*2, this.height*2)
-    this.changeActiveClass(1)
-    this.refreshBrush()
-
+    this.ctxBg.fillRect(0, 0, this.width, this.height)
   }
 
 
   buildGroundtruth(index:number){
     let promises = []
+    this.initBackgroundConstruction()
     switch(index){
       case 0:
         this.classes = [0, 1]
         this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
-        this.initBackgroundConstruction()
-        this.initConfusionMatrix()
         promises.push(SharpBrush.drawCircle(this.ctxBg, 256/this.upscaleFactor,
         256/this.upscaleFactor,50/this.upscaleFactor,this.RGBFromClass(1)))
         break;
       case 1:
         this.classes = [0, 1, 2, 3, 4]
         this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
-        this.initBackgroundConstruction()
-        this.initConfusionMatrix()
         promises.push(SharpBrush.drawCircle(this.ctxBg,
         32/this.upscaleFactor,
         32/this.upscaleFactor,
@@ -129,21 +124,46 @@ export class DrawingComponent implements OnInit {
           this.RGBFromClass(4)))
         break;
         case 2:
-          this.classes = [0,1,2,3,4]
+          this.classes = [0, 1]
           this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
-          this.initBackgroundConstruction()
-          this.initConfusionMatrix()
-          promises.push(SharpBrush.drawCircle(this.ctxBg, 4,4,2,this.RGBFromClass(1)))
-          promises.push(SharpBrush.drawCircle(this.ctxBg, 15,15,2,this.RGBFromClass(2)))
-          promises.push(SharpBrush.drawCircle(this.ctxBg, 28,28,2,this.RGBFromClass(3)))
+          var imageGT = new Image();
+          imageGT.src = "assets/images/patient1_raw0073_gt.png"
+          promises.push(new Promise(resolve =>{
+            imageGT.onload = (ev) =>{
+              resolve(imageGT)
+              this.drawCustomImage(this.ctxBg, imageGT)
+              this.initConfusionMatrix()
+            }
+          }))
         break;
     }
+    this.changeActiveClass(1)
+    this.initConfusionMatrix()
+    this.refreshBrush()
     Promise.all(promises).then(()=>{
       this.backgroundImage = this.ctxBg.getImageData(0,0, this.width, this.height).data;
       this.inference()
       this.ctxVisu.drawImage(this.canvasBG.nativeElement, 0, 0)
+
       }
     )
+  }
+  private drawCustomImage(ctx:CanvasRenderingContext2D, image:HTMLImageElement){
+    console.log(image.width, image.height)
+    ctx.drawImage(image, 0, 0)
+    var rawData = ctx.getImageData(0, 0, this.width, this.height)
+    var uniqueValue:Array<number> = ArrayTool.unique(rawData.data)
+    this.classes = uniqueValue.filter(v=>v<255).sort()
+    this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
+
+    for(let i=0;i<rawData.data.length;i+=4){
+      let l = rawData.data[i]
+      let rgb = this.getClassColor(l)
+      rawData.data[i] = rgb[0]
+      rawData.data[i+1] = rgb[1]
+      rawData.data[i+2] = rgb[2]
+    }
+    ctx.putImageData(rawData, 0, 0)
   }
 
   private getClassColor(index:number):Uint8ClampedArray{
@@ -206,16 +226,21 @@ export class DrawingComponent implements OnInit {
     startEvents
       .pipe(
         switchMap((e) => {
-          e.preventDefault()
-          const rect = canvas.getBoundingClientRect();
-          const pos = this.getCoord(e, rect)
-          this.drawOnCanvas(pos, pos)
-          this.inference()
-          return moveEvents
-            .pipe(
-              takeUntil(endEvents),
-              pairwise()
-            )
+            e.preventDefault()
+            const rect = canvas.getBoundingClientRect();
+            const pos = this.getCoord(e, rect)
+            if(this.drawTool=='draw')
+              this.drawOnCanvas(pos, pos)
+            else if(this.drawTool=='fill'){
+              this.fillOnCanvas(pos)
+            }
+            this.inference()
+            return moveEvents
+              .pipe(
+                takeUntil(endEvents),
+                pairwise()
+              )
+
         })
       )
       .subscribe({next:(res: [MouseEvent | TouchEvent, MouseEvent | TouchEvent]) => {
@@ -241,7 +266,32 @@ export class DrawingComponent implements OnInit {
     this.refreshBrush()
   }
 
+  fillOnCanvas(pos:Point2D){
+    if(!this.ctx){
+      return
+    }
+    let imageData = this.ctx.getImageData(0, 0, this.width, this.height)
+    let index = Math.round(pos.y)*this.width*4 + Math.round(pos.x)*4;
+    console.log(index)
+    let r = this.backgroundImage[index]
+    let g = this.backgroundImage[index+1]
+    let b = this.backgroundImage[index+2]
+    let col = this.getClassColor(this.currentClass)
 
+    for(let i=0;i<imageData.height;i++){
+      for(let j=0;j<imageData.width;j++){
+        let index = i*imageData.width*4 + j*4;
+
+        if(this.backgroundImage[index]==r && this.backgroundImage[index+1]==g && this.backgroundImage[index+2]==b){
+          imageData.data[index] = col[0]
+          imageData.data[index+1] = col[1]
+          imageData.data[index+2] = col[2]
+        }
+      }
+    }
+    this.ctx.putImageData(imageData, 0, 0)
+
+  }
   changeActiveClass(class_index:number){
     this.currentClass = class_index
     this.updateStateMatrix()
@@ -274,6 +324,10 @@ export class DrawingComponent implements OnInit {
     this.sharpBrush.setBrush(this.ctx, this.currentRadius, this.RGBFromClass(this.currentClass))
   }
 
+  changeTool(tool:string){
+    this.drawTool = tool;
+  }
+
   getClientPosition(event:TouchEvent|MouseEvent){
     event.preventDefault()
     if('touches' in event){
@@ -300,6 +354,7 @@ export class DrawingComponent implements OnInit {
     for (var i=0; i< this.confusionMatrix.length; i++){
       this.confusionMatrix[i] = new Array(this.classes.length).fill(0)
     }
+    this.updateStateMatrix()
   }
 
   inference(){

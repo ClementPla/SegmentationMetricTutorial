@@ -65,7 +65,13 @@
     <button mat-button (click)="buildGroundtruth(0)">Scenario 1</button>
     <button mat-button (click)="buildGroundtruth(1)">Scenario 2</button>
     <button mat-button (click)="buildGroundtruth(2)">Scenario 3</button>
-
+  </div>
+  <div class="flex-horizontal">
+    <div class="active-color" [ngStyle]="{'background-color':getRGBStyleFromClass(currentClass)}">
+      Active Color
+    </div>
+    <button mat-button (click)="changeTool('draw')">Draw</button>
+    <button mat-button (click)="changeTool('fill')">Fill</button>
   </div>
   <label for="sliderRadius">Radius</label>
   <mat-slider id="sliderRadius" valueText="Radius" min="1" max="25" value="5"

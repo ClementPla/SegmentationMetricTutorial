@@ -44,6 +44,18 @@ canvas{
   -ms-interpolation-mode: nearest-neighbor;
   aspect-ratio: 1;
 }
+
+.active-color{
+  width: 12ch;
+  height: 2rem;
+  color: white;
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 2rem;
+
+}
 .metric-container{
   display: flex;
   flex-direction: column;
