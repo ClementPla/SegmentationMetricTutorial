@@ -23,7 +23,14 @@ mat-toolbar{
 .draw-container{
   flex-flow: wrap;
 }
+.panel-options{
+  width: 150px;
+  margin: 1rem;
+}
 
+.panel-options > mat-button-toggle-group{
+  margin-left: 15px;
+}
 .canvas-container{
   position: relative;
   aspect-ratio: 1;
@@ -54,7 +61,7 @@ mat-toolbar{
 }
 #canvasGroundtruth{
   z-index: -2;
-  opacity: 75%;
+  opacity: 25%;
 }
 
 .canvas-container .cursor{
@@ -121,9 +128,7 @@ canvas{
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.panel-options > mat-button-toggle-group{
-  margin-left: 15px;
-}
+
 
 .active-color{
   width: fit-content;

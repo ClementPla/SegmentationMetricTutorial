@@ -1,36 +1,77 @@
-<div class="table-container flex-horizontal">
+<div class="table-container flex-vertical">
   <table class="confusion-matrix">
     <tr>
-      <td colspan="2" rowspan="2">
-      </td>
-      <th [attr.colspan]=classService.classes.length>Groundtruth
-      </th>
+      <td colspan="2" rowspan="2"></td>
+      <th [attr.colspan]="classService.classes.length">Groundtruth</th>
     </tr>
     <tr>
-      <th *ngFor="let class of classService.classes, let i = index" (mouseenter)="changeActiveClass.emit(i)">{{class}}</th>
+      <th
+        *ngFor="let class of classService.classes; let i = index"
+        (mouseenter)="changeActiveClass.emit(i)"
+      >
+        {{ class }}
+      </th>
     </tr>
-    <tr *ngFor="let class of classService.classes; let isFirst = first; let row = index" (mouseenter)="changeActiveClass.emit(row)">
-      <th class=predictedCell *ngIf="isFirst" [attr.rowspan]="classService.classes.length">
-        <div>Predicted</div></th>
-      <th>{{class}}</th>
-      <td *ngFor="let class of classService.classes; let col = index" [ngClass]="scoresService.stateCMatrix[row][col]">{{scoresService.confusionMatrix[row][col]}}</td>
+    <tr
+      *ngFor="
+        let class of classService.classes;
+        let isFirst = first;
+        let row = index
+      "
+      (mouseenter)="changeActiveClass.emit(row)"
+    >
+      <th
+        class="predictedCell"
+        *ngIf="isFirst"
+        [attr.rowspan]="classService.classes.length"
+      >
+        <div>Predicted</div>
+      </th>
+      <th>{{ class }}</th>
+      <td
+        *ngFor="let class of classService.classes; let col = index"
+        [ngClass]="scoresService.stateCMatrix[row][col]"
+      >
+        {{ scoresService.confusionMatrix[row][col] }}
+      </td>
     </tr>
   </table>
 
   <table class="confusion-matrix" *ngIf="UICtrlService.showConfMatLabel">
     <tr>
-      <td colspan="2" rowspan="2">
-      </td>
-      <th [attr.colspan]=classService.classes.length>Groundtruth</th>
+      <td colspan="2" rowspan="2"></td>
+      <th [attr.colspan]="classService.classes.length">Groundtruth</th>
     </tr>
     <tr>
-      <th *ngFor="let class of classService.classes, let i=index" (mouseenter)="changeActiveClass.emit(i)">{{class}}</th>
+      <th
+        *ngFor="let class of classService.classes; let i = index"
+        (mouseenter)="changeActiveClass.emit(i)"
+      >
+        {{ class }}
+      </th>
     </tr>
-    <tr *ngFor="let class of classService.classes; let isFirst = first; let row = index" (mouseenter)="changeActiveClass.emit(row)">
-      <th class=predictedCell *ngIf="isFirst" [attr.rowspan]="classService.classes.length">
-        <div>Predicted</div></th>
-      <th>{{class}}</th>
-      <td *ngFor="let class of classService.classes; let col = index" [ngClass]="scoresService.stateCMatrix[row][col]">{{scoresService.stateCMatrix[row][col]}}</td>
+    <tr
+      *ngFor="
+        let class of classService.classes;
+        let isFirst = first;
+        let row = index
+      "
+      (mouseenter)="changeActiveClass.emit(row)"
+    >
+      <th
+        class="predictedCell"
+        *ngIf="isFirst"
+        [attr.rowspan]="classService.classes.length"
+      >
+        <div>Predicted</div>
+      </th>
+      <th>{{ class }}</th>
+      <td
+        *ngFor="let class of classService.classes; let col = index"
+        [ngClass]="scoresService.stateCMatrix[row][col]"
+      >
+        {{ scoresService.stateCMatrix[row][col] }}
+      </td>
     </tr>
   </table>
 </div>

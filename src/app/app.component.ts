@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { DrawingComponent } from './Components/drawing/drawing.component';
 import { ControlUIService } from './Services/control-ui.service';
 import { ScoresService } from './Services/scores.service';
 
@@ -9,7 +10,10 @@ import { ScoresService } from './Services/scores.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent{
+  @ViewChild(DrawingComponent) child:DrawingComponent;
   constructor(public scoresService:ScoresService, public UICtrlService:ControlUIService){}
 
-
+  changeActiveClass(value:number){
+    this.child.changeActiveClass(value)
+  }
 }

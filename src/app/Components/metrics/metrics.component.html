@@ -1,23 +1,57 @@
-<div class="metric-container" [ngSwitch]="classService.classes.length>2">
-
+<div class="metric-container" [ngSwitch]="classService.classes.length > 2">
   <table *ngSwitchCase="true">
     <tr>
       <th>Metric</th>
       <th>Score</th>
       <th>Micro</th>
       <th>Macro</th>
-      <th *ngFor="let c of classService.classes; let i=index" [style.background-color]="classService.getRGBStyleFromClass(i)">{{c}}</th>
+      <th
+        *ngFor="let c of classService.classes; let i = index"
+        [style.background-color]="classService.getRGBStyleFromClass(i)"
+        [ngClass]="{hide: !UICtrlService.showPerClassMetrics}"
+      >
+        {{ c }}
+      </th>
     </tr>
-    <tr *ngFor="let score of scoresService.scores; let i=index" [ngStyle]="{'display':scoresService.visibleScores[i]? '':'none'}">
-      <th (mouseenter)="UICtrlService.activate($event, score.name)"
-      (mouseleave)="UICtrlService.deactivate()">{{score.name}}</th>
-      <td [style.background-color]="colorScore(score.score)">{{formatScore(score.score, (score.name=='Kappa')? false: true, (score.name=='Kappa')? 2: 1)}}</td>
-      <td [style.background-color]="colorScore(score.microAverage)">{{formatScore(score.microAverage)}}</td>
-      <td [style.background-color]="colorScore(score.macroAverage)">{{formatScore(score.macroAverage)}}</td>
-      <td [style.background-color]="colorScore(s)" *ngFor="let s of score.perClassScore; let j=index"
-      (mouseenter)="changeActiveClass.emit(j)" (mouseenter)="UICtrlService.activate($event, score.name)"
-      (mouseleave)="UICtrlService.deactivate()" [ngClass]="{'highlight': classService.currentClass==j, 'fade':classService.currentClass!=j} ">
-      {{formatScore(s)}}</td>
+    <tr
+      *ngFor="let score of scoresService.scores; let i = index"
+      [ngStyle]="{ display: scoresService.visibleScores[i] ? '' : 'none' }"
+    >
+      <th
+        (mouseenter)="UICtrlService.activate($event, score.name)"
+        (mouseleave)="UICtrlService.deactivate()"
+      >
+        {{ score.name }}
+      </th>
+      <td [style.background-color]="colorScore(score.score)">
+        {{
+          formatScore(
+            score.score,
+            score.name == "Kappa" ? false : true,
+            score.name == "Kappa" ? 2 : 1
+          )
+        }}
+      </td>
+      <td [style.background-color]="colorScore(score.microAverage)">
+        {{ formatScore(score.microAverage) }}
+      </td>
+      <td [style.background-color]="colorScore(score.macroAverage)">
+        {{ formatScore(score.macroAverage) }}
+      </td>
+      <td
+        [style.background-color]="colorScore(s)"
+        *ngFor="let s of score.perClassScore; let j = index"
+        (mouseenter)="changeActiveClass.emit(j)"
+        (mouseenter)="UICtrlService.activate($event, score.name)"
+        (mouseleave)="UICtrlService.deactivate()"
+        [ngClass]="{
+          highlight: classService.currentClass == j,
+          fade: classService.currentClass != j,
+          hide: !UICtrlService.showPerClassMetrics
+        }"
+      >
+        {{ formatScore(s) }}
+      </td>
     </tr>
   </table>
 
@@ -26,12 +60,25 @@
       <th>Metric</th>
       <th>Score</th>
     </tr>
-    <tr *ngFor="let score of scoresService.scores; let i=index" [ngStyle]="{'display':scoresService.visibleScores[i]? '':'none'}">
-      <th (mouseenter)="UICtrlService.activate($event, score.name)"
-      (mouseleave)="UICtrlService.deactivate()"
-      >{{score.name}}</th>
-      <td
-      [style.background-color]="colorScore(score.score)">{{formatScore(score.score, (score.name=='Kappa')? false: true, (score.name=='Kappa')? 2: 1)}}</td>
+    <tr
+      *ngFor="let score of scoresService.scores; let i = index"
+      [ngStyle]="{ display: scoresService.visibleScores[i] ? '' : 'none' }"
+    >
+      <th
+        (mouseenter)="UICtrlService.activate($event, score.name)"
+        (mouseleave)="UICtrlService.deactivate()"
+      >
+        {{ score.name }}
+      </th>
+      <td [style.background-color]="colorScore(score.score)">
+        {{
+          formatScore(
+            score.score,
+            score.name == "Kappa" ? false : true,
+            score.name == "Kappa" ? 2 : 1
+          )
+        }}
+      </td>
     </tr>
   </table>
 </div>
