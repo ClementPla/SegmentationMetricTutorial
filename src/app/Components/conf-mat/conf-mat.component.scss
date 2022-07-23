@@ -17,3 +17,13 @@
 table > tr .predictedCell > div{
   transform: rotate(-90deg);
 }
+
+td {
+  text-align: center;
+}
+
+.table-container{
+  flex-flow: wrap;
+}
+
+

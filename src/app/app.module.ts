@@ -14,6 +14,11 @@ import { ConfMatComponent } from './Components/conf-mat/conf-mat.component';
 import { MetricsComponent } from './Components/metrics/metrics.component';
 import { ClassesService } from './Services/classes.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatListModule} from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -25,6 +30,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   ],
   imports: [
     MatIconModule,
+    MatButtonToggleModule,
+    MatListModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatDividerModule,
     MatSidenavModule,
     MatSlideToggleModule,
     MatToolbarModule,

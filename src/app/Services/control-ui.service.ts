@@ -9,6 +9,13 @@ export class ControlUIService {
   showTooltip:boolean = false
   tooltipType:string
 
+  showConfMat:boolean = true;
+  showConfMatLabel:boolean=true;
+
+  showMetrics:boolean=true;
+
+  performanceMode:boolean=false
+
   pos:Point2D
   constructor() { }
 
@@ -21,5 +28,19 @@ export class ControlUIService {
   deactivate(){
     this.showTooltip=false
   }
+
+  toggleCM(){
+    this.showConfMat = !this.showConfMat
+  }
+  toggleCMLabel(){
+    this.showConfMatLabel = !this.showConfMatLabel
+  }
+  toggleMetrics(){
+    this.showMetrics = !this.showMetrics
+  }
+  togglePerformanceMode(){
+    this.performanceMode = !this.performanceMode
+  }
+
 
 }

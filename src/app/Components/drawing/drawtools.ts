@@ -8,7 +8,7 @@ export class SharpBrush{
   static createBrush(imageData:ImageData, color:Uint8ClampedArray){
     let w = imageData.width
     let h = imageData.height
-    let r = Math.min(w, h) / 2
+    let r = Math.floor(Math.min(w, h) / 2)
     for(let i=0; i<h; i++){
       for(let j=0; j<w; j++){
         let coord = Math.pow(i-h/2, 2) + Math.pow(j-w/2, 2)

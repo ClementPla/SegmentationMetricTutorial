@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
-import { fromEvent, merge } from 'rxjs';
+import { fromEvent, merge, Observable } from 'rxjs';
 import { Point2D, ArrayTool } from './utils';
 import { SharpBrush } from './drawtools';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { ScoresService } from 'src/app/Services/scores.service';
 import { ClassesService } from 'src/app/Services/classes.service';
+import { ControlUIService } from 'src/app/Services/control-ui.service';
 
 @Component({
   selector: 'app-drawing',
@@ -24,9 +25,6 @@ export class DrawingComponent implements OnInit {
   @ViewChild('canvasGroundtruth', { static: true })
   canvasBG: ElementRef<HTMLCanvasElement>;
 
-  @ViewChild('canvasEvent', { static: true })
-  canvasEvent: ElementRef<HTMLCanvasElement>;
-
   @ViewChild('canvasVisu', { static: true })
   canvasVisu: ElementRef<HTMLCanvasElement>;
 
@@ -41,17 +39,23 @@ export class DrawingComponent implements OnInit {
   height = this.width
   upscaleFactor = this.canvasScreenSize/this.width
 
-  currentRadius = 5
+  initialRadius = 5;
+
+  currentRadius = this.initialRadius;
   cursorPosition: Point2D = {x:0,y:0}
+  cursorPositionGT: Point2D = {x:0,y:0}
   sharpBrush:SharpBrush
   drawTool = 'draw'
+  drawNotDrag:boolean = true
 
-  constructor(private scoreService:ScoresService, public classService:ClassesService){}
+  imgSrc = ''
+
+  constructor(private scoreService:ScoresService, public classService:ClassesService,
+    public UICtrlService:ControlUIService){}
 
   ngOnInit(): void {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     const canvasBackground: HTMLCanvasElement = this.canvasBG.nativeElement;
-    const canvasEvent: HTMLCanvasElement = this.canvasEvent.nativeElement;
     const canvasVisu: HTMLCanvasElement = this.canvasVisu.nativeElement;
 
     this.ctx = canvasEl.getContext('2d')!;
@@ -73,16 +77,31 @@ export class DrawingComponent implements OnInit {
     this.ctxBg.imageSmoothingEnabled = false
     this.ctx.imageSmoothingEnabled = false
     this.ctxVisu.imageSmoothingEnabled = false
+
+
+
     this.buildGroundtruth(2)
-    this.captureEvents(canvasEvent);
-
+    this.captureEvents(canvasEl, this.cursorPosition);
+    this.captureEvents(canvasVisu, this.cursorPositionGT, true);
   }
-
   private initBackgroundConstruction(){
     this.ctx.fillRect(0, 0, this.width, this.height)
     this.ctxBg.fillRect(0, 0, this.width, this.height)
   }
 
+  setDragMode(){
+    this.ctx.globalCompositeOperation = 'destination-atop'
+    this.drawNotDrag = false
+  }
+  setDrawMode(){
+    this.ctx.globalCompositeOperation = 'source-over'
+    this.drawNotDrag = true
+  }
+  clearDrawing(){
+    this.changeActiveClass(0)
+    this.ctx.fillRect(0, 0, this.width, this.height)
+
+  }
 
   buildGroundtruth(index:number){
     let promises = []
@@ -90,11 +109,13 @@ export class DrawingComponent implements OnInit {
     switch(index){
       case 0:
         this.classService.setClasses([0, 1])
+        this.imgSrc = ''
         promises.push(SharpBrush.drawCircle(this.ctxBg, 256/this.upscaleFactor,
         256/this.upscaleFactor,50/this.upscaleFactor,this.classService.RGBFromClass(1)))
         break;
       case 1:
         this.classService.setClasses([0, 1, 2, 3, 4])
+        this.imgSrc = ''
         promises.push(SharpBrush.drawCircle(this.ctxBg,
         32/this.upscaleFactor,
         32/this.upscaleFactor,
@@ -112,14 +133,15 @@ export class DrawingComponent implements OnInit {
           this.classService.RGBFromClass(4)))
         break;
         case 2:
-          this.classService.setClasses([0, 1])
-
+          this.classService.setClasses(['0', '1'])
           var imageGT = new Image();
           imageGT.src = "assets/images/patient1_raw0073_gt.png"
+          this.imgSrc = "assets/images/patient1_raw0073.png"
           promises.push(new Promise(resolve =>{
             imageGT.onload = (ev) =>{
               resolve(imageGT)
               this.drawCustomImage(this.ctxBg, imageGT)
+              this.classService.setClasses(['BG', 'ILM', 'IPL', 'RPE', 'BM', 'IRF', 'SRF', 'PED'])
               this.scoreService.initConfMat()
             }
           }))
@@ -130,7 +152,8 @@ export class DrawingComponent implements OnInit {
     this.refreshBrush()
     Promise.all(promises).then(()=>{
       this.backgroundImage = this.ctxBg.getImageData(0,0, this.width, this.height).data;
-      this.inference()
+      this.changeActiveClass(1)
+      this.slowInference()
       this.ctxVisu.drawImage(this.canvasBG.nativeElement, 0, 0)
 
       }
@@ -154,7 +177,8 @@ export class DrawingComponent implements OnInit {
     ctx.putImageData(rawData, 0, 0)
   }
 
-  private captureEvents(canvas: HTMLCanvasElement) {
+  private captureEvents(canvas: HTMLCanvasElement,
+    cursorPoint:Point2D, isGT:boolean=false) {
     // this will capture all mousedown events from the canvas element
 
     const touchStartEvents = fromEvent<TouchEvent>(canvas, 'touchstart')
@@ -174,8 +198,8 @@ export class DrawingComponent implements OnInit {
       next:(event:MouseEvent|TouchEvent)=>{
         const rect = canvas.getBoundingClientRect();
         var pos = this.getClientPosition(event)
-        this.cursorPosition.x = pos.clientX - rect.left
-        this.cursorPosition.y = pos.clientY - rect.top
+        cursorPoint.x = pos.clientX - rect.left
+        cursorPoint.y = pos.clientY - rect.top
       }
 
     })
@@ -185,9 +209,13 @@ export class DrawingComponent implements OnInit {
             e.preventDefault()
             const rect = canvas.getBoundingClientRect();
             const pos = this.getCoord(e, rect)
-            if(this.drawTool=='draw')
-              this.drawOnCanvas(pos, pos)
-            else if(this.drawTool=='fill'){
+
+            if(isGT && this.drawTool=='draw'){
+              this.drawOnGTCanvas(pos, pos)
+            }
+            else if(this.drawTool=='draw')
+              this.drawOnCanvas(this.ctx, pos, pos)
+            else if(this.drawTool=='fill' && !isGT){
               this.fillOnCanvas(pos)
             }
             this.inference()
@@ -205,11 +233,18 @@ export class DrawingComponent implements OnInit {
 
         const prevPos = this.getCoord(res[0], rect)
         const currentPos = this.getCoord(res[1], rect)
+        if(isGT){
+          this.drawOnGTCanvas(prevPos, currentPos)
+        }
+        else this.drawOnCanvas(this.ctx, prevPos, currentPos);
 
-        this.drawOnCanvas(prevPos, currentPos);
-        this.inference();
+        if(!this.UICtrlService.performanceMode) this.inference();
 
       }});
+
+      endEvents.subscribe((e)=>{
+        this.slowInference();
+      })
   }
   getCoord(event:MouseEvent|TouchEvent, rect:DOMRect){
     var pt = this.getClientPosition(event)
@@ -228,16 +263,13 @@ export class DrawingComponent implements OnInit {
     }
     let imageData = this.ctx.getImageData(0, 0, this.width, this.height)
     let index = Math.round(pos.y)*this.width*4 + Math.round(pos.x)*4;
-    console.log(index)
     let r = this.backgroundImage[index]
     let g = this.backgroundImage[index+1]
     let b = this.backgroundImage[index+2]
     let col = this.classService.getClassColor(this.classService.currentClass)
-
     for(let i=0;i<imageData.height;i++){
       for(let j=0;j<imageData.width;j++){
         let index = i*imageData.width*4 + j*4;
-
         if(this.backgroundImage[index]==r && this.backgroundImage[index+1]==g && this.backgroundImage[index+2]==b){
           imageData.data[index] = col[0]
           imageData.data[index+1] = col[1]
@@ -271,20 +303,30 @@ export class DrawingComponent implements OnInit {
       return {clientX:event.clientX, clientY:event.clientY}
     }
   }
+
+  private drawOnGTCanvas(prevPos:Point2D, currentPos:Point2D){
+    this.drawOnCanvas(this.ctxBg, prevPos, currentPos)
+    this.drawOnCanvas(this.ctxVisu, prevPos, currentPos)
+    this.backgroundImage = this.ctxBg.getImageData(0, 0, this.width, this.height).data
+
+  }
   private drawOnCanvas(
+    ctx:CanvasRenderingContext2D,
     prevPos: Point2D,
     currentPos: Point2D) {
     if (!this.ctx) { return; }
     if (prevPos) {
-      this.sharpBrush.drawLine(this.ctx, prevPos, currentPos)
-    }
-    else{
-      this.sharpBrush.drawLine(this.ctx, currentPos, currentPos)
+      this.sharpBrush.drawLine(ctx, prevPos, currentPos)
+
     }
   }
 
   inference(){
     const imgData = this.ctx.getImageData(0,0,this.width, this.height).data;
     this.scoreService.computeConfusionMatrix(this.backgroundImage, imgData)
+  }
+  slowInference(){
+    this.inference()
+
   }
 }

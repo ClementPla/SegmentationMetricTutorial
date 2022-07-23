@@ -1,4 +1,41 @@
 .metric-container{
   display: flex;
   flex-direction: column;
+  margin-top: 0.25rem;
+}
+
+
+td {
+  text-align: center;
+  padding: 5px;
+
+}
+th{
+  text-align: left;
+  padding: 5px;
+}
+td:empty{
+  visibility: hidden;
+}
+
+td:not(:empty), th:not(:empty){
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  border-radius: 0.25rem;
+}
+
+
+
+tr:hover{
+  background-color: darkcyan;
+  filter: brightness(125%);
+  border-radius: 0.5rem;
+
+}
+
+.fade{
+  opacity: 50%;
+
+}
+.highlight{
+  opacity: 100%;
 }

@@ -11,16 +11,46 @@
 
 </mat-toolbar>
 
-<mat-drawer-container class="example-container" hasBackdrop="false" >
-  <mat-drawer #statsDrawer opened="true">
-    <div class="flex-vertical metric-options">
-      Metrics
-      <mat-slide-toggle *ngFor="let score of scoresService.scores; let i=index"
-      class="example-margin"
-      [checked]="true"
-      (change)="scoresService.visibleScores[i]=!scoresService.visibleScores[i]"
-      >{{score.name}} </mat-slide-toggle>
+<mat-drawer-container class="drawer-container" hasBackdrop="false" autosize>
+  <mat-drawer #statsDrawer opened="true" mode=push>
+    <div class="flex-vertical options">
+      <h2>Drawing</h2>
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.performanceMode" (change)="UICtrlService.togglePerformanceMode()">
+        Performance mode
+     </mat-slide-toggle>
+    <mat-divider></mat-divider>
+    <h2>Metrics</h2>
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.showConfMat" (change)="UICtrlService.toggleCM()">
+        Confusion Matrix
+     </mat-slide-toggle>
+
+      <mat-checkbox
+        class="example-margin"
+        [checked]="UICtrlService.showConfMatLabel" (change)="UICtrlService.toggleCMLabel()">
+        Show label
+     </mat-checkbox>
+
+    <mat-divider></mat-divider>
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.showMetrics" (change)="UICtrlService.toggleMetrics()">
+        Metrics
+     </mat-slide-toggle>
+
+     <div *ngIf="UICtrlService.showMetrics">
+        <div *ngFor="let score of scoresService.scores; last as last; let i=index;">
+          <mat-checkbox
+          class="example-margin"
+          [checked]="true"
+          (change)="scoresService.visibleScores[i]=!scoresService.visibleScores[i]"
+          >{{score.name}} </mat-checkbox>
+        </div>
     </div>
+  </div>
   </mat-drawer>
-    <app-drawing></app-drawing>
+  <app-drawing></app-drawing>
 </mat-drawer-container>

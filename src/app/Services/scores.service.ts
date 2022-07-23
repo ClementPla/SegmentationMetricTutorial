@@ -20,7 +20,6 @@ export class ScoresService {
   setScores(scores:Array<Score>){
     this.scores = scores
     this.visibleScores = new Array<boolean>(this.scores.length).fill(true);
-    console.log(this.visibleScores)
   }
   updateScore(){
     let statsComputer = new Stats(this.confusionMatrix)

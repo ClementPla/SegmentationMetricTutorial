@@ -17,7 +17,7 @@ export class ClassesService {
     }
     else{
       var h = (index+1) * 360/(this.classes.length);
-      let s = 95;
+      let s = 50;
       let l = 50;
       var hsl = [h, s, l]
     }

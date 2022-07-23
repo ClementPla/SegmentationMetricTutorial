@@ -1,56 +1,86 @@
-
-<div class="container">
-  <mat-toolbar color="accent">
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
     <button mat-button (click)="buildGroundtruth(0)">Preset 1</button>
     <button mat-button (click)="buildGroundtruth(1)">Preset 2</button>
-    <button mat-button (click)="buildGroundtruth(2)">Preset 3</button>
+    <button mat-button (click)="buildGroundtruth(2)">Optical Coherence Tomography</button>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-  </mat-toolbar>
+<div class="central-container flex-horizontal">
 
-  <app-conf-mat (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
-  <app-metrics (changeActiveClass)="changeActiveClass($event)"></app-metrics>
+  <!-- This the panel options container-->
+  <div class="panel-options">
+    <mat-action-list>
+      <button mat-list-item [style.background-color]="classService.getRGBStyleFromClass(classService.currentClass)">
+        <mat-icon>color_lens</mat-icon>Active color
+      </button>
+      <button mat-list-item (click)="changeTool('draw')">
+        <mat-icon>brush</mat-icon>Draw
+      </button>
 
-  <div class="flex-horizontal">
-    <div class="active-color" [ngStyle]="{'background-color':classService.getRGBStyleFromClass(classService.currentClass)}">
-      Active Color
+      <button mat-list-item (click)="changeTool('fill')">
+        <mat-icon>colorize</mat-icon>Fill
+      </button>
+
+    </mat-action-list>
+
+    <label for="sliderRadius">Radius</label>
+    <mat-slider id="sliderRadius" valueText="Radius" min="1" max="25" value="5" (input)="resizeBrush($event)" thumbLabel
+      step="0.5"></mat-slider>
+
+    <mat-button-toggle-group>
+      <mat-button-toggle [checked]="drawNotDrag" (change)="setDrawMode()">Draw</mat-button-toggle>
+      <mat-button-toggle [checked]="!drawNotDrag" (change)="setDragMode()">Drag</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-divider vertical="true" [inset]="true"></mat-divider>
+  </div>
+
+  <div class="color-panel">
+    <div *ngFor="let class of classService.classes, let i = index; last as last">
+      <button mat-button (click)="changeActiveClass(i)"
+        [style.background-color]="classService.getRGBStyleFromClass(i)">{{class}}</button>
+      <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </div>
-
-    <button mat-button (click)="changeTool('draw')">Draw</button>
-    <button mat-button (click)="changeTool('fill')">Fill</button>
   </div>
 
-
-  <label for="sliderRadius">Radius</label>
-  <mat-slider id="sliderRadius" valueText="Radius" min="1" max="25" value="5"
-  (input)="resizeBrush($event)" thumbLabel step="0.5"></mat-slider>
-
-
-  <label for="canvasVisu">Groundtruth</label>
-
-
-  <div class="drawZone flex-horizontal">
-
-    <canvas #canvasVisu id="canvasVisu"></canvas>
-
-    <div class="flex-horizontal">
-      <div class="color-panel">
-        <button mat-button *ngFor="let class of classService.classes, let i = index"
-          (click)="changeActiveClass(i)"
-          [ngStyle]="{'background-color':classService.getRGBStyleFromClass(i)}">{{class}}</button>
-      </div>
-      <div class="canvas-container demo" [ngStyle]="{'--width':canvasScreenSize+'px'}">
-        <div #cursor class="cursor" [ngStyle]="{'border-color':classService.getRGBStyleFromClass(classService.currentClass),
-          'top':cursorPosition.y+'px',
-          'left':cursorPosition.x+'px',
-          'width':  2*currentRadius*upscaleFactor +'px'
-            }">
+  <!-- This is the canvas container-->
+  <div class="draw-container flex-horizontal">
+    <div class="canvas-container">
+      <h3 class="canvas-label">Reference</h3>
+      <div #cursor class="cursor" [style.top.px]="cursorPositionGT.y" [style.left.px]="cursorPositionGT.x"
+        [style.scale]="1.15*currentRadius/(2*initialRadius)">
+        <div class="cursor-radius" [style.border-color]="classService.getRGBStyleFromClass(classService.currentClass)">
         </div>
-        <canvas #canvasEvent id="canvasEvent"></canvas>
-        <canvas #canvas id="canvasDraw"></canvas>
-        <canvas #canvasGroundtruth id="canvasGroundtruth"></canvas>
-        <div id="uniformBackground"></div>
+        <mat-icon *ngIf="drawTool=='draw'">brush</mat-icon>
       </div>
+
+      <canvas #canvasVisu id="canvasVisu"></canvas>
+      <img class="imgBackground" [src]="imgSrc">
+
+    </div>
+    <div class="canvas-container">
+      <h3 class="canvas-label">Prediction</h3>
+      <div #cursor class="cursor" [style.top.px]="cursorPosition.y" [style.left.px]="cursorPosition.x"
+        [style.scale]="1.15*currentRadius/(2*initialRadius)">
+
+        <div class="cursor-radius" [style.border-color]="classService.getRGBStyleFromClass(classService.currentClass)">
+        </div>
+
+        <mat-icon *ngIf="drawTool=='draw'">brush</mat-icon>
+        <mat-icon *ngIf="drawTool=='fill'">colorize</mat-icon>
+
+      </div>
+
+      <canvas #canvas id="canvasDraw"></canvas>
+      <canvas #canvasGroundtruth id="canvasGroundtruth"></canvas>
+      <img class="imgBackground" [src]="imgSrc">
+    </div>
   </div>
+  <!-- This is the metric container: confMats and scores-->
+  <div class="flex-horizontal metric-container">
+    <app-conf-mat (changeActiveClass)="changeActiveClass($event)" *ngIf="UICtrlService.showConfMat"></app-conf-mat>
+    <mat-divider vertical="true" *ngIf="UICtrlService.showConfMat && UICtrlService.showMetrics"></mat-divider>
+    <app-metrics (changeActiveClass)="changeActiveClass($event)" *ngIf="UICtrlService.showMetrics"></app-metrics>
   </div>
 </div>
-
