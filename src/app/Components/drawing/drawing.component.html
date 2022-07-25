@@ -5,13 +5,16 @@
     <button mat-button (click)="buildGroundtruth(2)">
       Optical Coherence Tomography
     </button>
+    <button mat-button (click)="buildGroundtruth(3)">
+      Fundus
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="central-container flex-horizontal">
   <!-- This the panel options container-->
   <div class="panel-options">
-    <mat-action-list dense fxLayout="row">
+    <mat-action-list dense fxLayout="column">
       <button
         mat-list-item
         [style.background-color]="
@@ -110,18 +113,4 @@
       <img class="imgBackground" [src]="imgSrc" />
     </div>
   </div>
-  <!-- This is the metric container: confMats and scores-->
-  <!-- <div class="flex-horizontal metric-container">
-    <app-conf-mat
-      (changeActiveClass)="changeActiveClass($event)"
-      *ngIf="UICtrlService.showConfMat"
-    ></app-conf-mat>
-    <mat-divider
-      vertical="true"
-      *ngIf="UICtrlService.showConfMat && UICtrlService.showMetrics"
-    ></mat-divider>
-    <app-metrics
-      (changeActiveClass)="changeActiveClass($event)"
-    ></app-metrics>
-  </div> -->
 </div>

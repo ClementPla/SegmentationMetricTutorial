@@ -11,7 +11,7 @@ mat-toolbar{
   --canvas-width: 512px;
   --options-width: 150px;
   flex-flow: wrap;
-  width: 100%;
+  width: fit-content;
   align-items: stretch;
 }
 .metric-container{

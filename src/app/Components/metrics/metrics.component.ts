@@ -22,9 +22,9 @@ export class MetricsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  formatScore(score: number, percentage = true, digits = 1): string {
+  formatScore(score: number, percentage = true, digits = 1) {
     if (score == undefined) {
-      return '';
+      return
     } else {
       if (percentage) return (score * 100).toFixed(digits);
       else return score.toFixed(digits);

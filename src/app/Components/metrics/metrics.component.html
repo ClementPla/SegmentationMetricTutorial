@@ -100,7 +100,8 @@
       >
         {{ score.name }}
       </th>
-      <td [style.background-color]="colorScore(score.score)">
+      <td [style.background-color]="colorScore(score.score)"
+          [style.display]="score.score !=undefined ? 'initial':'none'">
         {{
           formatScore(
             score.score,

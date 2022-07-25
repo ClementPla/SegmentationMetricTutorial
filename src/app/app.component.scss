@@ -3,7 +3,7 @@
 }
 
 mat-drawer{
-  padding: 2ch ;
+  padding: 1rem;
   width: fit-content;
 }
 
@@ -15,4 +15,17 @@ mat-button-toggle-group{
 }
 .options{
   gap: 0.5rem;
+}
+
+mat-toolbar{
+  position: sticky;
+
+}
+
+.metric-drawer{
+  max-width: 25%;
+  width:fit-content;
+  overflow-x: scroll;
+
+  font-size: small;
 }
