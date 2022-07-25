@@ -13,7 +13,7 @@ export class ControlUIService {
 
   showMetrics: boolean = true;
 
-  performanceMode: boolean = false;
+  performanceMode: boolean = true;
   showPerClassMetrics: boolean = false;
 
   showReference: boolean = true;
