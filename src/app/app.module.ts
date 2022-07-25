@@ -19,6 +19,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip'
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatButtonModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTooltipModule
   ],
   providers: [ClassesService],
   bootstrap: [AppComponent]

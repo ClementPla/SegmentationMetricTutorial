@@ -5,20 +5,22 @@
     class="example-icon"
     aria-label="Example icon-button with menu icon"
     (click)="optionsDrawer.toggle()"
-  >
+    matTooltip="Click to open or close the Options drawer"
+    >
     <mat-icon>menu</mat-icon>
   </button>
-  Options
+  <h2 matTooltip="This panels shows the different options related to the drawing and the display of the metrics">Options</h2>
   <span class="flexExpand"></span>
   <h1>Segmentation Metric Tutorial</h1>
   <span class="flexExpand"></span>
-  Metrics
+  <h2 matTooltip="This panel shows the segmentation metrics chosen and the confusion matrix used to compute them. Activate the Descriptions of metrics toggle to see a visual and textual description of the implemented metrics.">Metrics</h2>
   <button
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
     (click)="metricsDrawer.toggle()"
-  >
+    matTooltip="Click to open or close the Metrics drawer"
+    >
     <mat-icon>menu</mat-icon>
   </button>
 </mat-toolbar>
@@ -31,6 +33,7 @@
         class="example-margin"
         [checked]="UICtrlService.performanceMode"
         (change)="UICtrlService.togglePerformanceMode()"
+        matTooltip="Computes the metrics only after the user stopped drawing, hence minimizes the lag between the drawing and its apparition on the screen"
       >
         Performance mode
       </mat-slide-toggle>
@@ -38,6 +41,7 @@
         class="example-margin"
         [checked]="UICtrlService.showReference"
         (change)="UICtrlService.toggleReferenceDisplay()"
+        matTooltip="Show both the reference image and groundtruth and the predicted segmentation on two separate panels"
       >
         Show reference
       </mat-slide-toggle>
@@ -45,6 +49,7 @@
         class="example-margin"
         [checked]="UICtrlService.showOverlayReference"
         (change)="UICtrlService.toggleOverlayReference()"
+        matTooltip="Overlay the groundtruth segmentation in the predicted panel"
       >
         Overlay reference
       </mat-checkbox>
@@ -55,6 +60,7 @@
         class="example-margin"
         [checked]="UICtrlService.showConfMat"
         (change)="UICtrlService.toggleCM()"
+        matTooltip="Show the confusion matrix in the Metrics drawer"
       >
         Confusion Matrix
       </mat-slide-toggle>
@@ -63,6 +69,7 @@
         class="example-margin"
         [checked]="UICtrlService.showConfMatLabel"
         (change)="UICtrlService.toggleCMLabel()"
+        matTooltip="Show the corresponding labels of the confusion matrix"
       >
         Show label
       </mat-checkbox>
@@ -72,6 +79,7 @@
         class="example-margin"
         [checked]="UICtrlService.showMetrics"
         (change)="UICtrlService.toggleMetrics()"
+        matTooltip="Show the segmentation metrics in the Metrics drawer"
       >
         Metrics
       </mat-slide-toggle>
@@ -79,6 +87,7 @@
         class="example-margin"
         [checked]="UICtrlService.showPerClassMetrics"
         (change)="UICtrlService.togglePerClassMetrics()"
+        matTooltip="Show the metrics w.r.t to each class and not an average (micro or macro)"
       >
         Per class
       </mat-slide-toggle>
@@ -101,19 +110,21 @@
           </mat-checkbox>
         </div>
       </div>
-      <h2>Tutorial</h2>
+      <!--Change the name from Tutorial to something more evocative-->
+      <h2 >Tutorial</h2>
       <mat-slide-toggle
         class="example-margin"
+        matTooltip="Activate in order to get description about metrics when hovering over them"
         (change)="
           UICtrlService.tooltipsActivated = !UICtrlService.tooltipsActivated
         "
-        >Tooltip</mat-slide-toggle
-      >
+        >Descriptions of metrics</mat-slide-toggle>
     </div>
   </mat-drawer>
-  <mat-drawer class="metric-drawer" #metricsDrawer opened="true" mode="side" position="end" autosize>
-    <app-conf-mat *ngIf="UICtrlService.showConfMat" (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
+  <mat-drawer class="metric-drawer" 
+  #metricsDrawer opened="true" mode="side" position="end" autosize>
     <app-metrics *ngIf="UICtrlService.showMetrics" (changeActiveClass)="changeActiveClass($event)"></app-metrics>
+    <app-conf-mat *ngIf="UICtrlService.showConfMat" (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
   </mat-drawer>
   <app-drawing></app-drawing>
 </mat-drawer-container>

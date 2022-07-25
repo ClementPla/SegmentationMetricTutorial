@@ -19,7 +19,7 @@ export class ControlUIService {
   showReference: boolean = true;
   showOverlayReference: boolean = true;
 
-  pos: Point2D = {x:0, y:0};
+  pos: Point2D = {x:-500, y:-500};
   constructor() {}
 
   activate(event: MouseEvent, type: string) {
