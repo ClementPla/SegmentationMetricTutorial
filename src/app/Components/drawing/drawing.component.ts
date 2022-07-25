@@ -16,6 +16,7 @@ import { ControlUIService } from 'src/app/Services/control-ui.service';
 })
 export class DrawingComponent implements OnInit {
   @Input() showTooltip: boolean;
+  @Input() overlayOpacity:number=80;
 
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -45,7 +46,7 @@ export class DrawingComponent implements OnInit {
   drawTool = 'draw';
   drawNotDrag: boolean = true;
 
-  imgSrc = '';
+  imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
 
   constructor(
     private scoreService: ScoresService,
@@ -76,7 +77,7 @@ export class DrawingComponent implements OnInit {
     this.ctx.imageSmoothingEnabled = false;
     this.ctxVisu.imageSmoothingEnabled = false;
 
-    this.buildGroundtruth(2);
+    this.buildGroundtruth(3);
     this.captureEvents(canvasEl, this.cursorPosition);
     this.captureEvents(canvasVisu, this.cursorPositionGT, true);
   }
@@ -100,11 +101,12 @@ export class DrawingComponent implements OnInit {
 
   buildGroundtruth(index: number) {
     let promises = [];
+    this.classService.setClasses([0, 1]);
+
     this.initBackgroundConstruction();
     switch (index) {
       case 0:
-        this.classService.setClasses([0, 1]);
-        this.imgSrc = '';
+        this.imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
         promises.push(
           SharpBrush.drawCircle(
             this.ctxBg,
@@ -117,7 +119,7 @@ export class DrawingComponent implements OnInit {
         break;
       case 1:
         this.classService.setClasses([0, 1, 2, 3, 4]);
-        this.imgSrc = '';
+        this.imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
         promises.push(
           SharpBrush.drawCircle(
             this.ctxBg,
@@ -147,7 +149,6 @@ export class DrawingComponent implements OnInit {
         );
         break;
       case 2:
-        this.classService.setClasses(['0', '1']);
         var imageGT = new Image();
         imageGT.src = 'assets/images/patient1_raw0073_gt.png';
         this.imgSrc = 'assets/images/patient1_raw0073.png';
@@ -172,22 +173,16 @@ export class DrawingComponent implements OnInit {
         );
         break;
       case 3:
-        this.classService.setClasses(['0', '1']);
         var imageGT = new Image();
-        imageGT.src = 'assets/images/fundus_gt_small.png';
-        this.imgSrc = 'assets/images/fundus_img.jpeg';
+        imageGT.src = 'assets/images/fundus_gt.png';
+        this.imgSrc = 'assets/images/fundus.jpeg';
         promises.push(
           new Promise((resolve) => {
             imageGT.onload = (ev) => {
               resolve(imageGT);
               this.drawCustomImage(this.ctxBg, imageGT);
-              this.classService.setClasses(
-                []
-              )
-
+              this.classService.setClasses(['BG', 'MAC', 'OD', 'EX', 'HEM', 'MA']);
               this.scoreService.initConfMat();
-
-
             };
           })
         );
@@ -215,8 +210,10 @@ export class DrawingComponent implements OnInit {
   ) {
     ctx.drawImage(image, 0, 0);
     var rawData = ctx.getImageData(0, 0, this.width, this.height);
+    console.log(rawData)
     var uniqueValue: Array<number> = ArrayTool.unique(rawData.data);
     this.classService.setClasses(uniqueValue.filter((v) => v < 255).sort());
+    console.log(this.classService.classes)
 
     for (let i = 0; i < rawData.data.length; i += 4) {
       let l = rawData.data[i];
@@ -293,6 +290,7 @@ export class DrawingComponent implements OnInit {
       this.slowInference();
     });
   }
+
   getCoord(event: MouseEvent | TouchEvent, rect: DOMRect) {
     var pt = this.getClientPosition(event);
     return {
@@ -332,6 +330,7 @@ export class DrawingComponent implements OnInit {
     }
     this.ctx.putImageData(imageData, 0, 0);
   }
+
   changeActiveClass(class_index: number) {
     this.classService.currentClass = class_index;
     this.scoreService.updateStateMatrix();
@@ -358,7 +357,7 @@ export class DrawingComponent implements OnInit {
         clientY: event.touches[0].clientY,
       };
     } else {
-      return { clientX: event.clientX, clientY: event.clientY};
+      return { clientX: event.clientX, clientY: event.clientY };
     }
   }
 
@@ -372,6 +371,7 @@ export class DrawingComponent implements OnInit {
       this.height
     ).data;
   }
+
   private drawOnCanvas(
     ctx: CanvasRenderingContext2D,
     prevPos: Point2D,
@@ -393,7 +393,9 @@ export class DrawingComponent implements OnInit {
     this.inference();
   }
 
-  getCursorTransform():string{
-    return `scale(${(1.15 * this.currentRadius) / (2 * this.initialRadius)}) translate(-50%, -50%) `
+  getCursorTransform(): string {
+    return `scale(${
+      (1.15 * this.currentRadius) / (2 * this.initialRadius)
+    }) translate(-50%, -50%) `;
   }
 }

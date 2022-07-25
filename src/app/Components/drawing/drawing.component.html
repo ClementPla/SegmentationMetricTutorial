@@ -103,8 +103,8 @@
         <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
       </div>
 
-      <canvas #canvasVisu id="canvasVisu"></canvas>
-      <img class="imgBackground" [src]="imgSrc" />
+      <canvas #canvasVisu id="canvasVisu" [style.opacity.%]="overlayOpacity"></canvas>
+      <img class="imgBackground" [src]="imgSrc"/>
     </div>
     <div class="canvas-container">
       <h3 class="canvas-label">Prediction</h3>
@@ -125,9 +125,9 @@
         <mat-icon *ngIf="drawTool == 'fill'">colorize</mat-icon>
       </div>
 
-      <canvas #canvas id="canvasDraw"></canvas>
+      <canvas #canvas id="canvasDraw" [style.opacity.%]="overlayOpacity"></canvas>
       <canvas #canvasGroundtruth id="canvasGroundtruth" [style.display]="UICtrlService.showOverlayReference? 'initial':'none'"></canvas>
-      <img class="imgBackground" [src]="imgSrc" />
+      <img class="imgBackground" [src]="imgSrc" type="image/jpeg">/>
     </div>
   </div>
 </div>

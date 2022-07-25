@@ -11,6 +11,7 @@ import { ScoresService } from './Services/scores.service';
 })
 export class AppComponent{
   @ViewChild(DrawingComponent) child:DrawingComponent;
+  overlayOpacity:number = 80;
   constructor(public scoresService:ScoresService, public UICtrlService:ControlUIService){}
 
   changeActiveClass(value:number){
@@ -21,4 +22,10 @@ export class AppComponent{
     this.scoresService.visibleScores[index] = !this.scoresService.visibleScores[index]
 
   }
+  changeOpacity(value:number|null){
+    if(value){
+      this.overlayOpacity = value;
+    }
+  }
+
 }
