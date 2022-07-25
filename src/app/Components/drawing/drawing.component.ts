@@ -171,6 +171,23 @@ export class DrawingComponent implements OnInit {
           })
         );
         break;
+      case 3:
+        this.classService.setClasses(['0', '1']);
+        var imageGT = new Image();
+        imageGT.src = 'assets/images/fundus_gt_small.png';
+        this.imgSrc = 'assets/images/fundus_img.jpeg';
+        promises.push(
+          new Promise((resolve) => {
+            imageGT.onload = (ev) => {
+              resolve(imageGT);
+              this.drawCustomImage(this.ctxBg, imageGT);
+              this.scoreService.initConfMat();
+
+
+            };
+          })
+        );
+        break;
     }
     this.changeActiveClass(1);
     this.scoreService.initConfMat();

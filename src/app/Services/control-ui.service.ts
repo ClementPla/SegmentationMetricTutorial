@@ -16,7 +16,7 @@ export class ControlUIService {
   performanceMode: boolean = false;
   showPerClassMetrics: boolean = false;
 
-  showReference: boolean = false;
+  showReference: boolean = true;
   showOverlayReference: boolean = true;
 
   pos: Point2D;

@@ -111,7 +111,7 @@
       >
     </div>
   </mat-drawer>
-  <mat-drawer #metricsDrawer opened="true" mode="side" position="end">
+  <mat-drawer class="metric-drawer" #metricsDrawer opened="true" mode="side" position="end" autosize>
     <app-conf-mat *ngIf="UICtrlService.showConfMat" (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
     <app-metrics *ngIf="UICtrlService.showMetrics" (changeActiveClass)="changeActiveClass($event)"></app-metrics>
   </mat-drawer>
