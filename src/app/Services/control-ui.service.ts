@@ -4,8 +4,8 @@ import { Point2D } from '../Components/drawing/utils';
   providedIn: 'root',
 })
 export class ControlUIService {
-  tooltipsActivated = false;
-  showTooltip: boolean = true;
+  tooltipsActivated = true;
+  showTooltip: boolean = false;
   tooltipType: string;
 
   showConfMat: boolean = true;
@@ -51,5 +51,8 @@ export class ControlUIService {
   }
   toggleOverlayReference() {
     this.showOverlayReference = !this.showOverlayReference;
+  }
+  toggleTooltipVisibility(){
+    this.tooltipsActivated = !this.tooltipsActivated
   }
 }

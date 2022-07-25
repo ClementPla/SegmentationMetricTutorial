@@ -96,6 +96,10 @@
         [style.top.px]="cursorPosition.y"
         [style.left.px]="cursorPosition.x"
         [style.scale]="(1.15 * currentRadius) / (2 * initialRadius)"
+        [style.-webkit-transform]="(1.15 * currentRadius) / (2 * initialRadius)"
+        [style.-moz-transform]="(1.15 * currentRadius) / (2 * initialRadius)"
+        [style.-o-transform]="(1.15 * currentRadius) / (2 * initialRadius)"
+        [style.width]="currentRadius"
       >
         <div
           class="cursor-radius"
