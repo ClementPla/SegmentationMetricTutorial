@@ -57,6 +57,16 @@
         Overlay reference
       </mat-checkbox>
 
+      <label for="sliderOpacity">Opacity</label>
+      <mat-slider id="sliderOpacity"
+      valueText="Opacity"
+      min="1"
+      max="100"
+      (input)="changeOpacity(($event).value)"
+      value="80"
+      thumbLabel
+      step="1"></mat-slider>
+
       <mat-divider></mat-divider>
       <h2>Metrics</h2>
       <mat-slide-toggle
@@ -69,7 +79,7 @@
         Confusion Matrix
       </mat-slide-toggle>
 
-      <mat-checkbox
+      <mat-checkbox *ngIf="UICtrlService.showConfMat"
         class="example-margin"
         [checked]="UICtrlService.showConfMatLabel"
         (change)="UICtrlService.toggleCMLabel()"
@@ -132,5 +142,5 @@
     <app-metrics *ngIf="UICtrlService.showMetrics" (changeActiveClass)="changeActiveClass($event)"></app-metrics>
     <app-conf-mat *ngIf="UICtrlService.showConfMat" (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
   </mat-drawer>
-  <app-drawing></app-drawing>
+  <app-drawing [overlayOpacity]="overlayOpacity"></app-drawing>
 </mat-drawer-container>
