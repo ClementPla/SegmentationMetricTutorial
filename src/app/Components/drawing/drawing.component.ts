@@ -181,6 +181,10 @@ export class DrawingComponent implements OnInit {
             imageGT.onload = (ev) => {
               resolve(imageGT);
               this.drawCustomImage(this.ctxBg, imageGT);
+              this.classService.setClasses(
+                []
+              )
+
               this.scoreService.initConfMat();
 
 
@@ -354,7 +358,7 @@ export class DrawingComponent implements OnInit {
         clientY: event.touches[0].clientY,
       };
     } else {
-      return { clientX: event.clientX, clientY: event.clientY };
+      return { clientX: event.clientX, clientY: event.clientY};
     }
   }
 

@@ -69,7 +69,7 @@ mat-toolbar{
   position: absolute;
   width: 32px;
   height: 32px;
-  translate: -50% -50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
   transform-origin: center;
 }
