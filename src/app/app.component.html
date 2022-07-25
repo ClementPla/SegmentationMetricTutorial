@@ -69,7 +69,7 @@
         Confusion Matrix
       </mat-slide-toggle>
 
-      <mat-checkbox
+      <mat-checkbox *ngIf="UICtrlService.showConfMat"
         class="example-margin"
         [checked]="UICtrlService.showConfMatLabel"
         (change)="UICtrlService.toggleCMLabel()"
@@ -89,7 +89,7 @@
       >
         Metrics
       </mat-slide-toggle>
-      <mat-slide-toggle
+      <mat-slide-toggle *ngIf="UICtrlService.showMetrics"
         class="example-margin"
         [checked]="UICtrlService.showPerClassMetrics"
         (change)="UICtrlService.togglePerClassMetrics()"
@@ -117,7 +117,7 @@
       </div>
       <!--Change the name from Tutorial to something more evocative-->
       <h2 >Tutorial</h2>
-      <mat-slide-toggle
+      <mat-slide-toggle *ngIf="UICtrlService.showMetrics"
         class="example-margin"
         matTooltip="Activate in order to get description about metrics when hovering over them" 
         [matTooltipPosition]="'right'"       

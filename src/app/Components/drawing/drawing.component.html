@@ -104,7 +104,7 @@
       </div>
 
       <canvas #canvasVisu id="canvasVisu"></canvas>
-      <img class="imgBackground" [src]="imgSrc" />
+      <img class="imgBackground"  *ngIf imgSrc != "" [src]="imgSrc" />
     </div>
     <div class="canvas-container">
       <h3 class="canvas-label">Prediction</h3>
@@ -127,7 +127,7 @@
 
       <canvas #canvas id="canvasDraw"></canvas>
       <canvas #canvasGroundtruth id="canvasGroundtruth" [style.display]="UICtrlService.showOverlayReference? 'initial':'none'"></canvas>
-      <img class="imgBackground" [src]="imgSrc" />
+      <img class="imgBackground" *ngIf imgSrc != "" [src]="imgSrc" />
     </div>
   </div>
 </div>
