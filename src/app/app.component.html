@@ -89,7 +89,6 @@
         Show label
       </mat-checkbox>
 
-      <mat-divider></mat-divider>
       <mat-slide-toggle
         class="example-margin"
         [checked]="UICtrlService.showMetrics"
@@ -125,6 +124,8 @@
           </mat-checkbox>
         </div>
       </div>
+      
+      <mat-divider></mat-divider>
       <!--Change the name from Tutorial to something more evocative-->
       <h2 >Tutorial</h2>
       <mat-slide-toggle *ngIf="UICtrlService.showMetrics"

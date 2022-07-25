@@ -21,7 +21,7 @@
 <div class="central-container flex-horizontal">
   <!-- This the panel options container-->
   <div class="panel-options">
-    <mat-action-list dense fxLayout="column">
+    <mat-action-list dense fxLayout="row">
       <button
         mat-list-item
         [style.background-color]="
@@ -31,20 +31,21 @@
       >
         <mat-icon>color_lens</mat-icon>Active class
       </button>
-      <button mat-list-item (click)="changeTool('draw'); setDrawMode()"
-      matTooltip="Click to modify either the groundtruth (on reference image) or the segmentation (on prediction image) with a paintbrush tool">
-        <mat-icon>brush</mat-icon>Draw
-      </button>
-
-      <button mat-list-item (click)="changeTool('fill'); setDrawMode()"
-      matTooltip="Click and fill a region defined by the groundtruth's segmentation with the active class (only applicable on prediction image).">
-        <mat-icon>colorize</mat-icon>Fill
-      </button>
-
-      <!--
-      <button mat-list-item (click)="setDragMode()" matTooltip="Trying drag"
-        ><mat-icon>colorize</mat-icon>Drag
-      </button>-->
+      
+      <mat-button-toggle-group>
+        <mat-button-toggle [checked]="drawNotDrag" (change)="changeTool('draw'); setDrawMode()" 
+        matTooltip="Draw on the reference or on the prediction images"
+          >Draw</mat-button-toggle
+        >
+        <mat-button-toggle [checked]="!drawNotDrag" (change)="changeTool('draw'); setDragMode()" 
+        matTooltip="Drag the cursor and see the evolution of the metrics while doing so. The final position of the cursor will be drawn."
+          >Drag</mat-button-toggle
+        >
+        <mat-button-toggle [checked]="drawNotDrag" (change)="changeTool('fill'); setDrawMode()" 
+        matTooltip="Click and fill a region defined by the groundtruth's segmentation with the active class (only applicable on prediction image)."
+        >Fill</mat-button-toggle
+        >
+      </mat-button-toggle-group>
 
       <button
         mat-list-item
@@ -54,31 +55,22 @@
       >
         {{ class }}
       </button>
-    </mat-action-list>
-    <!--Adding a break line to add space before radius-->
-    <br>
-    <label for="sliderRadius">Radius</label>
-    <mat-slider
-      id="sliderRadius"
-      valueText="Radius"
-      min="1"
-      max="25"
-      value="5"
-      (input)="resizeBrush($event)"
-      thumbLabel
-      step="0.5"
-      matTooltip="Vary the radius of the paintbrush"
-    ></mat-slider>
 
-    <!--See if we want to move this and add only drag button up-->
-    <mat-button-toggle-group>
-      <mat-button-toggle [checked]="drawNotDrag" (change)="setDrawMode()" matTooltip="Draw on the reference of prediction images"
-        >Draw</mat-button-toggle
-      >
-      <mat-button-toggle [checked]="!drawNotDrag" (change)="setDragMode()" matTooltip="Drag the cursor and see the evolution of the metrics while doing so. The final position of the cursor will be drawn."
-        >Drag</mat-button-toggle
-      >
-    </mat-button-toggle-group>
+      <!--Adding a break line to add space before radius-->
+      <br>
+      <label for="sliderRadius">Radius</label>
+      <mat-slider
+        id="sliderRadius"
+        valueText="Radius"
+        min="1"
+        max="25"
+        value="5"
+        (input)="resizeBrush($event)"
+        thumbLabel
+        step="0.5"
+        matTooltip="Vary the radius of the paintbrush"
+      ></mat-slider>
+  </mat-action-list>
 
     <mat-divider vertical="true" [inset]="true"></mat-divider>
   </div>
