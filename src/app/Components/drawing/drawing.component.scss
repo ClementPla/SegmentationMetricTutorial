@@ -56,8 +56,8 @@ mat-toolbar{
 #canvasVisu{
   width: var(--canvas-width);
   aspect-ratio: 1;
-  opacity: 75%;
-  mix-blend-mode:screen;
+  mix-blend-mode:normal;
+
 }
 #canvasGroundtruth{
   z-index: -2;

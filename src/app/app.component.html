@@ -69,7 +69,7 @@
         Confusion Matrix
       </mat-slide-toggle>
 
-      <mat-checkbox *ngIf="UICtrlService.showConfMat"
+      <mat-checkbox
         class="example-margin"
         [checked]="UICtrlService.showConfMatLabel"
         (change)="UICtrlService.toggleCMLabel()"
@@ -89,7 +89,7 @@
       >
         Metrics
       </mat-slide-toggle>
-      <mat-slide-toggle *ngIf="UICtrlService.showMetrics"
+      <mat-slide-toggle  *ngIf="UICtrlService.showMetrics"
         class="example-margin"
         [checked]="UICtrlService.showPerClassMetrics"
         (change)="UICtrlService.togglePerClassMetrics()"
