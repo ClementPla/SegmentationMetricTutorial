@@ -8,7 +8,7 @@ export class ControlUIService {
   showTooltip: boolean = true;
   tooltipType: string;
 
-  showConfMat: boolean = false;
+  showConfMat: boolean = true;
   showConfMatLabel: boolean = true;
 
   showMetrics: boolean = true;
