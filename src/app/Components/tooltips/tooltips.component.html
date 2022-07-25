@@ -1,29 +1,111 @@
 <div *ngIf="controlUIService.showTooltip" class="container" [ngSwitch]="controlUIService.tooltipType"
-  [ngStyle]="{'top':controlUIService.pos.y+'px', 'left':controlUIService.pos.x+'px'}">
-  <div *ngSwitchCase="'Groundtruth'">
-    La description de la groundtruth
+  [ngStyle]="{'top':controlUIService.pos.y+'px', 'left':controlUIService.pos.x+'px'}"
+  >
+
+  <div *ngSwitchCase="'Metric'" class="container-horizontal">
+
+    <span> <img src="../../../assets/images/metrics/schema.PNG"></span>
+    <span> <img src="../../../assets/images/metrics/schema2.PNG"></span>
+    
+    <span> 
+      When hovering over each metric, a small description, a drawing and the equation will be shown. <br>
+      The drawings are all based over these representations of the predictions and the groundtruths.
+    </span>
   </div>
 
-  <div *ngSwitchCase="'Precision'">
-    La description de la precision
+  <div *ngSwitchCase="'Score'" class="container-horizontal">
+    For a binary classification problem (as in Preset 1), the scores represent the metric computed. <br>
+    For a multi-class problem (Preset 2 and OCT), the scores are only given for the kappa metric and otherwise represented either in the micro- or macro-average.
   </div>
 
-  <div *ngSwitchCase="'Accuracy'">
-    La description de l'accuracy
+  <!--Example came from here : https://datascience.stackexchange.com/questions/15989/micro-average-vs-macro-average-performance-in-a-multiclass-classification-settin-->
+  <div *ngSwitchCase="'Micro'" class="container-horizontal">
+    For a multi-class problem, this column shows the micro-average of the metrics. <br>
+    The micro-average aggregates the contributions of all classes in order to compute the average metric. <br>
+    Micro-averaged metrics are better when there is a class imbalance.
   </div>
-  <div *ngSwitchCase="'Dice'">
-    La description du Dice
+
+  <div *ngSwitchCase="'Macro'" class="container-horizontal">
+    For a multi-class problem, this column shows the macro-average of the metrics. <br>
+    The macro average computes the metric independently for each class and then takes the average over all classes (treating all classes equally).
   </div>
-  <div *ngSwitchCase="'Specificity'">
-    La description de la Specificity
+
+  <!------------------------------------------------------------------------------------------------------------>
+  <div *ngSwitchCase="'Precision'" class="container-horizontal">
+    <span><img src="../../../assets/images/metrics/precision.PNG" alt="Precision representation"></span>
+    <span class="text">
+        Fraction of relevant instances among the retrieved instances (w.r.t sensitivity).<br>
+        Metric ranges from 0 to 100 %.<br>
+    </span>    
   </div>
-  <div *ngSwitchCase="'Sensitivity'">
-    La description de la Sensitivity
+
+
+  <div *ngSwitchCase="'Accuracy'" class="container-horizontal">
+    <span> <img src="../../../assets/images/metrics/accuracy.PNG" alt="Accuracy representation"></span>
+    
+    <span>
+      Percentage of pixels in the segmentation that are correctly classified. <br>
+      Metric ranges from 0 to 100 %.<br>
+
+      {{'$$accuracy = TP + TN$$'}}
+    </span>
   </div>
-  <div *ngSwitchCase="'Kappa'">
-    La description du Kappa
+
+  <div *ngSwitchCase="'Dice'" class="container-horizontal">
+    <span><img src="../../../assets/images/metrics/dice.PNG" alt="Dice representation"></span>
+    
+    <span>
+      2* Area of overlap divided by the total number of pixels in both images. <br> 
+      It can be seen as an harmonic mean of the precision and sensitivity. <br>
+      Metric ranges from 0 to 100 %.<br>
+      {{'$dice = \frac{2|A \cap B|}{|A| + |B|}$'}} <br>
+      {{'$dice = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$'}} <br>
+    </span>
   </div>
-  <div *ngSwitchCase="'IoU'">
-    La description du IOU
+
+  <div *ngSwitchCase="'Specificity'" class="container-horizontal">
+    <span><img src="../../../assets/images/metrics/specificity.PNG" alt="Specificity representation"></span>
+
+    <span> 
+      Probability of predicting a negative test. <br>
+      Metric ranges from 0 to 100 %. <br>
+      {{'specificity = \frac{TN}{TN + FP}'}}
+    </span>    
   </div>
+
+  <div *ngSwitchCase="'Sensitivity'" class="container-horizontal">
+    <span><img src="../../../assets/images/metrics/recall_sensitivity.PNG" alt="Sensitivity representation"></span>
+  
+    <span> 
+      Fraction of relevant instances that were retrieved (w.r.t. precision) or
+      probability of predicting a positive test (w.r.t specificity). <br>
+      There is a balance to be found between precision and sensitivity (recall) and between sensitivity and specificity. <br>
+      Metric ranges from 0 to 100 %.<br>
+      {{'specificity = \frac{TP}{TP + FN}'}}
+    </span>
+  </div>
+
+  <div *ngSwitchCase="'Kappa'" class="container-horizontal">
+    <span>
+      Tells us how much the classifier is better than a random guess. <br>
+      Metric ranges from negative values to 1. <br>
+      Negative values mean that the classifier is performing less accurately than a random guess (0). <br>
+      Metric of 1 indicates a perfect classifier.<br>
+      {{'$$ \kappa = \frac{2 \times (TP \times TN - FN \times FP)}{(TP + FP) \times (FP + TN) + (TP + FN) \times (FN + TN)} $$'}}
+    </span>
+
+  </div>
+
+  <div *ngSwitchCase="'IoU'" class="container-horizontal">
+    <span><img src="../../../assets/images/metrics/iou.PNG" alt="IoU representation"></span>
+    
+    <span>
+      Intersection over Union (Jaccard Index). <br>
+      Overlap between the predicted segmentation and the groudtruth divided by the area of union between both. <br>
+      Metric ranges from 0 to 100 %. <br>
+      {{'$$IoU = \frac{|A \cap B|}{|A \cup B|}$$'}} <br>
+      {{'$$IoU = \frac{TP}{TP + FP + TN}$$'}} <br>
+    </span>
+  </div>
+
 </div>

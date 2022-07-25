@@ -5,10 +5,10 @@ import { Point2D } from '../Components/drawing/utils';
 })
 export class ControlUIService {
   tooltipsActivated = false;
-  showTooltip: boolean = false;
+  showTooltip: boolean = true;
   tooltipType: string;
 
-  showConfMat: boolean = true;
+  showConfMat: boolean = false;
   showConfMatLabel: boolean = true;
 
   showMetrics: boolean = true;
@@ -19,11 +19,11 @@ export class ControlUIService {
   showReference: boolean = false;
   showOverlayReference: boolean = true;
 
-  pos: Point2D;
+  pos: Point2D = {x:0, y:0};
   constructor() {}
 
   activate(event: MouseEvent, type: string) {
-    this.pos = { x: event.clientX, y: event.clientY };
+    this.pos = { x: event.clientX-400-event.offsetX, y: event.clientY-event.offsetY};
     this.showTooltip = true && this.tooltipsActivated;
     this.tooltipType = type;
   }

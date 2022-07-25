@@ -1,10 +1,27 @@
 @import "src/variables.scss";
 
-.container{
+.container {
   position: absolute;
-  background-color: $dark-gray;
+  background-color: rgba(139, 136, 136, 0.7);
+  backdrop-filter: blur(10px);
+  border-width: 2px;
+  border-color: $dark-gray;
+  border-style: solid;
   z-index: 50;
   padding: 2px 2px;
   color: white;
   border-radius: 0.2rem;
+  pointer-events: none;
+  width: 375px;
+}
+
+img{
+  max-width: 120px;
+}
+
+/* TODO : align items in middle of container*/
+.container-horizontal{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }

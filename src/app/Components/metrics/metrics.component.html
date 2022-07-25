@@ -1,10 +1,30 @@
 <div class="metric-container" [ngSwitch]="classService.classes.length > 2">
   <table *ngSwitchCase="true">
     <tr>
-      <th>Metric</th>
-      <th>Score</th>
-      <th>Micro</th>
-      <th>Macro</th>
+      <th
+      (mouseenter)="UICtrlService.activate($event, 'Metric')"
+      (mouseleave)="UICtrlService.deactivate()"
+      >
+      {{ 'Metric' }}
+      </th>
+      <th
+      (mouseenter)="UICtrlService.activate($event, 'Score')"
+      (mouseleave)="UICtrlService.deactivate()"
+      >  
+      {{ 'Score' }}
+      </th>
+      <th
+      (mouseenter)="UICtrlService.activate($event, 'Micro')"
+      (mouseleave)="UICtrlService.deactivate()"
+      >
+      {{ 'Micro' }}
+      </th>
+      <th
+      (mouseenter)="UICtrlService.activate($event, 'Macro')"
+      (mouseleave)="UICtrlService.deactivate()"
+      >  
+      {{ 'Macro' }}
+      </th>
       <th
         *ngFor="let c of classService.classes; let i = index"
         [style.background-color]="classService.getRGBStyleFromClass(i)"
@@ -57,8 +77,18 @@
 
   <table *ngSwitchCase="false">
     <tr>
-      <th>Metric</th>
-      <th>Score</th>
+      <th
+      (mouseenter)="UICtrlService.activate($event, 'Metric')"
+      (mouseleave)="UICtrlService.deactivate()"
+      >
+      {{ 'Metric' }}
+      </th>
+      <th
+      (mouseenter)="UICtrlService.activate($event, 'Score')"
+      (mouseleave)="UICtrlService.deactivate()"
+      >  
+      {{ 'Score' }}
+      </th>
     </tr>
     <tr
       *ngFor="let score of scoresService.scores; let i = index"
