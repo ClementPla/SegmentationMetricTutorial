@@ -392,4 +392,8 @@ export class DrawingComponent implements OnInit {
   slowInference() {
     this.inference();
   }
+
+  getCursorTransform():string{
+    return `scale(${(1.15 * this.currentRadius) / (2 * this.initialRadius)}) translate(-50%, -50%) `
+  }
 }

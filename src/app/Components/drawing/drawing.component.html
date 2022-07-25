@@ -92,7 +92,7 @@
         class="cursor"
         [style.top.px]="cursorPositionGT.y"
         [style.left.px]="cursorPositionGT.x"
-        [style.scale]="(1.15 * currentRadius) / (2 * initialRadius)"
+        [style.transform]="getCursorTransform()"
       >
         <div
           class="cursor-radius"
@@ -113,7 +113,7 @@
         class="cursor"
         [style.top.px]="cursorPosition.y"
         [style.left.px]="cursorPosition.x"
-        [style.scale]="(1.15 * currentRadius) / (2 * initialRadius)"
+        [style.transform]="getCursorTransform()"
       >
         <div
           class="cursor-radius"
@@ -121,7 +121,6 @@
             classService.getRGBStyleFromClass(classService.currentClass)
           "
         ></div>
-
         <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
         <mat-icon *ngIf="drawTool == 'fill'">colorize</mat-icon>
       </div>

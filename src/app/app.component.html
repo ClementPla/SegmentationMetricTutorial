@@ -34,6 +34,7 @@
         [checked]="UICtrlService.performanceMode"
         (change)="UICtrlService.togglePerformanceMode()"
         matTooltip="Computes the metrics only after the user stopped drawing, hence minimizes the lag between the drawing and its apparition on the screen"
+        [matTooltipPosition]="'right'"
       >
         Performance mode
       </mat-slide-toggle>
@@ -42,6 +43,7 @@
         [checked]="UICtrlService.showReference"
         (change)="UICtrlService.toggleReferenceDisplay()"
         matTooltip="Show both the reference image and groundtruth and the predicted segmentation on two separate panels"
+        [matTooltipPosition]="'right'"
       >
         Show reference
       </mat-slide-toggle>
@@ -50,6 +52,7 @@
         [checked]="UICtrlService.showOverlayReference"
         (change)="UICtrlService.toggleOverlayReference()"
         matTooltip="Overlay the groundtruth segmentation in the predicted panel"
+        [matTooltipPosition]="'right'"
       >
         Overlay reference
       </mat-checkbox>
@@ -61,6 +64,7 @@
         [checked]="UICtrlService.showConfMat"
         (change)="UICtrlService.toggleCM()"
         matTooltip="Show the confusion matrix in the Metrics drawer"
+        [matTooltipPosition]="'right'"
       >
         Confusion Matrix
       </mat-slide-toggle>
@@ -70,6 +74,7 @@
         [checked]="UICtrlService.showConfMatLabel"
         (change)="UICtrlService.toggleCMLabel()"
         matTooltip="Show the corresponding labels of the confusion matrix"
+        [matTooltipPosition]="'right'"
       >
         Show label
       </mat-checkbox>
@@ -80,6 +85,7 @@
         [checked]="UICtrlService.showMetrics"
         (change)="UICtrlService.toggleMetrics()"
         matTooltip="Show the segmentation metrics in the Metrics drawer"
+        [matTooltipPosition]="'right'"
       >
         Metrics
       </mat-slide-toggle>
@@ -88,6 +94,7 @@
         [checked]="UICtrlService.showPerClassMetrics"
         (change)="UICtrlService.togglePerClassMetrics()"
         matTooltip="Show the metrics w.r.t to each class and not an average (micro or macro)"
+        [matTooltipPosition]="'right'"
       >
         Per class
       </mat-slide-toggle>
@@ -103,9 +110,7 @@
           <mat-checkbox
             class="example-margin"
             [checked]="true"
-            (change)="
-              scoresService.visibleScores[i] = !scoresService.visibleScores[i]
-            "
+            (change)="toggleVisibilityScore(i)"
             >{{ score.name }}
           </mat-checkbox>
         </div>
@@ -114,11 +119,12 @@
       <h2 >Tutorial</h2>
       <mat-slide-toggle
         class="example-margin"
-        matTooltip="Activate in order to get description about metrics when hovering over them"
-        (change)="
-          UICtrlService.tooltipsActivated = !UICtrlService.tooltipsActivated
-        "
-        >Descriptions of metrics</mat-slide-toggle>
+        matTooltip="Activate in order to get description about metrics when hovering over them" 
+        [matTooltipPosition]="'right'"       
+        [checked]="UICtrlService.tooltipsActivated"
+        (change)="UICtrlService.toggleTooltipVisibility()"
+        >Description of metrics</mat-slide-toggle
+      >
     </div>
   </mat-drawer>
   <mat-drawer class="metric-drawer" 

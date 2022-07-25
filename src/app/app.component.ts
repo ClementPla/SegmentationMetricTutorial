@@ -16,4 +16,9 @@ export class AppComponent{
   changeActiveClass(value:number){
     this.child.changeActiveClass(value)
   }
+
+  toggleVisibilityScore(index:number){
+    this.scoresService.visibleScores[index] = !this.scoresService.visibleScores[index]
+
+  }
 }

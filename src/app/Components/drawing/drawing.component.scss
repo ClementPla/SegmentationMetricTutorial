@@ -36,9 +36,9 @@ mat-toolbar{
   aspect-ratio: 1;
   width: var(--canvas-width);
   height: var(--canvas-width);
-  overflow: hidden;
   cursor: none;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 }
 
 .canvas-container > *{
@@ -64,18 +64,19 @@ mat-toolbar{
   opacity: 25%;
 }
 
-.canvas-container .cursor{
+.canvas-container > .cursor{
   z-index: 5;
   position: absolute;
   width: 32px;
   height: 32px;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  transform-origin: center;
+  transform-origin: top left;
 }
 
 .cursor > .cursor-radius
 {
+  position: relative;
   width: inherit;
   aspect-ratio: 1;
   border-radius: 50%;
