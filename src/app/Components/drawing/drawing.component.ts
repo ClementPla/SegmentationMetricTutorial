@@ -44,7 +44,6 @@ export class DrawingComponent implements OnInit {
   cursorPositionGT: Point2D = { x: 0, y: 0 };
   sharpBrush: SharpBrush;
   drawTool = 'draw';
-  drawNotDrag: boolean = true;
 
   imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
 
@@ -88,11 +87,9 @@ export class DrawingComponent implements OnInit {
 
   setDragMode() {
     this.ctx.globalCompositeOperation = 'destination-atop';
-    this.drawNotDrag = false;
   }
   setDrawMode() {
     this.ctx.globalCompositeOperation = 'source-over';
-    this.drawNotDrag = true;
   }
   clearDrawing() {
     this.changeActiveClass(0);
@@ -260,9 +257,9 @@ export class DrawingComponent implements OnInit {
           const rect = canvas.getBoundingClientRect();
           const pos = this.getCoord(e, rect);
 
-          if (isGT && this.drawTool == 'draw') {
+          if (isGT && (this.drawTool == 'draw' || this.drawTool == 'drag')) {
             this.drawOnGTCanvas(pos, pos);
-          } else if (this.drawTool == 'draw')
+          } else if (this.drawTool == 'draw' || this.drawTool == 'drag')
             this.drawOnCanvas(this.ctx, pos, pos);
           else if (this.drawTool == 'fill' && !isGT) {
             this.fillOnCanvas(pos);
@@ -346,6 +343,12 @@ export class DrawingComponent implements OnInit {
   }
 
   changeTool(tool: string) {
+    if(tool=='drag'){
+      this.setDragMode()
+    }
+    else{
+      this.setDrawMode()
+    }
     this.drawTool = tool;
   }
 

@@ -1,6 +1,6 @@
 <mat-toolbar color="accent">
   <mat-toolbar-row>
-    <button mat-button (click)="buildGroundtruth(0)"     
+    <button mat-button (click)="buildGroundtruth(0)"
     matTooltip="Binary classification example">
       Preset 1
     </button>
@@ -29,21 +29,21 @@
         "
         matTooltip="Class selected and which will be used when drawing or filling"
       >
-        <mat-icon>color_lens</mat-icon>Active class
+        <mat-icon>palette</mat-icon>Active class
       </button>
-      
+
       <mat-button-toggle-group>
-        <mat-button-toggle [checked]="drawNotDrag" (change)="changeTool('draw'); setDrawMode()" 
+        <mat-button-toggle [checked]="drawTool=='draw'" (change)="changeTool('draw')"
         matTooltip="Draw on the reference or on the prediction images"
-          >Draw</mat-button-toggle
+          ><mat-icon>brush</mat-icon></mat-button-toggle
         >
-        <mat-button-toggle [checked]="!drawNotDrag" (change)="changeTool('draw'); setDragMode()" 
+        <mat-button-toggle [checked]="drawTool=='drag'" (change)="changeTool('drag')"
         matTooltip="Drag the cursor and see the evolution of the metrics while doing so. The final position of the cursor will be drawn."
           >Drag</mat-button-toggle
         >
-        <mat-button-toggle [checked]="drawNotDrag" (change)="changeTool('fill'); setDrawMode()" 
+        <mat-button-toggle [checked]="drawTool=='fill'" (change)="changeTool('fill')"
         matTooltip="Click and fill a region defined by the groundtruth's segmentation with the active class (only applicable on prediction image)."
-        >Fill</mat-button-toggle
+        ><mat-icon>colorize</mat-icon></mat-button-toggle
         >
       </mat-button-toggle-group>
 
