@@ -8,20 +8,32 @@
   border-color: $dark-gray;
   border-style: solid;
   z-index: 50;
-  padding: 2px 2px;
+  padding: 5px 5px;
   color: white;
   border-radius: 0.2rem;
   pointer-events: none;
-  width: 375px;
+  width: 450px;
 }
 
-img{
-  max-width: 120px;
+.container tspan{
+  font-size: 14px !important;
+  fill: black;
+  stroke: black;
 }
 
-/* TODO : align items in middle of container*/
+svg{
+  width: 150px;
+  height: 200px;
+  aspect-ratio: 1;
+}
+
+.schema-2{
+  height: 250px;
+}
+
 .container-horizontal{
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  align-items: center;
+  gap: 2px;
 }

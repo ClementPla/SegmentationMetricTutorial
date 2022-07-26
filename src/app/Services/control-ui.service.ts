@@ -23,7 +23,7 @@ export class ControlUIService {
   constructor() {}
 
   activate(event: MouseEvent, type: string) {
-    this.pos = { x: event.clientX-400-event.offsetX, y: event.clientY-event.offsetY};
+    this.pos = { x: event.clientX-475-event.offsetX, y: event.clientY-event.offsetY};
     this.showTooltip = true && this.tooltipsActivated;
     this.tooltipType = type;
   }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="135mm"
+   height="297mm"
+   viewBox="0 0 135 297"
+   version="1.1"
+   id="svg63264"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="schema2.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview63266"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.51150168"
+     inkscape:cx="104.59399"
+     inkscape:cy="694.03487"
+     inkscape:window-width="1507"
+     inkscape:window-height="1030"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     units="mm"
+     width="180mm" />
+  <defs
+     id="defs63261" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#1a1a1a;stroke:#ffffed;stroke-width:0"
+       id="rect65817"
+       width="119.97044"
+       height="143.37932"
+       x="8.3256607"
+       y="136.27829" />
+    <circle
+       style="fill:#1a1a1a;stroke:#ffffed;stroke-width:0"
+       id="path66011"
+       cx="67.495743"
+       cy="53.140362"
+       r="50" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
+       x="41.297371"
+       y="113.74377"
+       id="text13817-9"
+       transform="scale(0.97395858,1.0267377)"><tspan
+         sodipodi:role="line"
+         style="font-size:10.5833px;stroke-width:0.284534"
+         x="41.297371"
+         y="113.74377"
+         id="tspan54329">Predictions</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
+       x="37.631741"
+       y="284.27536"
+       id="text13817-9-5"
+       transform="scale(0.97395858,1.0267377)"><tspan
+         sodipodi:role="line"
+         style="font-size:10.5833px;stroke-width:0.284534"
+         x="37.631741"
+         y="284.27536"
+         id="tspan54329-4">Groundtruth</tspan></text>
+  </g>
+</svg>
