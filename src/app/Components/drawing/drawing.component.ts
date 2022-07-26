@@ -270,6 +270,7 @@ export class DrawingComponent implements OnInit {
       )
       .subscribe({
         next: (res: [MouseEvent | TouchEvent, MouseEvent | TouchEvent]) => {
+          if(this.drawTool!='fill' || isGT){
           const rect = canvas.getBoundingClientRect();
           var next = this.getClientPosition(res[1]);
 
@@ -280,6 +281,7 @@ export class DrawingComponent implements OnInit {
           } else this.drawOnCanvas(this.ctx, prevPos, currentPos);
 
           if (!this.UICtrlService.performanceMode) this.inference();
+        }
         },
       });
 

@@ -46,16 +46,6 @@
         ><mat-icon>colorize</mat-icon></mat-button-toggle
         >
       </mat-button-toggle-group>
-
-      <button
-        mat-list-item
-        *ngFor="let class of classService.classes; let i = index; last as last"
-        (click)="changeActiveClass(i)"
-        [style.background-color]="classService.getRGBStyleFromClass(i)"
-      >
-        {{ class }}
-      </button>
-
       <!--Adding a break line to add space before radius-->
       <br>
       <label for="sliderRadius">Radius</label>
@@ -70,6 +60,17 @@
         step="0.5"
         matTooltip="Vary the radius of the paintbrush"
       ></mat-slider>
+
+      <button
+        mat-list-item
+        *ngFor="let class of classService.classes; let i = index; last as last"
+        (click)="changeActiveClass(i)"
+        [style.background-color]="classService.getRGBStyleFromClass(i)"
+      >
+        {{ class }}
+      </button>
+
+
   </mat-action-list>
 
     <mat-divider vertical="true" [inset]="true"></mat-divider>
