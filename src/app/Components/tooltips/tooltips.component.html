@@ -360,6 +360,7 @@
     <div>
         Fraction of relevant instances among the retrieved instances (w.r.t sensitivity).<br>
         Metric ranges from 0 to 100 %.<br>
+        {{'precision = \frac{TP}{TP + FP}'}}
     </div>
   </div>
 
@@ -425,7 +426,6 @@
     <div>
       Percentage of pixels in the segmentation that are correctly classified. <br>
       Metric ranges from 0 to 100 %.<br>
-
       {{'$$accuracy = TP + TN$$'}}
     </div>
   </div>
@@ -532,7 +532,7 @@
       Harmonic mean of the precision and sensitivity. <br>
       Metric ranges from 0 to 100 %.<br>
       {{'$dice = \frac{2|A \cap B|}{|A| + |B|}$'}} <br>
-      {{'$dice = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$'}} <br>
+      {{'dice = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$'}} <br>
     </div>
   </div>
 
@@ -583,7 +583,7 @@
     <div> 
       Probability of predicting a negative test. <br>
       Metric ranges from 0 to 100 %. <br>
-      {{'specificity = \frac{TN}{TN + FP}'}}
+      {{'specificity = \frac{TN}{TN + FP}'}}<br>
     </div>    
   </div>
 
@@ -631,14 +631,16 @@
       </svg>
     </div>
   
+
     <div> 
       Fraction of relevant instances that were retrieved (w.r.t. precision) or
       probability of predicting a positive test (w.r.t specificity). <br>
       There is a balance to be found between precision and sensitivity (recall) and between sensitivity and specificity. <br>
       Metric ranges from 0 to 100 %.<br>
-      {{'specificity = \frac{TP}{TP + FN}'}}
+      {{'sensitivity = \frac{TP}{TP + FN}'}}
     </div>
   </div>
+
 
   <div *ngSwitchCase="'Kappa'" class="container-horizontal">
     <div >
@@ -646,7 +648,7 @@
       Metric ranges from negative values to 1. <br>
       Negative values mean that the classifier is performing less accurately than a random guess (0). <br>
       Metric of 1 indicates a perfect classifier.<br>
-      {{'$$ \kappa = \frac{2 \times (TP \times TN - FN \times FP)}{(TP + FP) \times (FP + TN) + (TP + FN) \times (FN + TN)} $$'}}
+      {{'\kappa = \frac{2 \times (TP \times TN - FN \times FP)}{(TP + FP) \times (FP + TN) + (TP + FN) \times (FN + TN)} $$'}}
     </div>
 
   </div>
@@ -706,7 +708,7 @@
       Intersection over Union (Jaccard Index). <br>
       Overlap between the predicted segmentation and the groudtruth divided by the area of union between both. <br>
       Metric ranges from 0 to 100 %. <br>
-      {{'$$IoU = \frac{|A \cap B|}{|A \cup B|}$$'}} <br>
+      {{'$$IoU = \frac{|A \cap B| }{ |A \cup B|}$$'}} <br>
       {{'$$IoU = \frac{TP}{TP + FP + TN}$$'}} <br>
     </div>
   </div>
