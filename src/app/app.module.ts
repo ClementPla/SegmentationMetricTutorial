@@ -19,7 +19,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatTooltipModule} from '@angular/material/tooltip'
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { PresetsComponent } from './Components/presets/presets.component'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {MatTooltipModule} from '@angular/material/tooltip'
     TooltipsComponent,
     ConfMatComponent,
     MetricsComponent,
+    PresetsComponent,
   ],
   imports: [
     MatIconModule,

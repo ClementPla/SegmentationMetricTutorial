@@ -76,6 +76,8 @@ export class DrawingComponent implements OnInit {
     this.ctx.imageSmoothingEnabled = false;
     this.ctxVisu.imageSmoothingEnabled = false;
 
+
+
     this.buildGroundtruth(3);
     this.captureEvents(canvasEl, this.cursorPosition);
     this.captureEvents(canvasVisu, this.cursorPositionGT, true);
@@ -205,12 +207,10 @@ export class DrawingComponent implements OnInit {
     ctx: CanvasRenderingContext2D,
     image: HTMLImageElement
   ) {
-    ctx.drawImage(image, 0, 0);
+    ctx.drawImage(image, 0, 0, this.width, this.height);
     var rawData = ctx.getImageData(0, 0, this.width, this.height);
-    console.log(rawData)
     var uniqueValue: Array<number> = ArrayTool.unique(rawData.data);
     this.classService.setClasses(uniqueValue.filter((v) => v < 255).sort());
-    console.log(this.classService.classes)
 
     for (let i = 0; i < rawData.data.length; i += 4) {
       let l = rawData.data[i];
@@ -219,6 +219,7 @@ export class DrawingComponent implements OnInit {
       rawData.data[i + 1] = rgb[1];
       rawData.data[i + 2] = rgb[2];
     }
+
     ctx.putImageData(rawData, 0, 0);
   }
 
@@ -307,6 +308,7 @@ export class DrawingComponent implements OnInit {
     if (!this.ctx) {
       return;
     }
+    this.ctx.globalCompositeOperation = 'source-over'
     let imageData = this.ctx.getImageData(0, 0, this.width, this.height);
     let index = Math.round(pos.y) * this.width * 4 + Math.round(pos.x) * 4;
     let r = this.backgroundImage[index];
@@ -327,7 +329,9 @@ export class DrawingComponent implements OnInit {
         }
       }
     }
-    this.ctx.putImageData(imageData, 0, 0);
+    createImageBitmap(imageData).then((data)=>{
+      this.ctx.drawImage(data, 0, 0, this.width, this.height)
+    })
   }
 
   changeActiveClass(class_index: number) {
@@ -352,6 +356,7 @@ export class DrawingComponent implements OnInit {
       this.setDrawMode()
     }
     this.drawTool = tool;
+
   }
 
   getClientPosition(event: TouchEvent | MouseEvent) {
@@ -400,7 +405,7 @@ export class DrawingComponent implements OnInit {
 
   getCursorTransform(): string {
     return `scale(${
-      (1.15 * this.currentRadius) / (2 * this.initialRadius)
+      (1.25*(this.currentRadius) / (this.initialRadius))/2 // I have no idea why the 1.25 is needed here... To be inspected
     }) translate(-50%, -50%) `;
   }
 }
