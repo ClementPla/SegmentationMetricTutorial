@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
-import { fromEvent, merge, Observable } from 'rxjs';
-import { Point2D, ArrayTool } from './utils';
+import { fromEvent, merge} from 'rxjs';
+import { Point2D, ArrayTool, downsample } from './utils';
 import { SharpBrush } from './drawtools';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators';
 import { ScoresService } from 'src/app/Services/scores.service';
 import { ClassesService } from 'src/app/Services/classes.service';
 import { ControlUIService } from 'src/app/Services/control-ui.service';
+import { PresetDraw } from './presetdrawing';
 
 @Component({
   selector: 'app-drawing',
@@ -45,7 +46,7 @@ export class DrawingComponent implements OnInit {
   sharpBrush: SharpBrush;
   drawTool = 'draw';
 
-  imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
+  imgSrc = '';
 
   constructor(
     private scoreService: ScoresService,
@@ -78,7 +79,7 @@ export class DrawingComponent implements OnInit {
 
 
 
-    this.buildGroundtruth(3);
+    this.buildGroundtruth(this.UICtrlService.currentPreset);
     this.captureEvents(canvasEl, this.cursorPosition);
     this.captureEvents(canvasVisu, this.cursorPositionGT, true);
   }
@@ -97,6 +98,13 @@ export class DrawingComponent implements OnInit {
     this.changeActiveClass(0);
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
+  setupPresetExample(presetExample: number){
+    this.changeActiveClass(0);
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    PresetDraw.drawPreset(this.ctx, presetExample, {xs:[256/this.upscaleFactor], ys:[256/this.upscaleFactor], rs:[128/this.upscaleFactor],
+    cs:[this.classService.RGBFromClass(1)]}
+    )
+  }
 
   buildGroundtruth(index: number) {
     let promises = [];
@@ -105,7 +113,7 @@ export class DrawingComponent implements OnInit {
     this.initBackgroundConstruction();
     switch (index) {
       case 0:
-        this.imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
+        this.imgSrc = '';
         promises.push(
           SharpBrush.drawCircle(
             this.ctxBg,
@@ -118,7 +126,7 @@ export class DrawingComponent implements OnInit {
         break;
       case 1:
         this.classService.setClasses([0, 1, 2, 3, 4]);
-        this.imgSrc = 'https://via.placeholder.com/512/000000/000000/?text=0';
+        this.imgSrc = '';
         promises.push(
           SharpBrush.drawCircle(
             this.ctxBg,
@@ -166,7 +174,6 @@ export class DrawingComponent implements OnInit {
                 'SRF',
                 'PED',
               ]);
-              this.scoreService.initConfMat();
             };
           })
         );
@@ -181,7 +188,6 @@ export class DrawingComponent implements OnInit {
               resolve(imageGT);
               this.drawCustomImage(this.ctxBg, imageGT);
               this.classService.setClasses(['BG', 'MAC', 'OD', 'EX', 'HEM', 'MA']);
-              this.scoreService.initConfMat();
             };
           })
         );
@@ -242,7 +248,7 @@ export class DrawingComponent implements OnInit {
     const mouseLeaveEvents = fromEvent<MouseEvent>(canvas, 'mouseleave');
 
     const endEvents = merge(touchEndEvents, mouseLeaveEvents, mouseUpEvents);
-
+    let hasChanged = false
     moveEvents.subscribe({
       next: (event: MouseEvent | TouchEvent) => {
         const rect = canvas.getBoundingClientRect();
@@ -257,6 +263,7 @@ export class DrawingComponent implements OnInit {
           e.preventDefault();
           const rect = canvas.getBoundingClientRect();
           const pos = this.getCoord(e, rect);
+          hasChanged = true
 
           if (isGT && (this.drawTool == 'draw' || this.drawTool == 'drag')) {
             this.drawOnGTCanvas(pos, pos);
@@ -287,7 +294,9 @@ export class DrawingComponent implements OnInit {
       });
 
     endEvents.subscribe((e) => {
-      this.slowInference();
+      if(hasChanged)
+        this.slowInference();
+        hasChanged=false
     });
   }
 
@@ -397,15 +406,27 @@ export class DrawingComponent implements OnInit {
 
   inference() {
     const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
-    this.scoreService.computeConfusionMatrix(this.backgroundImage, imgData);
+    this.scoreService.updateConfusionMatrix(this.backgroundImage, imgData);
+
+
   }
   slowInference() {
     this.inference();
+    const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
+    this.scoreService.computeBoundaryIoU(downsample(this.backgroundImage, 8), downsample(imgData, 8), this.width, this.height, 2)
+
   }
+
+
 
   getCursorTransform(): string {
     return `scale(${
       (1.25*(this.currentRadius) / (this.initialRadius))/2 // I have no idea why the 1.25 is needed here... To be inspected
     }) translate(-50%, -50%) `;
+  }
+
+  changePreset(preset:number){
+    this.UICtrlService.changeCurrentPreset(preset)
+    this.buildGroundtruth(preset)
   }
 }

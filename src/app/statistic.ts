@@ -45,6 +45,7 @@ export class Stats{
     let FP = N - TN
     var statistics = Stats.getStats(P, N, TP, TN, FP)
     statistics.set("Kappa", this.cohenKappa())
+    statistics.set("IoU", (TP)/(P+FP))
     return statistics
   }
 

@@ -1,1 +1,14 @@
-<p>presets works!</p>
+<div [ngSwitch]="UICtrlService.currentPreset">
+  <div *ngSwitchCase="0">
+    <h2>Binary segmentation</h2>
+    <span>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem, maiores.
+      Qui repudiandae, iure dolor animi cum ut ea ipsa voluptatibus maiores,
+      repellat minima cupiditate sequi at, nostrum vero et quasi?
+      <button mat-raised-button color="primary" (click)="getPreset(0)"> Test</button> Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Numquam ex asperiores sit sint vitae repudiandae unde.
+      Magnam, ex, praesentium necessitatibus officia ipsum illo alias autem,
+      neque delectus enim tempore asperiores.
+    </span>
+  </div>
+</div>

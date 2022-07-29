@@ -19,6 +19,8 @@ export class ControlUIService {
   showReference: boolean = true;
   showOverlayReference: boolean = true;
 
+  currentPreset:number=0;
+
   pos: Point2D = {x:-500, y:-500};
   constructor() {}
 
@@ -54,5 +56,9 @@ export class ControlUIService {
   }
   toggleTooltipVisibility(){
     this.tooltipsActivated = !this.tooltipsActivated
+  }
+
+  changeCurrentPreset(preset:number){
+    this.currentPreset = preset
   }
 }

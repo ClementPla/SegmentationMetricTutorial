@@ -41,3 +41,15 @@ export class ArrayTool{
   }
 
 }
+
+export function downsample(img:Uint8ClampedArray, downsampling:number):Uint8ClampedArray{
+
+  let output = new Uint8ClampedArray(img.length/downsampling)
+  for(let i=0; i<output.length; i += 4){
+    output[i] = img[i*downsampling]
+    output[i+1] = img[i*downsampling+1]
+    output[i+2] = img[i*downsampling+2]
+
+  }
+  return output
+}

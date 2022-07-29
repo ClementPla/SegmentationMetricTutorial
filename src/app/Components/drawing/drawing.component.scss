@@ -7,6 +7,10 @@ mat-slider{
 mat-toolbar{
   width: 100%;
 }
+
+app-presets{
+  max-width: calc(var(--canvas-width) * 2);
+}
 .central-container{
   --canvas-width: 512px;
   --options-width: 150px;
