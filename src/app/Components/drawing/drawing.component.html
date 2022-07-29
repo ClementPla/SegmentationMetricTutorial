@@ -1,71 +1,46 @@
 <mat-toolbar color="accent">
   <mat-toolbar-row>
-    <button
-      mat-button
-      (click)="buildGroundtruth(0)"
-      matTooltip="Binary classification example"
-    >
+    <button mat-button (click)="buildGroundtruth(0)"
+    matTooltip="Binary classification example">
       Preset 1
     </button>
-    <button
-      mat-button
-      (click)="buildGroundtruth(1)"
-      matTooltip="Multi-classification example"
-    >
-      Preset 2
-    </button>
-    <button
-      mat-button
-      (click)="buildGroundtruth(2)"
-      matTooltip="Medical image example on OCT"
-    >
+    <button mat-button (click)="buildGroundtruth(1)"
+    matTooltip="Multi-classification example">
+      Preset 2</button>
+    <button mat-button (click)="buildGroundtruth(2)"
+    matTooltip="Medical image example on OCT">
       Optical Coherence Tomography
     </button>
-    <button
-      mat-button
-      (click)="buildGroundtruth(3)"
-      matTooltip="Medical image example on Fundus image"
-    >
+    <button mat-button (click)="buildGroundtruth(3)"
+    matTooltip="Medical image example on Fundus image">
       Fundus
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="central-container flex-horizontal">
-  <!-- This the panel options container-->
-  <div class="panel-options">
-    <mat-action-list dense fxLayout="row">
-      <button
-        mat-list-item
-        [style.background-color]="
-          classService.getRGBStyleFromClass(classService.currentClass)
-        "
-      >
-        <mat-icon>palette</mat-icon>Active class
-      </button>
 
+<div class="central-container">
+  <div class="panel-options">
+  
+    <div class="verticalGroup">
+      <label>Tools</label>
       <mat-button-toggle-group>
-        <mat-button-toggle
-          [checked]="drawTool == 'draw'"
-          (change)="changeTool('draw')"
-          matTooltip="Draw on the reference or on the prediction images"
+        <mat-button-toggle [checked]="drawTool=='draw'" (change)="changeTool('draw')" class="sizeButton"
+        matTooltip="Draw on the reference or on the prediction images"
           ><mat-icon>brush</mat-icon></mat-button-toggle
         >
-        <mat-button-toggle
-          [checked]="drawTool == 'drag'"
-          (change)="changeTool('drag')"
-          matTooltip="Drag the cursor and see the evolution of the metrics while doing so. The final position of the cursor will be drawn."
+        <mat-button-toggle [checked]="drawTool=='drag'" (change)="changeTool('drag')" class="sizeButton"
+        matTooltip="Drag the cursor and see the evolution of the metrics while doing so. The final position of the cursor will be drawn."
           >Drag</mat-button-toggle
         >
-        <mat-button-toggle
-          [checked]="drawTool == 'fill'"
-          (change)="changeTool('fill')"
-          matTooltip="Click and fill a region defined by the groundtruth's segmentation with the active class (only applicable on prediction image)."
-          ><mat-icon>colorize</mat-icon></mat-button-toggle
+        <mat-button-toggle [checked]="drawTool=='fill'" (change)="changeTool('fill')" class="sizeButton"
+        matTooltip="Click and fill a region defined by the groundtruth's segmentation with the active class (only applicable on prediction image)."
+        ><mat-icon>colorize</mat-icon></mat-button-toggle
         >
       </mat-button-toggle-group>
-      <!--Adding a break line to add space before radius-->
-      <br />
+    </div>
+    
+    <div class="verticalGroup">
       <label for="sliderRadius">Radius</label>
       <mat-slider
         id="sliderRadius"
@@ -78,85 +53,71 @@
         step="0.5"
         matTooltip="Vary the radius of the paintbrush"
       ></mat-slider>
-
-      <button
-        mat-list-item
-        *ngFor="let class of classService.classes; let i = index; last as last"
-        (click)="changeActiveClass(i)"
-        [style.background-color]="classService.getRGBStyleFromClass(i)"
-      >
-        {{ class }}
-      </button>
-    </mat-action-list>
-
-  </div>
-  <div class="flex-vertical">
-
-    <!-- This is the canvas container-->
-    <div class="draw-container flex-horizontal">
-      <div
-        class="canvas-container"
-        [style.display]="UICtrlService.showReference ? 'initial' : 'none'"
-      >
-        <h3 class="canvas-label">Reference</h3>
-        <div
-          #cursor
-          class="cursor"
-          [style.top.px]="cursorPositionGT.y"
-          [style.left.px]="cursorPositionGT.x"
-          [style.transform]="getCursorTransform()"
-        >
-          <div
-            class="cursor-radius"
-            [style.border-color]="
-              classService.getRGBStyleFromClass(classService.currentClass)
-            "
-          ></div>
-          <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
-        </div>
-
-        <canvas
-          #canvasVisu
-          id="canvasVisu"
-          [style.opacity.%]="overlayOpacity"
-        ></canvas>
-        <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
-      </div>
-      <div class="canvas-container">
-        <h3 class="canvas-label">Prediction</h3>
-        <div
-          #cursor
-          class="cursor"
-          [style.top.px]="cursorPosition.y"
-          [style.left.px]="cursorPosition.x"
-          [style.transform]="getCursorTransform()"
-        >
-          <div
-            class="cursor-radius"
-            [style.border-color]="
-              classService.getRGBStyleFromClass(classService.currentClass)
-            "
-          ></div>
-          <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
-          <mat-icon *ngIf="drawTool == 'fill'">colorize</mat-icon>
-        </div>
-
-        <canvas
-          #canvas
-          id="canvasDraw"
-          [style.opacity.%]="overlayOpacity"
-        ></canvas>
-        <canvas
-          #canvasGroundtruth
-          id="canvasGroundtruth"
-          [style.display]="
-            UICtrlService.showOverlayReference ? 'initial' : 'none'
-          "
-        ></canvas>
-        <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
-      </div>
     </div>
-    <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
+    
+    <div id="spacer"></div>
+    <div class="verticalGroup growFlex">
+      <label>Choose the active class</label>
+      
+      <mat-button-toggle-group id="classSelector" class="growFlex" [value]="classService.currentClass">
+        <mat-button-toggle class="growFlex sizeButton"
+          mat-list-item
+          *ngFor="let class of classService.classes; let i = index; last as last"
+          [value]="i"
+          (click)="changeActiveClass(i)"
+          [style.background-color]="classService.getRGBStyleFromClass(i)"
+        >
+          {{ class }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
 
+  <div class="draw-container flex-vertical">
+    <div class="canvas-container" [style.display]="UICtrlService.showReference? 'initial':'none'">
+      <h3 class="canvas-label">Reference</h3>
+      <div
+        #cursor
+        class="cursor"
+        [style.top.px]="cursorPositionGT.y"
+        [style.left.px]="cursorPositionGT.x"
+        [style.transform]="getCursorTransform()"
+      >
+        <div
+          class="cursor-radius"
+          [style.border-color]="
+            classService.getRGBStyleFromClass(classService.currentClass)
+          "
+        ></div>
+        <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
+      </div>
+
+      <canvas #canvasVisu id="canvasVisu" [style.opacity.%]="overlayOpacity"></canvas>
+        <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
+    </div>
+    <div class="canvas-container">
+      <h3 class="canvas-label">Prediction</h3>
+      <div
+        #cursor
+        class="cursor"
+        [style.top.px]="cursorPosition.y"
+        [style.left.px]="cursorPosition.x"
+        [style.transform]="getCursorTransform()"
+      >
+        <div
+          class="cursor-radius"
+          [style.border-color]="
+            classService.getRGBStyleFromClass(classService.currentClass)
+          "
+        ></div>
+        <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
+        <mat-icon *ngIf="drawTool == 'fill'">colorize</mat-icon>
+      </div>
+
+      <canvas #canvas id="canvasDraw" [style.opacity.%]="overlayOpacity"></canvas>
+      <canvas #canvasGroundtruth id="canvasGroundtruth" [style.display]="UICtrlService.showOverlayReference? 'initial':'none'"></canvas>
+        <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
+    </div>
+        <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
   </div>
 </div>
