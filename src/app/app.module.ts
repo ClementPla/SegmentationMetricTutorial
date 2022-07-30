@@ -22,7 +22,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { PresetsComponent } from './Components/presets/presets.component';
 import { WelcomeComponent } from './Components/welcome/welcome.component';
-import { MainPageComponent } from './Components/main-page/main-page.component'
+import { MainPageComponent } from './Components/main-page/main-page.component';
+import { MathjaxModule } from 'mathjax-angular';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MainPageComponent } from './Components/main-page/main-page.component'
     MainPageComponent,
   ],
   imports: [
+    MathjaxModule.forRoot(),
     MatIconModule,
     MatButtonToggleModule,
     MatListModule,

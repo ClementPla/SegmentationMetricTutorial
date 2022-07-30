@@ -9,6 +9,14 @@ import { ControlUIService } from 'src/app/Services/control-ui.service';
 export class TooltipsComponent implements OnInit {
 
   @Input() type:string
+  precision='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'
+
+  accuracy='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'
+  /* precision='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'
+  precision='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'
+  precision='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'
+  precision='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'
+  precision='$$ \\text{precision} = \\frac{TP}{TP+FP} $$'*/
   constructor(public controlUIService:ControlUIService) { }
 
   ngOnInit(): void {

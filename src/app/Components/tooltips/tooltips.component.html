@@ -4,7 +4,7 @@
 
   <div *ngSwitchCase="'Metric'" class="container-horizontal">
 
-    <div> 
+    <div>
       <svg class="schema-2"
         width="230mm"
         height="297mm"
@@ -293,8 +293,8 @@
         </g>
       </svg>
     </div>
-    
-    <div> 
+
+    <div>
       When hovering over each metric, a small description, a drawing and the equation will be shown. <br>
       The drawings are all based over these representations of the predictions and the groundtruths.
     </div>
@@ -319,7 +319,7 @@
 
   <!------------------------------------------------------------------------------------------------------------>
   <div *ngSwitchCase="'Precision'" class="container-horizontal">
-    <div>  
+    <div>
       <svg
         width="100mm"
         height="210mm"
@@ -360,12 +360,12 @@
     <div>
         Fraction of relevant instances among the retrieved instances (w.r.t sensitivity).<br>
         Metric ranges from 0 to 100 %.<br>
-        {{'precision = \frac{TP}{TP + FP}'}}
+        <span [mathjax]="precision"></span>
     </div>
   </div>
 
   <div *ngSwitchCase="'Accuracy'" class="container-horizontal">
-    <div> 
+    <div>
       <svg
         width="130mm"
         height="297mm"
@@ -422,7 +422,7 @@
         </g>
       </svg>
     </div>
-    
+
     <div>
       Percentage of pixels in the segmentation that are correctly classified. <br>
       Metric ranges from 0 to 100 %.<br>
@@ -444,7 +444,7 @@
         xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:svg="http://www.w3.org/2000/svg">
-      
+
         <defs
           id="defs74535">
           <rect
@@ -527,7 +527,7 @@
         </g>
       </svg>
     </div>
-    
+
     <div>
       Harmonic mean of the precision and sensitivity. <br>
       Metric ranges from 0 to 100 %.<br>
@@ -580,11 +580,11 @@
       </svg>
     </div>
 
-    <div> 
+    <div>
       Probability of predicting a negative test. <br>
       Metric ranges from 0 to 100 %. <br>
       {{'specificity = \frac{TN}{TN + FP}'}}<br>
-    </div>    
+    </div>
   </div>
 
   <div *ngSwitchCase="'Sensitivity'" class="container-horizontal">
@@ -630,9 +630,9 @@
         </g>
       </svg>
     </div>
-  
 
-    <div> 
+
+    <div>
       Fraction of relevant instances that were retrieved (w.r.t. precision) or
       probability of predicting a positive test (w.r.t specificity). <br>
       There is a balance to be found between precision and sensitivity (recall) and between sensitivity and specificity. <br>
@@ -667,7 +667,7 @@
          xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
          xmlns="http://www.w3.org/2000/svg"
          xmlns:svg="http://www.w3.org/2000/svg">
-        
+
         <defs
            id="defs73437" />
         <g
@@ -703,7 +703,7 @@
         </g>
       </svg>
     </div>
-    
+
     <div>
       Intersection over Union (Jaccard Index). <br>
       Overlap between the predicted segmentation and the groudtruth divided by the area of union between both. <br>
