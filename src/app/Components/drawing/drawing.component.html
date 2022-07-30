@@ -79,7 +79,7 @@
     <div class="verticalGroup">
       <label for="clearButton">Clear</label>
 
-      <button id="clearButton" mat-button (click)="clearCanvas()">
+      <button id="clearButton" mat-button (click)="clearCanvas()" matTooltip="Click to clear both the reference and the predictions canvas">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -111,6 +111,7 @@
           mat-button
           (click)="addClass()"
           *ngIf="UICtrlService.currentPreset == 4"
+          matTooltip="Click to add one more class to this custom scenario"
         >
           <mat-icon>plus_one</mat-icon>
         </button>
