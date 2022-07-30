@@ -15,19 +15,12 @@
   width: 450px;
 }
 
-.container tspan{
-  font-size: 14px !important;
-  fill: black;
-  stroke: black;
+.text{
+  text-align: justify;
+  text-justify: inter-word;
 }
 
-svg{
-  width: 150px;
-  height: 200px;
-  aspect-ratio: 1;
-}
-
-.schema-2{
+img{
   height: 250px;
 }
 
@@ -35,5 +28,5 @@ svg{
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2px;
+  gap: 15px;
 }

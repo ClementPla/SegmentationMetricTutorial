@@ -1,5 +1,7 @@
 <div class="metric-container" [ngSwitch]="classService.classes.length > 2">
+  <!--Multi-class table-->
   <table *ngSwitchCase="true">
+    <!--Headers-->
     <tr>
       <th
       (mouseenter)="UICtrlService.activate($event, 'Metric')"
@@ -33,6 +35,7 @@
         {{ c }}
       </th>
     </tr>
+
     <tr
       *ngFor="let score of scoresService.scores; let i = index"
       [ngStyle]="{ display: scoresService.visibleScores[i] ? '' : 'none' }"
@@ -62,8 +65,6 @@
         [style.background-color]="colorScore(s)"
         *ngFor="let s of score.perClassScore; let j = index"
         (mouseenter)="changeActiveClass.emit(j)"
-        (mouseenter)="UICtrlService.activate($event, score.name)"
-        (mouseleave)="UICtrlService.deactivate()"
         [ngClass]="{
           highlight: classService.currentClass == j,
           fade: classService.currentClass != j,
@@ -75,6 +76,7 @@
     </tr>
   </table>
 
+  <!--Binary classification table-->
   <table *ngSwitchCase="false">
     <tr>
       <th

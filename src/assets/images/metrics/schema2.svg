@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="135mm"
-   height="297mm"
-   viewBox="0 0 135 297"
+   width="230mm"
+   height="122mm"
+   viewBox="0 0 230 122"
    version="1.1"
    id="svg63264"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
@@ -23,14 +23,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.51150168"
-     inkscape:cx="104.59399"
-     inkscape:cy="694.03487"
-     inkscape:window-width="1507"
-     inkscape:window-height="1030"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:zoom="0.72337261"
+     inkscape:cx="515.6402"
+     inkscape:cy="365.64835"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      units="mm"
      width="180mm" />
@@ -41,41 +41,41 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#1a1a1a;stroke:#ffffed;stroke-width:0"
+       style="fill:#1a1a1a;fill-opacity:0;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect65817"
-       width="119.97044"
-       height="143.37932"
-       x="8.3256607"
-       y="136.27829" />
+       width="75.412483"
+       height="85.573273"
+       x="132.92322"
+       y="6.8973694" />
     <circle
-       style="fill:#1a1a1a;stroke:#ffffed;stroke-width:0"
+       style="fill:#1a1a1a;fill-opacity:0;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path66011"
-       cx="67.495743"
+       cx="59.558235"
        cy="53.140362"
        r="50" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-       x="41.297371"
+       x="33.147633"
        y="113.74377"
        id="text13817-9"
        transform="scale(0.97395858,1.0267377)"><tspan
          sodipodi:role="line"
          style="font-size:10.5833px;stroke-width:0.284534"
-         x="41.297371"
+         x="33.147633"
          y="113.74377"
          id="tspan54329">Predictions</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-       x="37.631741"
-       y="284.27536"
+       x="144.6227"
+       y="112.06308"
        id="text13817-9-5"
        transform="scale(0.97395858,1.0267377)"><tspan
          sodipodi:role="line"
          style="font-size:10.5833px;stroke-width:0.284534"
-         x="37.631741"
-         y="284.27536"
+         x="144.6227"
+         y="112.06308"
          id="tspan54329-4">Groundtruth</tspan></text>
   </g>
 </svg>

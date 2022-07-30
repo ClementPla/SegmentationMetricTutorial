@@ -1,715 +1,154 @@
 <div *ngIf="controlUIService.showTooltip" class="container" [ngSwitch]="controlUIService.tooltipType"
-  [ngStyle]="{'top':controlUIService.pos.y+'px', 'left':controlUIService.pos.x+'px'}"
-  >
+  [ngStyle]="{'top':controlUIService.pos.y+'px', 'left':controlUIService.pos.x+'px'}">
 
   <div *ngSwitchCase="'Metric'" class="container-horizontal">
 
     <div>
-      <svg class="schema-2"
-        width="230mm"
-        height="297mm"
-        viewBox="0 0 230 297"
-        version="1.1"
-        id="svg5"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="schema.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-        <defs
-          id="defs2">
-          <rect
-            x="-453.43161"
-            y="424.40091"
-            width="193.53789"
-            height="197.68512"
-            id="rect45653" />
-        </defs>
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <rect
-            style="fill:#d21d1b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882"
-            width="115"
-            height="296.99161"
-            x="5e-07"
-            y="5e-07" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81"
-            cx="15.16435"
-            cy="55.51025"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2"
-            cx="59.868374"
-            cy="49.017235"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-1"
-            cx="43.404575"
-            cy="262.67249"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-1-9"
-            cx="79.699776"
-            cy="269.40768"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-1-9-2"
-            cx="20.579754"
-            cy="213.28108"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <rect
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882-3"
-            width="115"
-            height="296.99698"
-            x="115"
-            y="5e-07" />
-          <path
-            id="path4718"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 115.22606,53.573351 a 98.891619,99.999679 0 0 0 -1.10827,-0.0153 98.891619,99.999679 0 0 0 -98.891724,100.000019 98.891619,99.999679 0 0 0 98.891724,99.99998 98.891619,99.999679 0 0 0 1.0988,-0.0412 z" />
-          <path
-            id="path5193"
-            style="fill:#d91a1b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 115.22606,53.573351 -0.009,199.999999 a 101.12343,100.02746 0 0 0 100,-99.98649 101.12343,100.02746 0 0 0 -99.99031,-100.013509 z" />
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="6.076571"
-            y="15.832496"
-            id="text13817-9"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              id="tspan13815-4"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="6.076571"
-              y="15.832496">False negatives </tspan><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="6.076571"
-              y="29.061621"
-              id="tspan54329">(FN)</tspan></text>
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="126.3485"
-            y="15.832496"
-            id="text13817-9-1"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              id="tspan13815-4-14"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="126.3485"
-              y="15.832496">True negatives</tspan><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="126.3485"
-              y="29.061621"
-              id="tspan55183">(TN)</tspan></text>
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="124.64869"
-            y="139.52524"
-            id="text13817-4"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              id="tspan13815-6"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="124.64869"
-              y="139.52524">False positives </tspan><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="124.64869"
-              y="152.75436"
-              id="tspan51957">(FP)</tspan></text>
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="24.05328"
-            y="139.52524"
-            id="text13817-4-3"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              id="tspan13815-6-6"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="24.05328"
-              y="139.52524">True positives</tspan><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="24.05328"
-              y="152.75436"
-              id="tspan50449">(TP)</tspan></text>
-          <text
-            xml:space="preserve"
-            transform="scale(0.26458333)"
-            id="text45651"
-            style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect45653);fill:#000000;fill-opacity:1;stroke:none" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5"
-            cx="77.797714"
-            cy="85.702194"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8"
-            cx="48.268875"
-            cy="116.36915"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#666666;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-5"
-            cx="166.74367"
-            cy="52.015209"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#666666;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-5-8"
-            cx="189.33372"
-            cy="69.971161"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#666666;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-5-8-9"
-            cx="144.80663"
-            cy="111.13068"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#666666;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-5-8-9-4"
-            cx="130.96207"
-            cy="202.42993"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#666666;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-5-8-9-4-6"
-            cx="183.72107"
-            cy="239.4735"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#666666;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-5-8-9-4-6-0"
-            cx="143.6841"
-            cy="270.53021"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-1"
-            cx="67.726097"
-            cy="184.46942"
-            rx="4.2871847"
-            ry="4.1121473" />
-          <ellipse
-            style="fill:#000080;fill-opacity:1;stroke:#ffffed;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-            id="path5856-81-2-5-8-1-2"
-            cx="13.470382"
-            cy="98.034462"
-            rx="4.2871847"
-            ry="4.1121473" />
-        </g>
-      </svg>
+      <img src="../../../assets/images/metrics/schema.svg" alt="Schematic of metrics representation">
     </div>
 
-    <div>
-      <svg class="schema-2"
-        width="135mm"
-        height="297mm"
-        viewBox="0 0 135 297"
-        version="1.1"
-        id="svg63264"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="schema2.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-        <defs
-          id="defs63261" />
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <rect
-            style="fill:#1a1a1a;stroke:#ffffed;stroke-width:0"
-            id="rect65817"
-            width="119.97044"
-            height="143.37932"
-            x="8.3256607"
-            y="136.27829" />
-          <circle
-            style="fill:#1a1a1a;stroke:#ffffed;stroke-width:0"
-            id="path66011"
-            cx="67.495743"
-            cy="53.140362"
-            r="50" />
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="41.297371"
-            y="113.74377"
-            id="text13817-9"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="41.297371"
-              y="113.74377"
-              id="tspan54329">Predictions</tspan></text>
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="37.631741"
-            y="284.27536"
-            id="text13817-9-5"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="37.631741"
-              y="284.27536"
-              id="tspan54329-4">Groundtruth</tspan></text>
-        </g>
-      </svg>
-    </div>
-
-    <div>
-      When hovering over each metric, a small description, a drawing and the equation will be shown. <br>
-      The drawings are all based over these representations of the predictions and the groundtruths.
+    <div class="text">
+      When hovering over each metric, a small description, a drawing and the equation will be shown.
+      The equations and the schematics are of a binary classification problem.
+      The drawings are all based over these representations of the predictions and the groundtruth.
+      The circle represents the predictions (positive) of the model and the rectangle the groundtruth.
+      Green represents the positive class and red the negative class.
     </div>
   </div>
 
-  <div *ngSwitchCase="'Score'" class="container-horizontal">
-    For a binary classification problem (as in Preset 1), the scores represent the metric computed. <br>
-    For a multi-class problem (Preset 2 and OCT), the scores are only given for the kappa metric and otherwise represented either in the micro- or macro-average.
+  <div *ngSwitchCase="'Score'" class="container-horizontal text">
+    For a binary classification problem (as in Preset 1), the scores represent the metric computed. 
+    For a multi-class problem (Preset 2 and OCT), the scores are only given for the kappa metric and otherwise
+    represented either in the micro- or macro-average.
   </div>
 
   <!--Example came from here : https://datascience.stackexchange.com/questions/15989/micro-average-vs-macro-average-performance-in-a-multiclass-classification-settin-->
-  <div *ngSwitchCase="'Micro'" class="container-horizontal">
-    For a multi-class problem, this column shows the micro-average of the metrics. <br>
-    The micro-average aggregates the contributions of all classes in order to compute the average metric. <br>
+  <div *ngSwitchCase="'Micro'" class="container-horizontal text">
+    For a multi-class problem, this column shows the micro-average of the metrics. 
+    The micro-average aggregates the contributions of all classes in order to compute the average metric. 
     Micro-averaged metrics are better when there is a class imbalance.
   </div>
 
-  <div *ngSwitchCase="'Macro'" class="container-horizontal">
-    For a multi-class problem, this column shows the macro-average of the metrics. <br>
-    The macro average computes the metric independently for each class and then takes the average over all classes (treating all classes equally).
+  <div *ngSwitchCase="'Macro'" class="container-horizontal text">
+    For a multi-class problem, this column shows the macro-average of the metrics. 
+    The macro average computes the metric independently for each class and then takes the average over all classes
+    (treating all classes equally).
   </div>
 
   <!------------------------------------------------------------------------------------------------------------>
   <div *ngSwitchCase="'Precision'" class="container-horizontal">
     <div>
-      <svg
-        width="100mm"
-        height="210mm"
-        viewBox="0 0 100 210"
-        version="1.1"
-        id="svg70858"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="precision.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-        <defs
-          id="defs70855" />
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <path
-            id="path4718"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 51.947592,111.15181 a 42.853388,43.666712 0 0 0 -0.48024,-0.007 42.853388,43.666712 0 0 0 -42.8534358,43.66685 42.853388,43.666712 0 0 0 42.8534358,43.66685 42.853388,43.666712 0 0 0 0.47615,-0.018 z" />
-          <path
-            id="path4718-8"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 52.237572,4.2662939 a 42.98959,43.720158 0 0 0 -0.48178,-0.007 42.98959,43.720158 0 0 0 -42.9896368,43.7203001 42.98959,43.720158 0 0 0 42.9896368,43.720287 42.98959,43.720158 0 0 0 0.47766,-0.018 z" />
-          <path
-            style="fill:none;stroke:#000000;stroke-width:1.99843px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-            d="m 23.519942,102.09058 60.4946,0.002"
-            id="path70765" />
-          <path
-            id="path5193"
-            style="fill:#d91a1b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 51.947592,111.15181 -0.004,87.32248 A 43.812955,43.673231 0 0 0 95.269787,154.81895 43.812955,43.673231 0 0 0 51.947762,111.15181 Z" />
-        </g>
-      </svg>
+      <img src="../../../assets/images/metrics/precision.svg">
     </div>
-    <div>
-        Fraction of relevant instances among the retrieved instances (w.r.t sensitivity).<br>
-        Metric ranges from 0 to 100 %.<br>
-        <span [mathjax]="precision"></span>
+    <div class="text">
+      Fraction of relevant instances among the retrieved instances (w.r.t sensitivity).<br> <br>
+      Metric ranges from 0 to 100 %.<br>
+      <span [mathjax]="precision"></span>
     </div>
   </div>
 
   <div *ngSwitchCase="'Accuracy'" class="container-horizontal">
     <div>
-      <svg
-        width="130mm"
-        height="297mm"
-        viewBox="0 0 130 297"
-        version="1.1"
-        id="svg71069"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="accuracy.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-        <defs
-          id="defs71066" />
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <rect
-            style="fill:#d21d1b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882"
-            width="49.57885"
-            height="130.21379"
-            x="15.332045"
-            y="154.35529" />
-          <rect
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882-3"
-            width="49.23735"
-            height="130.21614"
-            x="64.910889"
-            y="154.3472" />
-          <path
-            id="path4718"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 64.947678,178.39252 a 41.019474,40.890429 0 0 0 -0.459703,-0.006 41.019474,40.890429 0 0 0 -41.019517,40.89057 41.019474,40.890429 0 0 0 41.019517,40.89055 41.019474,40.890429 0 0 0 0.455774,-0.0168 z" />
-          <path
-            id="path5193"
-            style="fill:#d91a1b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 64.947514,178.06688 -0.0038,82.08367 A 42.885027,41.053104 0 0 0 107.35234,219.11426 42.885027,41.053104 0 0 0 64.947858,178.06688 Z" />
-          <path
-            style="fill:none;stroke:#000000;stroke-width:2.81522px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-            d="m 7.6966542,145.72885 120.0504058,0.002"
-            id="path70765" />
-          <path
-            id="rect882-3-0"
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="M 244.04688 26.638672 L 244.04688 518.79297 L 430.14062 518.79297 L 430.14062 26.638672 L 244.04688 26.638672 z M 244.18555 116.28711 A 162.08514 155.16134 0 0 1 404.45508 271.42578 A 162.08514 155.16134 0 0 1 244.16992 426.52539 L 244.18555 116.28711 z "
-            transform="scale(0.26458333)" />
-          <path
-            id="path4718-0"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 64.607373,31.093236 a 41.019474,40.890429 0 0 0 -0.459703,-0.006 41.019474,40.890429 0 0 0 -41.019517,40.89057 41.019474,40.890429 0 0 0 41.019517,40.890554 41.019474,40.890429 0 0 0 0.455774,-0.0168 z" />
-        </g>
-      </svg>
+      <img src="../../../assets/images/metrics/accuracy.svg">
     </div>
 
-    <div>
-      Percentage of pixels in the segmentation that are correctly classified. <br>
+    <div class="text">
+      Percentage of pixels in the segmentation that are correctly classified. <br> <br>
       Metric ranges from 0 to 100 %.<br>
-      {{'$$accuracy = TP + TN$$'}}
+      <span [mathjax]="accuracy"></span>
     </div>
   </div>
 
   <div *ngSwitchCase="'Dice'" class="container-horizontal">
     <div>
-      <svg
-        width="210mm"
-        height="297mm"
-        viewBox="0 0 210 297"
-        version="1.1"
-        id="svg74538"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="dice.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-
-        <defs
-          id="defs74535">
-          <rect
-            x="35.942749"
-            y="250.21683"
-            width="77.415151"
-            height="81.562391"
-            id="rect75782" />
-          <rect
-            x="35.942749"
-            y="250.21683"
-            width="77.415154"
-            height="81.562393"
-            id="rect75782-5" />
-        </defs>
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <path
-            style="fill:none;stroke:#000000;stroke-width:3.58664px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-            d="m 5.5256248,148.79585 195.0444852,0.002"
-            id="path70765" />
-          <rect
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882-3-0"
-            width="93.128975"
-            height="130.21614"
-            x="105.82973"
-            y="9.2578754" />
-          <circle
-            style="fill:#000080;stroke:#ffffed;stroke-width:0"
-            id="path73740"
-            cx="79.851692"
-            cy="76.09481"
-            r="40" />
-          <rect
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882-3-0-5"
-            width="93.128998"
-            height="130.21614"
-            x="104.56615"
-            y="156.17886" />
-          <circle
-            style="fill:#000080;stroke:#ffffed;stroke-width:0"
-            id="path73740-7"
-            cx="44.572109"
-            cy="223.38156"
-            r="40" />
-          <path
-            id="rect882-3-0-4"
-            style="fill:#000000;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="M 105.64683,45.450964 V 106.2426 A 39.999999,39.999999 0 0 0 119.66871,75.863061 39.999999,39.999999 0 0 0 105.64683,45.450964 Z" />
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="91.623955"
-            y="216.80952"
-            id="text13817-9"
-            transform="scale(0.97395858,1.0267377)"><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="91.623955"
-              y="216.80952"
-              id="tspan54329">+</tspan></text>
-          <text
-            xml:space="preserve"
-            style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
-            x="11.850204"
-            y="68.558228"
-            id="text13817-9-4"
-            transform="scale(0.97395858,1.0267377)"
-            inkscape:transform-center-x="-57.424876"
-            inkscape:transform-center-y="123.62808"><tspan
-              sodipodi:role="line"
-              style="font-size:10.5833px;stroke-width:0.284534"
-              x="11.850204"
-              y="68.558228"
-              id="tspan54329-4">2 x</tspan></text>
-        </g>
-      </svg>
+      <div>
+        <img src="../../../assets/images/metrics/dice.svg">
+      </div>
     </div>
 
-    <div>
-      Harmonic mean of the precision and sensitivity. <br>
+    <div class="text">
+      Harmonic mean of the precision and sensitivity. <br> <br>
       Metric ranges from 0 to 100 %.<br>
-      {{'$dice = \frac{2|A \cap B|}{|A| + |B|}$'}} <br>
-      {{'dice = \frac{2 \cdot TP}{2 \cdot TP + FP + FN}$'}} <br>
+      <span [mathjax]="dice"></span>
+      
     </div>
   </div>
 
   <div *ngSwitchCase="'Specificity'" class="container-horizontal">
     <div>
-      <svg
-        width="70mm"
-        height="288mm"
-        viewBox="0 0 70 288"
-        version="1.1"
-        id="svg73061"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="specificity.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-        <defs
-          id="defs73058" />
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <rect
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882-3"
-            width="49.23735"
-            height="130.21614"
-            x="11.775268"
-            y="152.07965" />
-          <path
-            id="path5193"
-            style="fill:#d91a1b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 11.811893,175.79917 -0.0038,82.08367 a 42.885027,41.053104 0 0 0 42.40863,-41.03629 42.885027,41.053104 0 0 0 -42.404486,-41.04738 z" />
-          <path
-            style="fill:none;stroke:#000000;stroke-width:2.06599px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-            d="m 3.0876107,142.9339 64.5707953,0.002"
-            id="path70765" />
-          <path
-            id="rect882-3-0"
-            style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="M 43.21875 18.066406 L 43.21875 510.22266 L 229.3125 510.22266 L 229.3125 18.066406 L 43.21875 18.066406 z M 43.357422 107.7168 L 43.359375 107.7168 A 162.08514 155.16134 0 0 1 203.62695 262.85547 A 162.08514 155.16134 0 0 1 43.34375 417.95312 L 43.357422 107.7168 z "
-            transform="scale(0.26458333)" />
-        </g>
-      </svg>
+      <img src="../../../assets/images/metrics/specificity.svg">
     </div>
 
-    <div>
-      Probability of predicting a negative test. <br>
+    <div class="text">
+      Probability of predicting a negative test. <br> <br>
       Metric ranges from 0 to 100 %. <br>
-      {{'specificity = \frac{TN}{TN + FP}'}}<br>
+      <span [mathjax]="specificity"></span>
     </div>
   </div>
 
   <div *ngSwitchCase="'Sensitivity'" class="container-horizontal">
     <div>
-      <svg
-        width="70mm"
-        height="260mm"
-        viewBox="0 0 70 260"
-        version="1.1"
-        id="svg68712"
-        inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-        sodipodi:docname="sensitivity.svg"
-        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">
-
-        <defs
-          id="defs68709" />
-        <g
-          inkscape:label="Calque 1"
-          inkscape:groupmode="layer"
-          id="layer1">
-          <rect
-            style="fill:#d21d1b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            id="rect882"
-            width="51.960064"
-            height="139.22495"
-            x="9.8240547"
-            y="118.7689" />
-          <path
-            id="path4718"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="m 61.822669,144.46959 a 42.98959,43.720158 0 0 0 -0.481782,-0.007 42.98959,43.720158 0 0 0 -42.989637,43.7203 42.98959,43.720158 0 0 0 42.989637,43.72029 42.98959,43.720158 0 0 0 0.477664,-0.018 z" />
-          <path
-            id="path4718-8"
-            style="fill:#21d41b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-            d="M 62.339945,5.7619001 A 42.98959,43.720158 0 0 0 61.85816,5.7549001 42.98959,43.720158 0 0 0 18.868523,49.4752 42.98959,43.720158 0 0 0 61.85816,93.195487 a 42.98959,43.720158 0 0 0 0.477665,-0.018 z" />
-          <path
-            style="fill:none;stroke:#000000;stroke-width:1.99843px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-            d="m 6.1900413,107.60959 60.4946067,0.002"
-            id="path70765" />
-        </g>
-      </svg>
+      <img src="../../../assets/images/metrics/sensitivity.svg">
     </div>
 
-
-    <div>
+    <div class="text">
       Fraction of relevant instances that were retrieved (w.r.t. precision) or
-      probability of predicting a positive test (w.r.t specificity). <br>
-      There is a balance to be found between precision and sensitivity (recall) and between sensitivity and specificity. <br>
+      probability of predicting a positive test (w.r.t specificity). 
+      There is a balance to be found between precision and sensitivity (recall) and between sensitivity and specificity. <br> <br>
       Metric ranges from 0 to 100 %.<br>
-      {{'sensitivity = \frac{TP}{TP + FN}'}}
+      <span [mathjax]="sensitivity"></span>
     </div>
   </div>
 
 
   <div *ngSwitchCase="'Kappa'" class="container-horizontal">
-    <div >
-      Tells us how much the classifier is better than a random guess. <br>
+    <div class="text">
+      Tells us how much the classifier is better than a random guess. 
+      Negative values mean that the classifier is performing less accurately than a random guess (0). 
+      Metric of 1 indicates a perfect classifier.<br> <br>
       Metric ranges from negative values to 1. <br>
-      Negative values mean that the classifier is performing less accurately than a random guess (0). <br>
-      Metric of 1 indicates a perfect classifier.<br>
-      {{'\kappa = \frac{2 \times (TP \times TN - FN \times FP)}{(TP + FP) \times (FP + TN) + (TP + FN) \times (FN + TN)} $$'}}
+      <span [mathjax]="kappa"></span>
     </div>
 
   </div>
 
   <div *ngSwitchCase="'IoU'" class="container-horizontal">
     <div>
-      <svg
-         width="181mm"
-         height="297mm"
-         viewBox="0 0 181 297"
-         version="1.1"
-         id="svg73440"
-         inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-         sodipodi:docname="iou.svg"
-         xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-         xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-         xmlns="http://www.w3.org/2000/svg"
-         xmlns:svg="http://www.w3.org/2000/svg">
-
-        <defs
-           id="defs73437" />
-        <g
-           inkscape:label="Calque 1"
-           inkscape:groupmode="layer"
-           id="layer1">
-          <path
-             style="fill:none;stroke:#000000;stroke-width:3.39141px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-             d="m 4.2742461,155.12961 174.3663539,0.002"
-             id="path70765" />
-          <rect
-             style="fill:#21d41b;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-             id="rect882-3-0"
-             width="93.128975"
-             height="130.21614"
-             x="77.316711"
-             y="17.054689" />
-          <circle
-             style="fill:#000080;stroke:#ffffed;stroke-width:0"
-             id="path73740"
-             cx="51.338669"
-             cy="83.891624"
-             r="40" />
-          <path
-             id="rect882-3-0-4"
-             style="fill:#000000;fill-opacity:0.584838;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-             d="M 77.133809,53.247778 V 114.03941 A 39.999999,39.999999 0 0 0 91.155694,83.659875 39.999999,39.999999 0 0 0 77.133809,53.247778 Z" />
-          <path
-             id="rect882-3-0-1"
-             style="fill:#000000;fill-opacity:0.851449;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
-             d="M 290.14648,616.54883 V 754.2168 A 151.1811,151.1811 0 0 0 191.96289,717.97852 151.1811,151.1811 0 0 0 40.78125,869.16016 151.1811,151.1811 0 0 0 191.96289,1020.3418 151.1811,151.1811 0 0 0 290.14648,983.98047 V 1108.7031 H 642.13086 V 616.54883 Z"
-             transform="scale(0.26458333)" />
-        </g>
-      </svg>
+      <img src="../../../assets/images/metrics/iou.svg">
     </div>
 
-    <div>
-      Intersection over Union (Jaccard Index). <br>
-      Overlap between the predicted segmentation and the groudtruth divided by the area of union between both. <br>
+    <div class="text">
+      Intersection over Union (Jaccard Index).
+      Overlap between the predicted segmentation and the groudtruth divided by the area of union between both. <br> <br>
       Metric ranges from 0 to 100 %. <br>
-      {{'$$IoU = \frac{|A \cap B| }{ |A \cup B|}$$'}} <br>
-      {{'$$IoU = \frac{TP}{TP + FP + TN}$$'}} <br>
+      <span [mathjax]="iou"></span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'Boundary Dice'" class="container-horizontal">
+    <div>
+      <img src="../../../assets/images/metrics/boundaryDice.svg">
+    </div>
+
+    <div class="text">
+      Boundary Dice. A small mask around the boudary of the predictions and groundtruth are computed by dilatation and erosion operations. 
+      The Dice metric is then computed only considering those boundaries. <br> <br>
+      Metric ranges from 0 to 100 %. <br>
+      <span [mathjax]="boundaryDice"></span>
+    </div>
+  </div>
+
+  
+  <div *ngSwitchCase="'Boundary IoU'" class="container-horizontal">
+    <div>
+      <img src="../../../assets/images/metrics/boundaryIou.svg">
+    </div>
+
+    <div class="text">
+      Boundary Intersection over Union (Jaccard Index). A small mask around the boundary of the predictions and groundtruth are computed by dilatation and erosion operations. 
+      The IoU metric is then computed only considering those boundaries. <br> <br>
+      Metric ranges from 0 to 100 %. <br>
+      <span [mathjax]="boundaryIoU"></span>
     </div>
   </div>
 
