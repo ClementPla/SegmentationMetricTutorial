@@ -1,14 +1,13 @@
 @import "../../../variables.scss";
 
-mat-slider{
+mat-slider {
   width: 100%;
 }
 
-mat-toolbar{
+mat-toolbar {
 }
 
-
-.central-container{
+.central-container {
   --canvas-width: 512px;
   --options-width: 150px;
   flex-flow: wrap;
@@ -18,59 +17,58 @@ mat-toolbar{
   max-width: calc(var(--canvas-width) * 2 + 2em);
 }
 
-.metric-container{
+.metric-container {
   font-size: small;
   width: fit-content;
   position: relative;
   flex-flow: wrap;
 }
 
-.draw-container{
+.draw-container {
   flex-flow: wrap;
 }
 
-.sizeButton{
+.sizeButton {
   height: 3em;
 }
 
-.panel-options > mat-button-toggle-group{
+.panel-options > mat-button-toggle-group {
   overflow: visible;
 }
 
-.growFlex{
+.growFlex {
   flex-grow: 2;
 }
 
-.verticalGroup{
+.verticalGroup {
   display: flex;
   gap: 5px;
   flex-direction: column;
   align-items: center;
 }
 
-#classSelector{
+#classSelector {
   display: flex;
   width: 100%;
   overflow: visible;
   border: none;
 }
 
-#classSelector .mat-button-toggle-checked{
+#classSelector .mat-button-toggle-checked {
   filter: brightness(1);
   border: white 1px solid;
 }
 
-#classSelector mat-button-toggle{
-  filter: brightness(.5);
+#classSelector mat-button-toggle {
+  filter: brightness(0.5);
   font-weight: bold;
   box-sizing: border-box;
 }
 
-#spacer{
+#spacer {
   flex-grow: 1;
-
 }
-.panel-options{
+.panel-options {
   height: 70px;
   margin: 1rem;
   display: flex;
@@ -78,7 +76,7 @@ mat-toolbar{
   align-items: flex-start;
 }
 
-.canvas-container{
+.canvas-container {
   margin: 0.5em;
   position: relative;
   aspect-ratio: 1;
@@ -89,30 +87,30 @@ mat-toolbar{
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.canvas-container > *{
+.canvas-container > * {
   position: absolute;
   width: var(--canvas-width);
   aspect-ratio: 1;
 }
 
-#canvasDraw{
+#canvasDraw {
   z-index: 1;
   opacity: 95%;
-  mix-blend-mode:screen;
+  mix-blend-mode: screen;
 }
 
-#canvasVisu{
+#canvasVisu {
   width: var(--canvas-width);
   aspect-ratio: 1;
-  mix-blend-mode:normal;
+  mix-blend-mode: normal;
 }
 
-#canvasGroundtruth{
+#canvasGroundtruth {
   z-index: -2;
   opacity: 25%;
 }
 
-.canvas-container > .cursor{
+.canvas-container > .cursor {
   z-index: 5;
   position: absolute;
   width: 32px;
@@ -122,8 +120,7 @@ mat-toolbar{
   transform-origin: top left;
 }
 
-.cursor > .cursor-radius
-{
+.cursor > .cursor-radius {
   position: relative;
   width: inherit;
   aspect-ratio: 1;
@@ -133,13 +130,19 @@ mat-toolbar{
   pointer-events: none;
   transform-origin: center;
   animation: rotation 20s infinite linear;
-  background: radial-gradient(circle, white 0%, white 3%, rgba(25,25,25,0.2) 3%, rgba(25,25,25,0.2) 100%);
+  background: radial-gradient(
+    circle,
+    white 0%,
+    white 3%,
+    rgba(25, 25, 25, 0.2) 3%,
+    rgba(25, 25, 25, 0.2) 100%
+  );
 }
 
-.cursor > mat-icon{
+.cursor > mat-icon {
   position: absolute;
   top: 0;
-  left:50%;
+  left: 50%;
 }
 
 @keyframes rotation {
@@ -151,15 +154,15 @@ mat-toolbar{
   }
 }
 
-.color-panel{
+.color-panel {
   display: flex;
   flex-direction: column;
 }
-.color-panel > button{
+.color-panel > button {
   color: rgb(250, 250, 250);
 }
 
-.canvas-label{
+.canvas-label {
   z-index: 50;
   width: fit-content;
   height: fit-content;
@@ -167,24 +170,24 @@ mat-toolbar{
   pointer-events: none;
 }
 
-.imgBackground{
+.imgBackground {
   z-index: -10;
 }
 
-canvas{
+canvas {
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
   aspect-ratio: 1;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  image-rendering: optimizeSpeed;             /* Older versions of FF          */
-  image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+  image-rendering: optimizeSpeed; /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges; /* FF 6.0+                       */
   image-rendering: -webkit-optimize-contrast; /* Safari                        */
-  image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
-  image-rendering: pixelated;                 /* Awesome future-browsers       */
-  -ms-interpolation-mode: nearest-neighbor;   /* IE */
+  image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated; /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor; /* IE */
 }
 
-.active-color{
+.active-color {
   width: fit-content;
   color: white;
   margin: auto;
