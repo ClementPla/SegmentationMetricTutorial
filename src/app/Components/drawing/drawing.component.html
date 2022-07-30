@@ -3,7 +3,7 @@
     <button
       mat-button
       (click)="buildGroundtruth(0)"
-      matTooltip="Binary classification example"
+      matTooltip="This preset illustrates a binary, highly unbalanced segmentation task."
     >
       Preset 1
     </button>
@@ -34,6 +34,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="central-container">
+
   <div class="panel-options">
     <div class="verticalGroup">
       <label>Tools</label>
@@ -183,4 +184,5 @@
     </div>
   </div>
   <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
+
 </div>
