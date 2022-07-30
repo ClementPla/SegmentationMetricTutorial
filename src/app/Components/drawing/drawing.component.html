@@ -16,6 +16,10 @@
     matTooltip="Medical image example on Fundus image">
       Fundus
     </button>
+    <button mat-button (click)="buildGroundtruth(4)"
+    matTooltip="You do you">
+      Custom
+    </button>
     <span class="flexExpand"></span>
 
   </mat-toolbar-row>
@@ -57,6 +61,12 @@
       ></mat-slider>
     </div>
 
+    <div class="verticalGroup">
+      <label for="clearButton">Clear</label>
+
+      <button id='clearButton' mat-button (click)="clearCanvas()"><mat-icon>delete</mat-icon></button>
+    </div>
+
     <div id="spacer"></div>
     <div class="verticalGroup growFlex">
       <label>Choose the active class</label>
@@ -71,6 +81,8 @@
         >
           {{ class }}
         </mat-button-toggle>
+        <button mat-button (click)="addClass()" *ngIf="UICtrlService.currentPreset==4"><mat-icon>plus_one</mat-icon></button>
+
       </mat-button-toggle-group>
     </div>
   </div>

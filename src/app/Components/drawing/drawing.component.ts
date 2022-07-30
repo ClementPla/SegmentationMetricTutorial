@@ -94,8 +94,19 @@ export class DrawingComponent implements OnInit {
   }
   clearDrawing() {
     this.changeActiveClass(0);
+    var compo = this.ctx.globalCompositeOperation;
+    this.ctx.globalCompositeOperation = 'source-over'
     this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.globalCompositeOperation = compo
+
   }
+  clearCanvas(){
+    this.clearDrawing()
+    this.buildGroundtruth(this.UICtrlService.currentPreset)
+    this.slowInference()
+
+  }
+
   setupPresetExample(presetExample: number) {
     this.changeActiveClass(0);
     this.ctx.fillRect(0, 0, this.width, this.height);
@@ -201,6 +212,13 @@ export class DrawingComponent implements OnInit {
           })
         );
         break;
+      case 4:{
+        this.imgSrc = ''
+        this.ctxBg.fillStyle = 'black'
+        this.ctx.fillStyle = 'black'
+        this.ctxBg.fillRect(0,0,this.width, this.height)
+        this.ctx.fillRect(0,0,this.width, this.height)
+      }
     }
     this.changeActiveClass(1);
     this.scoreService.initConfMat();
@@ -317,6 +335,12 @@ export class DrawingComponent implements OnInit {
   resizeBrush(event: MatSliderChange) {
     this.currentRadius = event.value || 2;
     this.refreshBrush();
+  }
+
+  addClass(){
+
+    this.classService.addClass()
+    this.scoreService.initConfMat()
   }
 
   fillOnCanvas(pos: Point2D) {
