@@ -1,12 +1,16 @@
 <div class="preset-container" [ngSwitch]="UICtrlService.currentPreset">
   <div *ngSwitchCase="0">
-    <h2>Binary segmentation</h2>
     <span>
-      This preset illustrates a binary, highly unbalanced segmentation task.
-      In this case, <b>Accuracy</b> is not a reliable metric to evaluate the quality of the segmentation
+
       <button mat-raised-button color="primary" (click)="getPreset(0)"> Test</button>
-      <button mat-raised-button color="warn" (click)="getPreset(1)"> Test2</button>
-      <button mat-raised-button color="warn" (click)="getPreset(2)"> Test3</button>
+      <button mat-raised-button color="primary" (click)="getPreset(1)"> Perfect boundaries</button>
+      <button mat-raised-button color="primary" (click)="getPreset(2)"> Perfect segmentation</button>
+      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% precision</button>
+      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
+      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
+
+      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
+      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
 
     </span>
   </div>

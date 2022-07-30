@@ -15,7 +15,7 @@ mat-toolbar{
   flex-direction: row;
   margin-left: 2rem;
   align-items: stretch;
-  max-width: calc(var(--canvas-width) * 2);
+  max-width: calc(var(--canvas-width) * 2 + 2em);
 }
 
 .metric-container{
@@ -79,11 +79,13 @@ mat-toolbar{
 }
 
 .canvas-container{
+  margin: 0.5em;
   position: relative;
   aspect-ratio: 1;
   width: var(--canvas-width);
   height: var(--canvas-width);
   cursor: none;
+  overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 

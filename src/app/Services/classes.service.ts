@@ -15,7 +15,7 @@ export class ClassesService {
       var hsl = [0, 0, 0];
     } else {
       if(normalize)
-        var h = (index+1)  * 360 / this.classes.length;
+        var h = (index)  * 360 / this.classes.length;
       else
         var h = (index + 1)%360;
 
