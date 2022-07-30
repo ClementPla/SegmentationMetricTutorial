@@ -1,0 +1,158 @@
+<app-tooltips></app-tooltips>
+<mat-toolbar>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="optionsDrawer.toggle()"
+    matTooltip="Click to open or close the Options drawer"
+    >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h2 matTooltip="This panels shows the different options related to the drawing and the display of the metrics">Options</h2>
+  <span class="flexExpand"></span>
+  <h1>Segmentation Metric Tutorial</h1>
+  <span class="flexExpand"></span>
+  <h2 matTooltip="This panel shows the segmentation metrics chosen and the confusion matrix used to compute them. Activate the Descriptions of metrics toggle to see a visual and textual description of the implemented metrics.">Metrics</h2>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="metricsDrawer.toggle()"
+    matTooltip="Click to open or close the Metrics drawer"
+    >
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-drawer-container class="drawer-container" hasBackdrop="false" autosize>
+  <mat-drawer #optionsDrawer opened="true" mode="push">
+    <div class="flex-vertical options">
+      <h2>Drawing</h2>
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.performanceMode"
+        (change)="UICtrlService.togglePerformanceMode()"
+        matTooltip="Computes the metrics only after the user stopped drawing, hence minimizes the lag between the drawing and its apparition on the screen"
+        [matTooltipPosition]="'right'"
+      >
+        Performance mode
+      </mat-slide-toggle>
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.showReference"
+        (change)="UICtrlService.toggleReferenceDisplay()"
+        matTooltip="Show both the reference image and groundtruth and the predicted segmentation on two separate panels"
+        [matTooltipPosition]="'right'"
+      >
+        Show reference
+      </mat-slide-toggle>
+      <mat-checkbox
+        class="example-margin"
+        [checked]="UICtrlService.showOverlayReference"
+        (change)="UICtrlService.toggleOverlayReference()"
+        matTooltip="Overlay the groundtruth segmentation in the predicted panel"
+        [matTooltipPosition]="'right'"
+      >
+        Overlay reference
+      </mat-checkbox>
+
+      <label for="sliderOpacity">Opacity</label>
+      <mat-slider id="sliderOpacity"
+      valueText="Opacity"
+      min="1"
+      max="100"
+      (input)="changeOpacity(($event).value)"
+      value="80"
+      thumbLabel
+      step="1"></mat-slider>
+
+      <mat-divider></mat-divider>
+      <h2>Metrics</h2>
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.showConfMat"
+        (change)="UICtrlService.toggleCM()"
+        matTooltip="Show the confusion matrix in the Metrics drawer"
+        [matTooltipPosition]="'right'"
+      >
+        Confusion Matrix
+      </mat-slide-toggle>
+
+      <mat-checkbox *ngIf="UICtrlService.showConfMat"
+        class="example-margin"
+        [checked]="UICtrlService.showConfMatLabel"
+        (change)="UICtrlService.toggleCMLabel()"
+        matTooltip="Show the corresponding labels of the confusion matrix"
+        [matTooltipPosition]="'right'"
+      >
+        Show label
+      </mat-checkbox>
+
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.showMetrics"
+        (change)="UICtrlService.toggleMetrics()"
+        matTooltip="Show the segmentation metrics in the Metrics drawer"
+        [matTooltipPosition]="'right'"
+      >
+        Metrics
+      </mat-slide-toggle>
+
+      <mat-checkbox *ngIf="UICtrlService.showMetrics"
+        color="warn"
+        class="example-margin"
+        [checked]="UICtrlService.showBoundaryMetric"
+        (change)="UICtrlService.toggleBoundaryMetric()"
+        matTooltip="Compute metrics based on the boundaries of the shapes. It may cause performance issues"
+        [matTooltipPosition]="'right'"
+        >
+        Boundary metrics
+      </mat-checkbox>
+      <mat-slide-toggle  *ngIf="UICtrlService.showMetrics"
+        class="example-margin"
+        [checked]="UICtrlService.showPerClassMetrics"
+        (change)="UICtrlService.togglePerClassMetrics()"
+        matTooltip="Show the metrics w.r.t to each class and not an average (micro or macro)"
+        [matTooltipPosition]="'right'"
+      >
+        Per class
+      </mat-slide-toggle>
+
+      <div *ngIf="UICtrlService.showMetrics">
+        <div
+          *ngFor="
+            let score of scoresService.scores;
+            last as last;
+            let i = index
+          "
+        >
+          <mat-checkbox
+            class="example-margin"
+            [checked]="true"
+            (change)="toggleVisibilityScore(i)"
+            >{{ score.name }}
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+      <!--Change the name from Tutorial to something more evocative-->
+      <h2 >Tutorial</h2>
+      <mat-slide-toggle *ngIf="UICtrlService.showMetrics"
+        class="example-margin"
+        matTooltip="Activate in order to get description about metrics when hovering over them"
+        [matTooltipPosition]="'right'"
+        [checked]="UICtrlService.tooltipsActivated"
+        (change)="UICtrlService.toggleTooltipVisibility()"
+        >Description of metrics</mat-slide-toggle
+      >
+    </div>
+  </mat-drawer>
+  <mat-drawer class="metric-drawer"
+  #metricsDrawer opened="true" mode="push" position="end">
+    <app-metrics *ngIf="UICtrlService.showMetrics" (changeActiveClass)="changeActiveClass($event)"></app-metrics>
+    <app-conf-mat *ngIf="UICtrlService.showConfMat" (changeActiveClass)="changeActiveClass($event)"></app-conf-mat>
+  </mat-drawer>
+  <app-drawing [overlayOpacity]="overlayOpacity"></app-drawing>
+</mat-drawer-container>

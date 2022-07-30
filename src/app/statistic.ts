@@ -15,8 +15,8 @@ export class Stats{
     this.diagValues = new Array<number>(this.n_classes)
     this.union = new Array<number>(this.n_classes)
 
-    this.sumRows = this.cm.map(r => r.reduce((a, b) => a + b));
-    this.sumCols = this.cm.reduce((a,b) => a.map((x, i) => x + b[i]))
+    this.sumCols = this.cm.map(r => r.reduce((a, b) => a + b));
+    this.sumRows = this.cm.reduce((a,b) => a.map((x, i) => x + b[i]))
     this.S = this.sumRows.reduce((a, b) => a+b)
 
 
@@ -29,11 +29,11 @@ export class Stats{
 
   static getStats(P:number, N:number, TP:number, TN:number, FP:number):Map<string, number>{
     var statistics = new Map<string, number>()
-    statistics.set('Accuracy', (TP+TN) / (P+N+0.1))
-    statistics.set('Precision', TP / (TP+FP+0.1))
-    statistics.set('Sensitivity',  TP/(P+0.1))
-    statistics.set('Specificity', TN/(N+0.1))
-    statistics.set('Dice', (2*TP)/(2*TP+FP+(P-TP)+0.1))
+    statistics.set('Accuracy', (TP+TN) / (P+N+0.001))
+    statistics.set('Precision', TP / (TP+FP+0.001))
+    statistics.set('Sensitivity',  TP/(P+0.001))
+    statistics.set('Specificity', TN/(N+0.001))
+    statistics.set('Dice', (2*TP)/(2*TP+FP+(P-TP)+0.001))
     return statistics
 
   }

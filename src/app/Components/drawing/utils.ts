@@ -42,14 +42,30 @@ export class ArrayTool{
 
 }
 
-export function downsample(img:Uint8ClampedArray, downsampling:number):Uint8ClampedArray{
+export function doubleDownsample(img1:Uint8ClampedArray, img2:Uint8ClampedArray, downsampling:number,
+  width:number, height:number):Array<Uint8ClampedArray>{
 
-  let output = new Uint8ClampedArray(img.length/downsampling)
-  for(let i=0; i<output.length; i += 4){
-    output[i] = img[i*downsampling]
-    output[i+1] = img[i*downsampling+1]
-    output[i+2] = img[i*downsampling+2]
+  let output1 = new Uint8ClampedArray(img1.length/(downsampling*downsampling))
+  let output2 = new Uint8ClampedArray(img1.length/(downsampling*downsampling))
+  let newWidth = width/downsampling
+
+  for(let i=0; i<output1.length; i += 4){
+
+    let row = i/newWidth>>0;
+    let col = i%newWidth;
+
+    let j= ((row*downsampling)*width+col*downsampling)*4
+
+    output1[i] = img1[j*downsampling]
+    output1[i+1] = img1[j*downsampling+1]
+    output1[i+2] = img1[j*downsampling+2]
+    output1[i+3] = img1[j*downsampling+3]
+
+    output2[i] = img2[j*downsampling]
+    output2[i+1] = img2[j*downsampling+1]
+    output2[i+2] = img2[j*downsampling+2]
+    output2[i+3] = img2[j*downsampling+3]
 
   }
-  return output
+  return [output1, output2]
 }

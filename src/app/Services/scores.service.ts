@@ -146,6 +146,7 @@ export class ScoresService {
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         let index = (y * width + x) * 4;
+        output[index+3]=255
         if (img[index] > 0 && img[index + 1] > 0 && img[index + 2] > 0) {
           output[index] = img[index];
           output[index + 1] = img[index + 1];
@@ -163,6 +164,9 @@ export class ScoresService {
                   );
                   if (!set.includes(l)) {
                     set.push(l);
+                    if(set.length>1){
+                      break
+                    }
                   }
                 }
               }

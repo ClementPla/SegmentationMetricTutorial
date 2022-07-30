@@ -19,6 +19,8 @@ export class ControlUIService {
   showReference: boolean = true;
   showOverlayReference: boolean = true;
 
+  showBoundaryMetric:boolean = false;
+
   currentPreset:number=0;
 
   pos: Point2D = {x:-500, y:-500};
@@ -57,7 +59,9 @@ export class ControlUIService {
   toggleTooltipVisibility(){
     this.tooltipsActivated = !this.tooltipsActivated
   }
-
+  toggleBoundaryMetric(){
+    this.showBoundaryMetric = !this.showBoundaryMetric
+  }
   changeCurrentPreset(preset:number){
     this.currentPreset = preset
   }

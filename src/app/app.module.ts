@@ -20,7 +20,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { PresetsComponent } from './Components/presets/presets.component'
+import { PresetsComponent } from './Components/presets/presets.component';
+import { WelcomeComponent } from './Components/welcome/welcome.component';
+import { MainPageComponent } from './Components/main-page/main-page.component'
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { PresetsComponent } from './Components/presets/presets.component'
     ConfMatComponent,
     MetricsComponent,
     PresetsComponent,
+    WelcomeComponent,
+    MainPageComponent,
   ],
   imports: [
     MatIconModule,

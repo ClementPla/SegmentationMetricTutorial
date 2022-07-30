@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { fromEvent, merge } from 'rxjs';
-import { Point2D, ArrayTool, downsample } from './utils';
+import { Point2D, ArrayTool, doubleDownsample } from './utils';
 import { SharpBrush } from './drawtools';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators';
 import { ScoresService } from 'src/app/Services/scores.service';
@@ -108,6 +108,7 @@ export class DrawingComponent implements OnInit {
   }
 
   buildGroundtruth(index: number) {
+    this.UICtrlService.currentPreset = index;
     let promises = [];
     this.classService.setClasses([0, 1]);
 
@@ -242,7 +243,6 @@ export class DrawingComponent implements OnInit {
     cursorPoint: Point2D,
     isGT: boolean = false
   ) {
-
     const touchStartEvents = fromEvent<TouchEvent>(canvas, 'touchstart');
     const mouseStartEvents = fromEvent<MouseEvent>(canvas, 'mousedown');
     const mouseMoveEvents = fromEvent<MouseEvent>(canvas, 'mousemove');
@@ -414,14 +414,16 @@ export class DrawingComponent implements OnInit {
   }
   slowInference() {
     this.inference();
-    const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
-    this.scoreService.computeBoundaryIoU(
-      downsample(this.backgroundImage, 2),
-      downsample(imgData, 2),
-      this.width,
-      this.height,
-      7
-    );
+    if (this.UICtrlService.showBoundaryMetric) {
+      const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
+      this.scoreService.computeBoundaryIoU(
+        this.backgroundImage,
+        imgData,
+        this.width,
+        this.height,
+        7
+      );
+    }
   }
 
   getCursorTransform(): string {

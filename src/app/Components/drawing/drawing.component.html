@@ -1,5 +1,6 @@
 <mat-toolbar color="accent">
   <mat-toolbar-row>
+    <span class="flexExpand"></span>
     <button mat-button (click)="buildGroundtruth(0)"
     matTooltip="Binary classification example">
       Preset 1
@@ -15,13 +16,14 @@
     matTooltip="Medical image example on Fundus image">
       Fundus
     </button>
+    <span class="flexExpand"></span>
+
   </mat-toolbar-row>
 </mat-toolbar>
 
-
 <div class="central-container">
   <div class="panel-options">
-  
+
     <div class="verticalGroup">
       <label>Tools</label>
       <mat-button-toggle-group>
@@ -39,7 +41,7 @@
         >
       </mat-button-toggle-group>
     </div>
-    
+
     <div class="verticalGroup">
       <label for="sliderRadius">Radius</label>
       <mat-slider
@@ -54,11 +56,11 @@
         matTooltip="Vary the radius of the paintbrush"
       ></mat-slider>
     </div>
-    
+
     <div id="spacer"></div>
     <div class="verticalGroup growFlex">
       <label>Choose the active class</label>
-      
+
       <mat-button-toggle-group id="classSelector" class="growFlex" [value]="classService.currentClass">
         <mat-button-toggle class="growFlex sizeButton"
           mat-list-item
@@ -118,6 +120,8 @@
       <canvas #canvasGroundtruth id="canvasGroundtruth" [style.display]="UICtrlService.showOverlayReference? 'initial':'none'"></canvas>
         <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
     </div>
-        <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
   </div>
+  <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
 </div>
+
+

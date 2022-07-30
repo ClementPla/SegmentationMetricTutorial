@@ -1,0 +1,58 @@
+<div class="main">
+  <h1>An Intuitive Grasp on Segmentation Metrics.</h1>
+  <h2>MICCAI Educational Challenge 2022</h2>
+
+  <div class="animation-container">
+    <div matTooltip="Reference" class="moving-shape circle"></div>
+    <div matTooltip="Prediction" class="moving-shape square"></div>
+  </div>
+  <span>
+    <i>
+      Semantic segmentation is the task consisting in classifying all the pixels
+      of an image into different predefined classes. It has many usecases, in
+      particular for medical images, where segmentation (implicitely or
+      explicitely) is often a prerequisite to the diagnosis. The segmented
+      structures, either healthy or pathological, have many shapes and sizes. A
+      lot of research is dedicated to developping models for automatically
+      segmenting these.
+    </i>
+  </span>
+  <span>
+    This website has been conceived to provide an intuitive understanding of
+    different segmentation metrics. Two canvas are provided to draw a reference
+    and a <i>simulated</i> prediction. Metrics are computed on the fly and by
+    hovering over them, a quick tutorial is provided for each. To illustrate the
+    benefits and pitfall of the differents metrics, we designed different
+    presets (binary, multi-class, and two real images captured with OCT and
+    fundus). For each preset, we also provide different interactive scenarii.
+  </span>
+  <span>
+    However, the tool is thought to provide total freedom to the experimenter.
+    Feel free to twist it for your own usecase!
+  </span>
+  <button class="start" mat-raised-button routerLink="/main" color="accent">
+    START
+  </button>
+
+  <h3>Sources</h3>
+  <ul>
+    <li>
+      <a
+        href="https://github.com/ClementPla/SegmentationMetricTutorial/tree/main/src"
+        >Source code for the website</a
+      >
+    </li>
+
+    <li>
+      <a
+        href="https://github.com/ClementPla/SegmentationMetricTutorial/blob/main/src/app/statistic.ts"
+        >Source code (javascript) for the metrics implementation</a
+      >
+    </li>
+  </ul>
+  <h3>Authors</h3>
+  <ul>
+    <li>PLAYOUT Clément, MSc., PhD candidate</li>
+    <li>RICHER Emmanuelle, MSc., PhD candidate</li>
+  </ul>
+</div>

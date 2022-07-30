@@ -1,10 +1,9 @@
-<div [ngSwitch]="UICtrlService.currentPreset">
+<div class="preset-container" [ngSwitch]="UICtrlService.currentPreset">
   <div *ngSwitchCase="0">
     <h2>Binary segmentation</h2>
     <span>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem, maiores.
-      Qui repudiandae, iure dolor animi cum ut ea ipsa voluptatibus maiores,
-      repellat minima cupiditate sequi at, nostrum vero et quasi?
+      This preset illustrates a binary, highly unbalanced segmentation task.
+      In this case, <b>Accuracy</b> is not a reliable metric to evaluate the quality of the segmentation
       <button mat-raised-button color="primary" (click)="getPreset(0)"> Test</button> Lorem ipsum dolor sit amet consectetur
       adipisicing elit. Numquam ex asperiores sit sint vitae repudiandae unde.
       Magnam, ex, praesentium necessitatibus officia ipsum illo alias autem,
