@@ -10,11 +10,15 @@ export class ClassesService {
   currentClass: number;
   constructor() {}
 
-  getClassColor(index: number): Uint8ClampedArray {
+  getClassColor(index: number, normalize:boolean=true): Uint8ClampedArray {
     if (index == 0) {
       var hsl = [0, 0, 0];
     } else {
-      var h = ((index + 1) * 360) / this.classes.length;
+      if(normalize)
+        var h = (index+1)  * 360 / this.classes.length;
+      else
+        var h = (index + 1)%360;
+
       let s = 50;
       let l = 50;
       var hsl = [h, s, l];
@@ -45,5 +49,13 @@ export class ClassesService {
   setClasses(classes: Array<string | number>) {
     this.classes = classes;
     this.classToRGB = this.classes.map((v, i) => this.getClassColor(i));
+  }
+
+  addClass(){
+    if(this.classes.length<8){
+      this.classes.push(this.classes.length)
+      this.classToRGB.push(this.getClassColor(this.classes.length*80, false))
+    }
+
   }
 }

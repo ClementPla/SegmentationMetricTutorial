@@ -1,21 +1,33 @@
 import { Point2D } from './utils';
 import { SharpBrush } from './drawtools';
-import { CssSelector } from '@angular/compiler';
 
 export class PresetDraw {
-
-  static drawPreset(
-    ctx:CanvasRenderingContext2D,
-    exampleId:number,
-    options?:{xs:Array<number>, ys:Array<number>, rs:Array<number>, cs:Array<Uint8ClampedArray>}
-  ){
-    switch(exampleId){
-      case 0:{
-        if(options)
-          SharpBrush.drawCircle(ctx, options?.xs[0], options?.ys[0], options?.rs[0], options?.cs[0])
-        break;
-      }
+  static drawCircles(
+    ctx: CanvasRenderingContext2D,
+    options?: {
+      xs: Array<number>;
+      ys: Array<number>;
+      rs: Array<number>;
+      cs: Array<Uint8ClampedArray>;
     }
-
+  ) {
+    var ps = new Array<Promise<void|ImageBitmap>>()
+    if (options){
+      for(let i=0;i<options?.xs.length; i++)
+        ps.push(SharpBrush.drawCircle(
+          ctx,
+          options?.xs[i],
+          options?.ys[i],
+          options?.rs[i],
+          options?.cs[i]
+        ));
+    }
+    return ps
+  }
+  static drawImage(ctx: CanvasRenderingContext2D,
+    ref: Uint8ClampedArray,
+    width:number,
+    height:number){
+    ctx.putImageData(new ImageData(ref, width, height), 0, 0)
   }
 }
