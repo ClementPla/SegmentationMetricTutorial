@@ -1,4 +1,14 @@
 
+h1{
+  a{
+    text-decoration: none; /* no underline */
+    color: white;
+    padding: 10px;
+  }
+  a:hover{
+    border: solid white 1px;
+  }
+}
 
 mat-drawer{
   padding: 1rem;
