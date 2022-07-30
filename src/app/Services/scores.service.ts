@@ -100,7 +100,7 @@ export class ScoresService {
     img2: Uint8ClampedArray,
     width: number,
     height: number,
-    boundary:number=3
+    boundary: number = 3
   ) {
     let n_classes = this.classService.classes.length;
     let confMat = new Array(n_classes);
@@ -108,20 +108,30 @@ export class ScoresService {
       confMat[i] = new Array(n_classes).fill(0);
     }
 
-    let kernel = this.getKernel(boundary)
-    let boundary1 = this.convertImgToBoundaryRegion(img1, kernel, width, height)
-    let boundary2 = this.convertImgToBoundaryRegion(img2, kernel, width, height)
-    this.computeConfMat(boundary1, boundary2, confMat)
-    let stat = new Stats(confMat)
-    let scores = stat.updateScore()
-    scores.forEach(element => {
-      console.log(element)
-      if(element.name=='Dice' || element.name=='IoU'){
-        element.name = 'Boundary '+element.name
-        this.scores.push(element)
+    let kernel = this.getKernel(boundary);
+    let boundary1 = this.convertImgToBoundaryRegion(
+      img1,
+      kernel,
+      width,
+      height
+    );
+    let boundary2 = this.convertImgToBoundaryRegion(
+      img2,
+      kernel,
+      width,
+      height
+    );
+    this.computeConfMat(boundary1, boundary2, confMat);
+    let stat = new Stats(confMat);
+    let scores = stat.updateScore();
+    scores.forEach((element) => {
+      console.log(element);
+      if (element.name == 'Dice' || element.name == 'IoU') {
+        element.name = 'Boundary ' + element.name;
+        this.scores.push(element);
       }
     });
-    this.setScores(this.scores)
+    this.setScores(this.scores);
   }
 
   convertImgToBoundaryRegion(
@@ -136,31 +146,34 @@ export class ScoresService {
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         let index = (y * width + x) * 4;
+        if (img[index] > 0 && img[index + 1] > 0 && img[index + 2] > 0) {
+          output[index] = img[index];
+          output[index + 1] = img[index + 1];
+          output[index + 2] = img[index + 2];
+          output[index + 3] = img[index + 3];
 
-        output[index] = img[index];
-        output[index + 1] = img[index + 1];
-        output[index + 2] = img[index + 2];
-        output[index + 3] = img[index + 3];
-
-        if (!this.isOnBoundary(x, y, width, height, sz)) {
-          let set = new Array<number>();
-          for (let i = 0; i < ksize; i++) {
-            for (let j = 0; j < ksize; j++) {
-              if (kernel[i][j] == 1) {
-                let m = ((y + j - sz) * width + (i + x - sz)) * 4;
-                let l = this.classService.getClassFromRGB(img.slice(m, m + 3));
-                if (!set.includes(l)) {
-                  set.push(l);
+          if (!this.isOnBoundary(x, y, width, height, sz)) {
+            let set = new Array<number>();
+            for (let i = 0; i < ksize; i++) {
+              for (let j = 0; j < ksize; j++) {
+                if (kernel[i][j] == 1) {
+                  let m = ((y + j - sz) * width + (i + x - sz)) * 4;
+                  let l = this.classService.getClassFromRGB(
+                    img.slice(m, m + 3)
+                  );
+                  if (!set.includes(l)) {
+                    set.push(l);
+                  }
                 }
               }
             }
-          }
-          if (set.length == 1) {
-            const l = set[0];
-            if (l > 0) {
-              output[index] = 0;
-              output[index + 1] = 0;
-              output[index + 2] = 0;
+            if (set.length == 1) {
+              const l = set[0];
+              if (l > 0) {
+                output[index] = 0;
+                output[index + 1] = 0;
+                output[index + 2] = 0;
+              }
             }
           }
         }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
-import { fromEvent, merge} from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { Point2D, ArrayTool, downsample } from './utils';
 import { SharpBrush } from './drawtools';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { PresetDraw } from './presetdrawing';
 })
 export class DrawingComponent implements OnInit {
   @Input() showTooltip: boolean;
-  @Input() overlayOpacity:number=80;
+  @Input() overlayOpacity: number = 80;
 
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -77,8 +77,6 @@ export class DrawingComponent implements OnInit {
     this.ctx.imageSmoothingEnabled = false;
     this.ctxVisu.imageSmoothingEnabled = false;
 
-
-
     this.buildGroundtruth(this.UICtrlService.currentPreset);
     this.captureEvents(canvasEl, this.cursorPosition);
     this.captureEvents(canvasVisu, this.cursorPositionGT, true);
@@ -98,12 +96,15 @@ export class DrawingComponent implements OnInit {
     this.changeActiveClass(0);
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
-  setupPresetExample(presetExample: number){
+  setupPresetExample(presetExample: number) {
     this.changeActiveClass(0);
     this.ctx.fillRect(0, 0, this.width, this.height);
-    PresetDraw.drawPreset(this.ctx, presetExample, {xs:[256/this.upscaleFactor], ys:[256/this.upscaleFactor], rs:[128/this.upscaleFactor],
-    cs:[this.classService.RGBFromClass(1)]}
-    )
+    PresetDraw.drawPreset(this.ctx, presetExample, {
+      xs: [256 / this.upscaleFactor],
+      ys: [256 / this.upscaleFactor],
+      rs: [128 / this.upscaleFactor],
+      cs: [this.classService.RGBFromClass(1)],
+    });
   }
 
   buildGroundtruth(index: number) {
@@ -187,7 +188,14 @@ export class DrawingComponent implements OnInit {
             imageGT.onload = (ev) => {
               resolve(imageGT);
               this.drawCustomImage(this.ctxBg, imageGT);
-              this.classService.setClasses(['BG', 'MAC', 'OD', 'EX', 'HEM', 'MA']);
+              this.classService.setClasses([
+                'BG',
+                'MAC',
+                'OD',
+                'EX',
+                'HEM',
+                'MA',
+              ]);
             };
           })
         );
@@ -234,7 +242,6 @@ export class DrawingComponent implements OnInit {
     cursorPoint: Point2D,
     isGT: boolean = false
   ) {
-    // this will capture all mousedown events from the canvas element
 
     const touchStartEvents = fromEvent<TouchEvent>(canvas, 'touchstart');
     const mouseStartEvents = fromEvent<MouseEvent>(canvas, 'mousedown');
@@ -248,7 +255,7 @@ export class DrawingComponent implements OnInit {
     const mouseLeaveEvents = fromEvent<MouseEvent>(canvas, 'mouseleave');
 
     const endEvents = merge(touchEndEvents, mouseLeaveEvents, mouseUpEvents);
-    let hasChanged = false
+    let hasChanged = false;
     moveEvents.subscribe({
       next: (event: MouseEvent | TouchEvent) => {
         const rect = canvas.getBoundingClientRect();
@@ -263,7 +270,7 @@ export class DrawingComponent implements OnInit {
           e.preventDefault();
           const rect = canvas.getBoundingClientRect();
           const pos = this.getCoord(e, rect);
-          hasChanged = true
+          hasChanged = true;
 
           if (isGT && (this.drawTool == 'draw' || this.drawTool == 'drag')) {
             this.drawOnGTCanvas(pos, pos);
@@ -278,25 +285,24 @@ export class DrawingComponent implements OnInit {
       )
       .subscribe({
         next: (res: [MouseEvent | TouchEvent, MouseEvent | TouchEvent]) => {
-          if(this.drawTool!='fill' || isGT){
-          const rect = canvas.getBoundingClientRect();
-          var next = this.getClientPosition(res[1]);
+          if (this.drawTool != 'fill' || isGT) {
+            const rect = canvas.getBoundingClientRect();
+            var next = this.getClientPosition(res[1]);
 
-          const prevPos = this.getCoord(res[0], rect);
-          const currentPos = this.getCoord(res[1], rect);
-          if (isGT) {
-            this.drawOnGTCanvas(prevPos, currentPos);
-          } else this.drawOnCanvas(this.ctx, prevPos, currentPos);
+            const prevPos = this.getCoord(res[0], rect);
+            const currentPos = this.getCoord(res[1], rect);
+            if (isGT) {
+              this.drawOnGTCanvas(prevPos, currentPos);
+            } else this.drawOnCanvas(this.ctx, prevPos, currentPos);
 
-          if (!this.UICtrlService.performanceMode) this.inference();
-        }
+            if (!this.UICtrlService.performanceMode) this.inference();
+          }
         },
       });
 
     endEvents.subscribe((e) => {
-      if(hasChanged)
-        this.slowInference();
-        hasChanged=false
+      if (hasChanged) this.slowInference();
+      hasChanged = false;
     });
   }
 
@@ -317,7 +323,7 @@ export class DrawingComponent implements OnInit {
     if (!this.ctx) {
       return;
     }
-    this.ctx.globalCompositeOperation = 'source-over'
+    this.ctx.globalCompositeOperation = 'source-over';
     let imageData = this.ctx.getImageData(0, 0, this.width, this.height);
     let index = Math.round(pos.y) * this.width * 4 + Math.round(pos.x) * 4;
     let r = this.backgroundImage[index];
@@ -338,9 +344,9 @@ export class DrawingComponent implements OnInit {
         }
       }
     }
-    createImageBitmap(imageData).then((data)=>{
-      this.ctx.drawImage(data, 0, 0, this.width, this.height)
-    })
+    createImageBitmap(imageData).then((data) => {
+      this.ctx.drawImage(data, 0, 0, this.width, this.height);
+    });
   }
 
   changeActiveClass(class_index: number) {
@@ -358,14 +364,12 @@ export class DrawingComponent implements OnInit {
   }
 
   changeTool(tool: string) {
-    if(tool=='drag'){
-      this.setDragMode()
-    }
-    else{
-      this.setDrawMode()
+    if (tool == 'drag') {
+      this.setDragMode();
+    } else {
+      this.setDrawMode();
     }
     this.drawTool = tool;
-
   }
 
   getClientPosition(event: TouchEvent | MouseEvent) {
@@ -407,26 +411,27 @@ export class DrawingComponent implements OnInit {
   inference() {
     const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
     this.scoreService.updateConfusionMatrix(this.backgroundImage, imgData);
-
-
   }
   slowInference() {
     this.inference();
     const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
-    this.scoreService.computeBoundaryIoU(downsample(this.backgroundImage, 8), downsample(imgData, 8), this.width, this.height, 2)
-
+    this.scoreService.computeBoundaryIoU(
+      downsample(this.backgroundImage, 2),
+      downsample(imgData, 2),
+      this.width,
+      this.height,
+      7
+    );
   }
-
-
 
   getCursorTransform(): string {
     return `scale(${
-      (1.25*(this.currentRadius) / (this.initialRadius))/2 // I have no idea why the 1.25 is needed here... To be inspected
-    }) translate(-50%, -50%) `;
+      (1.25 * this.currentRadius) / this.initialRadius / 2
+    }) translate(-50%, -50%) `; // I have no idea why the 1.25 is needed here... To be inspected. TODO: Make it works with change of resolution
   }
 
-  changePreset(preset:number){
-    this.UICtrlService.changeCurrentPreset(preset)
-    this.buildGroundtruth(preset)
+  changePreset(preset: number) {
+    this.UICtrlService.changeCurrentPreset(preset);
+    this.buildGroundtruth(preset);
   }
 }
