@@ -15,9 +15,9 @@ export class ClassesService {
       var hsl = [0, 0, 0];
     } else {
       if(normalize)
-        var h = ((index * 360) / this.classes.length);
+        var h = (index+1)  * 360 / this.classes.length;
       else
-        var h = (index)%360;
+        var h = (index + 1)%360;
 
       let s = 50;
       let l = 50;
@@ -52,7 +52,7 @@ export class ClassesService {
   }
 
   addClass(){
-    if(this.classes.length<10){
+    if(this.classes.length<8){
       this.classes.push(this.classes.length)
       this.classToRGB.push(this.getClassColor(this.classes.length*80, false))
     }

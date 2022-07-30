@@ -101,21 +101,59 @@ export class DrawingComponent implements OnInit {
 
   }
   clearCanvas(){
+    var activeTool = this.drawTool
+    var activeClass = this.classService.currentClass
+
+    this.changeTool('draw')
+    this.changeActiveClass(0)
     this.clearDrawing()
     this.buildGroundtruth(this.UICtrlService.currentPreset)
+
+
     this.slowInference()
 
+    this.changeActiveClass(activeClass)
+    this.changeTool(activeTool)
   }
 
   setupPresetExample(presetExample: number) {
-    this.changeActiveClass(0);
-    this.ctx.fillRect(0, 0, this.width, this.height);
-    PresetDraw.drawPreset(this.ctx, presetExample, {
-      xs: [256 / this.upscaleFactor],
-      ys: [256 / this.upscaleFactor],
-      rs: [128 / this.upscaleFactor],
-      cs: [this.classService.RGBFromClass(1)],
-    });
+    this.clearCanvas()
+
+    var ps = new Array<Promise<void | ImageBitmap>>()
+
+    switch(presetExample){
+      case 0:{
+        this.UICtrlService.showBoundaryMetric = true
+        ps = PresetDraw.drawCircles(this.ctx,
+          {
+          xs: [256 / this.upscaleFactor],
+          ys: [256 / this.upscaleFactor],
+          rs: [42 / this.upscaleFactor],
+          cs: [this.classService.classToRGB[1]],
+        });
+        break
+      }
+      case 1:{
+        this.UICtrlService.showBoundaryMetric = true
+        let kernel = this.scoreService.getKernel(this.UICtrlService.boundarySize)
+        let boundary = this.scoreService.convertImgToBoundaryRegion(this.backgroundImage, kernel,
+          this.width, this.height)
+        PresetDraw.drawImage(this.ctx, boundary, this.width, this.height)
+
+        break
+      }
+      case 2:{
+        PresetDraw.drawImage(this.ctx,
+          this.backgroundImage,
+          this.width,
+          this.height);
+      }
+    }
+
+    this.changeActiveClass(1)
+    Promise.all(ps).then(()=>{
+      this.slowInference()
+    })
   }
 
   buildGroundtruth(index: number) {
@@ -435,6 +473,7 @@ export class DrawingComponent implements OnInit {
   inference() {
     const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
     this.scoreService.updateConfusionMatrix(this.backgroundImage, imgData);
+
   }
   slowInference() {
     this.inference();
@@ -445,7 +484,7 @@ export class DrawingComponent implements OnInit {
         imgData,
         this.width,
         this.height,
-        7
+        this.UICtrlService.boundarySize
       );
     }
   }

@@ -22,6 +22,8 @@ export class ControlUIService {
   showBoundaryMetric:boolean = false;
 
   currentPreset:number=0;
+  boundarySize:number=5;
+
 
   pos: Point2D = {x:-500, y:-500};
   constructor() {}
