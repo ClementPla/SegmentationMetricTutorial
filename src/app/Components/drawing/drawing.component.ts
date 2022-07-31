@@ -185,7 +185,7 @@ export class DrawingComponent implements OnInit {
               this.width,
               this.height
             );
-            this.UICtrlService.isBusy = false
+            this.updateGTCanvas()
           })
         );
         break;
@@ -208,9 +208,9 @@ export class DrawingComponent implements OnInit {
         break;
       }
       case 'overSegment': {
-        ps.push(
-          new Promise(() => {
-            let kernel = this.drawService.getKernel(5);
+
+        let f = ()=>{
+          let kernel = this.drawService.getKernel(5);
             let overSegment = this.drawService.dilate(
               this.backgroundImage,
               kernel,
@@ -223,9 +223,14 @@ export class DrawingComponent implements OnInit {
               this.width,
               this.height
             );
-            this.UICtrlService.isBusy = false
-          })
-        );
+            return;
+        }
+        let p = new Promise<void|ImageBitmap>(()=>
+        {
+          f()
+          this.updateGTCanvas()
+        })
+        ps.push(p)
         break;
       }
       case 'lowImbalance': {

@@ -22,7 +22,7 @@
       (click)="getPreset('swapLabels')"
       matTooltipClass="blur-tooltip"
     >
-      Swap labels
+      Shuffle predicted labels
     </button>
     <button
       mat-raised-button
@@ -79,7 +79,7 @@
       (click)="getPreset('worstKappa')"
       matTooltipClass="blur-tooltip"
       matTooltip="To understand the Kappa'score, we can search for its minimum. To get there, all positives classes have to be predicted negatives
-      and the negative class have to be predicted with the label of the biggest positive class"
+      and the negative class is predicted with the label of the biggest positive class"
     >
     Worst Kappa
     </button>
