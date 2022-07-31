@@ -11,7 +11,7 @@
   <h1><a href="/">Segmentation Metric Tutorial</a></h1>
   <span class="flexExpand"></span>
   <h2
-    matTooltip="This panel shows the segmentation metrics chosen and the confusion matrix used to compute them. Activate the Descriptions of metrics toggle to see a visual and textual description of the implemented metrics.">
+    matTooltip="This panel shows the segmentation metrics chosen and the confusion matrix used to compute them. Hover over the metrics to see a visual and textual description.">
     Metrics
   </h2>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
@@ -51,6 +51,12 @@
       <mat-divider></mat-divider>
       <h2>Metrics</h2>
 
+      <mat-slide-toggle class="example-margin" [checked]="UICtrlService.showConfMat" (change)="UICtrlService.toggleCM()"
+        matTooltip="Show the confusion matrix in the Metrics drawer" [matTooltipPosition]="'right'">
+        Confusion Matrix
+      </mat-slide-toggle>
+
+
       <mat-slide-toggle class="example-margin" [checked]="UICtrlService.showMetrics"
         (change)="UICtrlService.toggleMetrics()" matTooltip="Show the segmentation metrics in the Metrics drawer"
         [matTooltipPosition]="'right'">
@@ -82,23 +88,6 @@
           </div>
         </ng-container>
       </div>
-
-      <mat-slide-toggle *ngIf="UICtrlService.showMetrics" class="example-margin"
-        matTooltip="Activate in order to get description about metrics when hovering over them"
-        [matTooltipPosition]="'right'" [checked]="UICtrlService.tooltipsActivated"
-        (change)="UICtrlService.toggleTooltipVisibility()">Description of metrics</mat-slide-toggle>
-
-      <mat-divider></mat-divider>
-      <mat-slide-toggle class="example-margin" [checked]="UICtrlService.showConfMat" (change)="UICtrlService.toggleCM()"
-        matTooltip="Show the confusion matrix in the Metrics drawer" [matTooltipPosition]="'right'">
-        Confusion Matrix
-      </mat-slide-toggle>
-
-      <mat-checkbox *ngIf="UICtrlService.showConfMat" class="example-margin" [checked]="UICtrlService.showConfMatLabel"
-        (change)="UICtrlService.toggleCMLabel()" matTooltip="Show the corresponding labels of the confusion matrix"
-        [matTooltipPosition]="'right'">
-        Show label
-      </mat-checkbox>
     </div>
   </mat-drawer>
 

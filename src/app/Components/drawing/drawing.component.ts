@@ -351,12 +351,12 @@ export class DrawingComponent implements OnInit {
           })
         );
         break;
-      case 4:{
+      case 4: {
         this.imgSrc = ''
         this.ctxBg.fillStyle = 'black'
         this.ctx.fillStyle = 'black'
-        this.ctxBg.fillRect(0,0,this.width, this.height)
-        this.ctx.fillRect(0,0,this.width, this.height)
+        this.ctxBg.fillRect(0, 0, this.width, this.height)
+        this.ctx.fillRect(0, 0, this.width, this.height)
       }
     }
     this.changeActiveClass(1);
@@ -397,6 +397,7 @@ export class DrawingComponent implements OnInit {
     }
     return ps
   }
+
 
   private drawCustomImage(
     ctx: CanvasRenderingContext2D,
@@ -499,7 +500,7 @@ export class DrawingComponent implements OnInit {
     this.refreshBrush();
   }
 
-  addClass(){
+  addClass() {
 
     this.classService.addClass()
     this.scoreService.initConfMat()
@@ -614,8 +615,7 @@ export class DrawingComponent implements OnInit {
   }
 
   getCursorTransform(): string {
-    return `scale(${
-      (1.25 * this.currentRadius) / this.initialRadius / 2
+    return `scale(${(1.25 * this.currentRadius) / this.initialRadius / 2
       }) translate(-50%, -50%) `; // I have no idea why the 1.25 is needed here... To be inspected. TODO: Make it works with change of resolution
   }
 

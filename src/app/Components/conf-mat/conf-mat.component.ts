@@ -16,9 +16,4 @@ export class ConfMatComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-
-
-
 }

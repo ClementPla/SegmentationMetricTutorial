@@ -9,7 +9,6 @@ export class ControlUIService {
   tooltipType: string;
 
   showConfMat: boolean = false;
-  showConfMatLabel: boolean = true;
 
   showMetrics: boolean = true;
 
@@ -40,9 +39,7 @@ export class ControlUIService {
   toggleCM() {
     this.showConfMat = !this.showConfMat;
   }
-  toggleCMLabel() {
-    this.showConfMatLabel = !this.showConfMatLabel;
-  }
+  
   toggleMetrics() {
     this.showMetrics = !this.showMetrics;
   }
