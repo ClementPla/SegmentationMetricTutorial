@@ -60,9 +60,9 @@
       mat-raised-button
       (click)="getPreset('lowImbalance')"
       matTooltipClass="blur-tooltip"
-      matTooltip="Even though class 1 is never being segmented, the high imbalance leads to high scores (every other class is good)."
+      matTooltip="Even though class 1 is never being segmented, the high imbalance leads to high scores. Indeed, every other class (vast majority of the pixels) is good."
     >
-    Fail class 1
+      Fail class 1
     </button>
     <button
       color="warn"
@@ -71,7 +71,7 @@
       matTooltipClass="blur-tooltip"
       matTooltip="The high imbalance of class 4 (not segmented) leads to low metrics even though every other class is good."
     >
-    Fail class 4
+      Fail class 4
     </button>
     <button
       color="warn"
@@ -81,7 +81,7 @@
       matTooltip="To understand the Kappa'score, we can search for its minimum. To get there, all positives classes have to be predicted negatives
       and the negative class is predicted with the label of the biggest positive class"
     >
-    Worst Kappa
+      Worst Kappa
     </button>
   </div>
 </div>
