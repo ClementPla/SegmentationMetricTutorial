@@ -66,6 +66,9 @@ MIT
 @angular/router
 MIT
 
+mathjax-angular
+MIT
+
 rxjs
 Apache-2.0
                                Apache License
