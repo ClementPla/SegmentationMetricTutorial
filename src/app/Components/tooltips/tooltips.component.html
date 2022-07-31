@@ -17,16 +17,17 @@
   </div>
 
   <div *ngSwitchCase="'Score'" class="container-horizontal text">
-    For a binary classification problem (as in Preset 1), the scores represent the metric computed. 
-    For a multi-class problem (Preset 2 and OCT), the scores are only given for the kappa metric and otherwise
-    represented either in the micro- or macro-average.
+    For a binary classification problem, the scores represent the metric computed. 
+    For a multi-class problem, the scores are only given for the kappa metric and are otherwise
+    represented in the micro- and macro-average column.
   </div>
 
   <!--Example came from here : https://datascience.stackexchange.com/questions/15989/micro-average-vs-macro-average-performance-in-a-multiclass-classification-settin-->
   <div *ngSwitchCase="'Micro'" class="container-horizontal text">
     For a multi-class problem, this column shows the micro-average of the metrics. 
     The micro-average aggregates the contributions of all classes in order to compute the average metric. 
-    Micro-averaged metrics are better when there is a class imbalance.
+    For example, when computing the micro precision, the true positives and false positives of each class will be 
+    summed before being inputed into the formula.
   </div>
 
   <div *ngSwitchCase="'Macro'" class="container-horizontal text">

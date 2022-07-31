@@ -1,10 +1,18 @@
 @import "../../../variables.scss";
 
-mat-slider {
+.mat-toolbar-height {
+  --height: 40px;
+  height: var(--height) !important;
+  min-height: var(--height) !important;
   width: 100%;
 }
 
-mat-toolbar {
+mat-toolbar button {
+  width: fit-content;
+}
+
+mat-slider {
+  width: 100%;
 }
 
 .central-container {
@@ -13,7 +21,6 @@ mat-toolbar {
   flex-flow: wrap;
   flex-direction: row;
   margin-left: 2rem;
-  align-items: stretch;
   max-width: calc(var(--canvas-width) * 2 + 2em);
 }
 
@@ -25,7 +32,15 @@ mat-toolbar {
 }
 
 .draw-container {
-  flex-flow: wrap;
+  flex-direction: row;
+}
+
+mat-button-toggle {
+  width: 100%;
+}
+
+button {
+  width: 100%;
 }
 
 .sizeButton {
@@ -68,6 +83,7 @@ mat-toolbar {
 #spacer {
   flex-grow: 1;
 }
+
 .panel-options {
   height: 70px;
   margin: 1rem;
@@ -130,13 +146,11 @@ mat-toolbar {
   pointer-events: none;
   transform-origin: center;
   animation: rotation 20s infinite linear;
-  background: radial-gradient(
-    circle,
-    white 0%,
-    white 3%,
-    rgba(25, 25, 25, 0.2) 3%,
-    rgba(25, 25, 25, 0.2) 100%
-  );
+  background: radial-gradient(circle,
+      white 0%,
+      white 3%,
+      rgba(25, 25, 25, 0.2) 3%,
+      rgba(25, 25, 25, 0.2) 100%);
 }
 
 .cursor > mat-icon {
@@ -149,6 +163,7 @@ mat-toolbar {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(359deg);
   }
@@ -158,6 +173,7 @@ mat-toolbar {
   display: flex;
   flex-direction: column;
 }
+
 .color-panel > button {
   color: rgb(250, 250, 250);
 }

@@ -9,10 +9,12 @@ td {
   padding: 5px;
   width: 3ch;
 }
+
 th {
   text-align: left;
   padding: 5px;
 }
+
 td:empty {
   visibility: hidden;
 }
@@ -28,6 +30,7 @@ tr:hover {
   font-weight: bolder;
   border-radius: 0.5rem;
 }
+
 tr:hover > th {
   background-color: darkcyan;
 }
@@ -35,6 +38,7 @@ tr:hover > th {
 .fade {
   opacity: 50%;
 }
+
 .highlight {
   opacity: 100%;
 }

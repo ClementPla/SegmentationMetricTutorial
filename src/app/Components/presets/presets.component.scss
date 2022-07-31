@@ -1,2 +1,34 @@
-.preset-container{
+@import "../../../variables.scss";
+
+
+.presets-buttons {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    --height: 40px;
+    height: var(--height);
+}
+
+.blur-tooltip {
+    backdrop-filter: blur(5px);
+}
+
+button {
+    width: 100%;
+}
+
+.presets-group-0 {
+    background-color: $light-gray;
+    border-color: $dark-gray;
+}
+
+.presets-group-1 {
+    background-color: $light-green;
+    border-color: $dark-green;
+}
+
+.presets-group-2 {
+    background-color: $light-blue;
+    border-color: $dark-blue;
 }

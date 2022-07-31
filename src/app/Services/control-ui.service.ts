@@ -22,8 +22,8 @@ export class ControlUIService {
   showBoundaryMetric:boolean = false;
 
   currentPreset:number=0;
+  currentSubPreset?:number=0;
   boundarySize:number=5;
-
 
   pos: Point2D = {x:-500, y:-500};
   constructor() {}
@@ -66,5 +66,9 @@ export class ControlUIService {
   }
   changeCurrentPreset(preset:number){
     this.currentPreset = preset
+    this.currentSubPreset = undefined
+  }
+  changeCurrentSubPreset(SubPreset:number){
+    this.currentSubPreset = SubPreset
   }
 }

@@ -21,10 +21,12 @@ export class ScoresService {
     this.scores = scores;
     this.visibleScores = new Array<boolean>(this.scores.length).fill(true);
   }
+
   updateScore() {
     let statsComputer = new Stats(this.confusionMatrix);
     this.setScores(statsComputer.updateScore());
   }
+  
   initConfMat() {
     this.confusionMatrix = new Array(this.classService.classes.length).fill(0);
     for (var i = 0; i < this.confusionMatrix.length; i++) {

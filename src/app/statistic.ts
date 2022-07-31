@@ -35,8 +35,8 @@ export class Stats{
     statistics.set('Specificity', TN/(N+0.001))
     statistics.set('Dice', (2*TP)/(2*TP+FP+(P-TP)+0.001))
     return statistics
-
   }
+
   getBinaryClassStats():Map<string, number>{
     let N = this.sumRows[0]
     let P = this.sumRows[1]
@@ -76,10 +76,10 @@ export class Stats{
       statistics.get('P').push(P)
       statistics.get('N').push(N)
       statistics.get('FP').push(FP)
-
     }
     return statistics
   }
+  
   updateScore():Array<Score>{
     let scores = new Array<Score>()
     if(this.n_classes==2){

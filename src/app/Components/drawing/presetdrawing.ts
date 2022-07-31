@@ -1,4 +1,3 @@
-import { Point2D } from './utils';
 import { SharpBrush } from './drawtools';
 
 export class PresetDraw {

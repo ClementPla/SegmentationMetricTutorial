@@ -24,6 +24,7 @@ import { PresetsComponent } from './Components/presets/presets.component';
 import { WelcomeComponent } from './Components/welcome/welcome.component';
 import { MainPageComponent } from './Components/main-page/main-page.component';
 import { MathjaxModule } from 'mathjax-angular';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MathjaxModule } from 'mathjax-angular';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule
   ],
   providers: [ClassesService],
   bootstrap: [AppComponent]

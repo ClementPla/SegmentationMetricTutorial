@@ -1,4 +1,3 @@
-
 h1{
   a{
     text-decoration: none; /* no underline */
@@ -18,16 +17,17 @@ mat-drawer{
 mat-drawer-container{
   height: calc(100% - 64px);
 }
+
 mat-button-toggle-group{
   width: fit-content;
 }
+
 .options{
   gap: 0.5rem;
 }
 
 mat-toolbar{
   position: sticky;
-
 }
 
 .metric-drawer{
@@ -36,4 +36,8 @@ mat-toolbar{
   overflow-x: scroll;
 
   font-size: small;
+}
+
+.spacer{
+  padding: 15px;
 }

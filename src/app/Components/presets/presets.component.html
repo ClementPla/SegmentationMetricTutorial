@@ -1,17 +1,79 @@
 <div class="preset-container" [ngSwitch]="UICtrlService.currentPreset">
-  <div *ngSwitchCase="0">
-    <span>
 
-      <button mat-raised-button color="primary" (click)="getPreset(0)"> Test</button>
-      <button mat-raised-button color="primary" (click)="getPreset(1)"> Perfect boundaries</button>
-      <button mat-raised-button color="primary" (click)="getPreset(2)"> Perfect segmentation</button>
-      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% precision</button>
-      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
-      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
+  <!-- binary class segmentation presets -->
 
-      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
-      <button mat-raised-button color="primary" (click)="getPreset(2)"> 50% sensitivity</button>
+  <div *ngSwitchCase="0" class="presets-buttons">
 
-    </span>
+    <button mat-raised-button class="presets-group-0" (click)="getPreset(0)" 
+    matTooltip="This is perfect. Perfect, perfect, perfect !"
+    matTooltipClass="blur-tooltip"
+    > Perfect segmentation
+    </button>
+
+    <button mat-raised-button class="presets-group-0" (click)="getPreset(1)"
+      matTooltip="We achieve high precision and specificity while only keeping the boundaries of the object. The accuracy is high on account of very few FP or FN in the segmentation. "
+      matTooltipClass="blur-tooltip"
+      >Perfect boundaries
+    </button>
+
+    <button mat-raised-button class="presets-group-1" (click)="getPreset(2)" 
+    matTooltip="When the segmentation is conservative, there are very few FP, 
+    and we achieve high precision and specificity."
+    matTooltipClass="blur-tooltip"
+    > Too conservative
+    </button>
+
+    <button mat-raised-button class="presets-group-1" (click)="getPreset(3)" matTooltip="When the segmentation is too coarse, the TP are maximized 
+    and FN minimized, we achieve high sensitivity."
+    matTooltipClass="blur-tooltip"
+    > Too lazy
+    </button>
+
+    <button mat-raised-button class="presets-group-2" (click)="getPreset(4)" 
+      matTooltip="For the same amount of FN and FP, an unbalanced class gets lower dice, kappa and IoU."
+      matTooltipClass="blur-tooltip"
+      > Low imbalance
+    </button>
+
+    <button mat-raised-button class="presets-group-2" (click)="getPreset(5)" 
+      matTooltip="For the same amount of FN and FP, a balanced class gets higher dice, kappa and IoU." 
+      matTooltipClass="blur-tooltip"
+      > High imbalance
+    </button>
   </div>
+
+  <!-- multi class segmentation presets -->
+  <div *ngSwitchCase="1" class="presets-buttons">
+    <button mat-raised-button class="presets-group-0" (click)="getPreset(0)" 
+    matTooltip="This is perfect. Perfect, perfect, perfect !"
+    matTooltipClass="blur-tooltip"
+    > Perfect segmentation
+    </button>
+
+    <button mat-raised-button class="presets-group-0" (click)="getPreset(1)"
+      matTooltip="We achieve high precision and specificity while only keeping the boundaries of the object. The accuracy is high on account of very few FP or FN in the segmentation. "
+      matTooltipClass="blur-tooltip"
+      >Perfect boundaries
+    </button>
+
+    <button mat-raised-button class="presets-group-1" (click)="getPreset(6)" 
+      matTooltip="The imbalance of class 1 leads to high metrics even though that class is never segmented (every other class is good)."
+      matTooltipClass="blur-tooltip"
+      > Low imbalance 
+    </button>
+
+    <button mat-raised-button class="presets-group-1" (click)="getPreset(7)" 
+      matTooltip="The high imbalance of class 3 leads to low metrics even though every other class is good." 
+      matTooltipClass="blur-tooltip"
+      > High imbalance
+    </button>
+
+    <button mat-raised-button class="presets-group-2" (click)="getPreset(8)" 
+      matTooltip="Even though only the background is correctly segmented, we still achieve relatively good accuracy and specificity." 
+      matTooltipClass="blur-tooltip"
+      > Wrong classes
+    </button>
+
+  </div>
+
 </div>

@@ -92,6 +92,7 @@
       {{ 'Score' }}
       </th>
     </tr>
+    
     <tr
       *ngFor="let score of scoresService.scores; let i = index"
       [ngStyle]="{ display: scoresService.visibleScores[i] ? '' : 'none' }"
@@ -102,8 +103,7 @@
       >
         {{ score.name }}
       </th>
-      <td [style.background-color]="colorScore(score.score)"
-          [style.display]="score.score !=undefined ? 'initial':'none'">
+      <td [style.background-color]="colorScore(score.score)">
         {{
           formatScore(
             score.score,

@@ -19,8 +19,8 @@ export class MainPageComponent implements OnInit {
 
   toggleVisibilityScore(index:number){
     this.scoresService.visibleScores[index] = !this.scoresService.visibleScores[index]
-
   }
+  
   changeOpacity(value:number|null){
     if(value){
       this.overlayOpacity = value;
