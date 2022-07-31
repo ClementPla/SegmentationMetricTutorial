@@ -2,8 +2,8 @@
 
 
 .presets-buttons {
-    padding: 10px;
     display: flex;
+    margin: 2px;
     flex-direction: row;
     align-items: stretch;
     --height: 40px;
@@ -18,17 +18,17 @@ button {
     width: 100%;
 }
 
-.presets-group-0 {
+.presets-group-0 > button {
     background-color: $light-gray;
     border-color: $dark-gray;
 }
 
-.presets-group-1 {
+.presets-group-1 > button {
     background-color: $light-green;
     border-color: $dark-green;
 }
 
-.presets-group-2 {
+.presets-group-2 > button {
     background-color: $light-blue;
     border-color: $dark-blue;
 }

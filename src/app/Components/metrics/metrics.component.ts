@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ClassesService } from 'src/app/Services/classes.service';
 import { ControlUIService } from 'src/app/Services/control-ui.service';
 import { ScoresService } from 'src/app/Services/scores.service';
-import { Color } from '../drawing/utils';
+import { Color } from '../../utils';
 
 @Component({
   selector: 'app-metrics',

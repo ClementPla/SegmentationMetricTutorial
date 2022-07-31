@@ -19,6 +19,10 @@
 </mat-toolbar>
 
 <div class="central-container">
+  <div *ngIf="UICtrlService.isBusy" class="spinning-wheel">
+    <mat-spinner></mat-spinner>
+  </div>
+
 
   <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
 
@@ -42,14 +46,14 @@
 
     <div class="verticalGroup">
       <label for="sliderRadius">Radius</label>
-      <mat-slider id="sliderRadius" valueText="Radius" min="1" max="25" value="5" (input)="resizeBrush($event)"
+      <mat-slider id="sliderRadius" valueText="Radius" min="1" max="50" value="5" (input)="resizeBrush($event)"
         thumbLabel step="0.5" matTooltip="Vary the radius of the paintbrush"></mat-slider>
     </div>
 
     <div class="verticalGroup">
       <label for="clearButton">Clear</label>
 
-      <button id="clearButton" mat-button (click)="clearCanvas()"
+      <button id="clearButton" mat-button (click)="resetPreset()"
         matTooltip="Clear both the reference and the prediction canvas">
         <mat-icon>delete</mat-icon>
       </button>
@@ -77,7 +81,7 @@
 
   <div class="draw-container flex-horizontal">
     <div class="canvas-container" [style.display]="UICtrlService.showReference ? 'initial' : 'none'">
-      <h3 class="canvas-label">Reference</h3>
+      <div class="canvas-label">Reference</div>
       <div #cursor class="cursor" [style.top.px]="cursorPositionGT.y" [style.left.px]="cursorPositionGT.x"
         [style.transform]="getCursorTransform()">
         <div class="cursor-radius" [style.border-color]="
@@ -91,7 +95,7 @@
     </div>
 
     <div class="canvas-container">
-      <h3 class="canvas-label">Prediction</h3>
+      <div class="canvas-label">Prediction</div>
       <div #cursor class="cursor" [style.top.px]="cursorPosition.y" [style.left.px]="cursorPosition.x"
         [style.transform]="getCursorTransform()">
         <div class="cursor-radius" [style.border-color]="

@@ -8,7 +8,7 @@
   </div>
   <span>
     <i>
-      Semantic segmentation is the task consisting in classifying all the pixels
+      Semantic segmentation consists in classifying all the pixels
       of an image into different predefined classes. It has many usecases, in
       particular for medical images, where segmentation (implicitely or
       explicitely) is often a prerequisite to the diagnosis. The segmented
@@ -20,17 +20,17 @@
   <span>
     This website has been conceived to provide an intuitive understanding of
     different segmentation metrics. Two canvases are provided to draw a reference
-    and a <i>simulated</i> prediction. Metrics are computed on the fly and by
-    hovering over them, a quick description will be provided for each. To illustrate the
+    and a <i>simulated</i> prediction. Metrics are computed on the fly. By
+    hovering over them, a quick description is provided for each. To illustrate the
     benefits and pitfalls of the differents metrics, we designed different
     presets (binary, multi-class, and two real images; one captured with Optical
     Coherence Tomography (OCT) and the other with fundus). For each preset,
-    we also provide different interactive scenarios. <br> <br>
-    
-    Modify the groundtruths and the predicted segmentations of those presets and 
-    scenarios and see how the metrics behave. Create your own groundtruth with our 
-    custom preset. Look inside the confusion matrices and observe every metrics 
-    per class or in their micro and macro averages. 
+    we also provide different interactive scenarios. <b> However, we encourage testing custom cases! </b>
+    <br><br>
+
+    Modify the groundtruths and the predicted segmentations of those presets and
+    scenarios and see how the metrics behave. Create your own groundtruth. Check the confusion matrices and observe the metrics
+    per class or in their micro and macro averages.
   </span>
   <span>
     This tool was made to provide total freedom to the experimenter.
@@ -55,9 +55,9 @@
   <div class="spacer"></div>
 
   <h2>Sources</h2>
-
-  <a href="https://github.com/ClementPla/SegmentationMetricTutorial/tree/main/src">Source code for the website</a> 
-  <a href="https://github.com/ClementPla/SegmentationMetricTutorial/blob/main/src/app/statistic.ts">Source code 
+<i>This project is open-sourced, under GNU-3 licence. If you want to implement your own metric or functionality, you can fork or make a pull-request on the following repositories</i>
+  <a href="https://github.com/ClementPla/SegmentationMetricTutorial/tree/main/src">Source code for the website</a>
+  <a href="https://github.com/ClementPla/SegmentationMetricTutorial/blob/main/src/app/statistic.ts">Source code
     (javascript) for the metrics implementation</a> <br>
 
   <div class="spacer"></div>

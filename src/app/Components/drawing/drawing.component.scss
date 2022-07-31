@@ -14,6 +14,24 @@ mat-toolbar button {
 mat-slider {
   width: 100%;
 }
+.spinning-wheel{
+  position: absolute;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  top: 0;
+  left: 0;
+
+  mat-spinner{
+    left: 50%;
+    top: 50%;
+    scale: 2;
+    transform: translate(-50%, -50%);
+}
+
+}
+
 
 .central-container {
   --canvas-width: 512px;
@@ -180,8 +198,9 @@ button {
 
 .canvas-label {
   z-index: 50;
-  width: fit-content;
-  height: fit-content;
+  right: 10px;
+  width: fit-content !important;
+  height: fit-content !important;
   position: absolute;
   pointer-events: none;
 }

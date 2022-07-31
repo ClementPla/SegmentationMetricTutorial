@@ -62,6 +62,17 @@
         [matTooltipPosition]="'right'">
         Metrics
       </mat-slide-toggle>
+      <mat-checkbox
+        *ngIf="UICtrlService.showMetrics"
+        color="accent"
+        class="example-margin"
+        [checked]="UICtrlService.ignoreFirstClassMetric"
+        (change)="UICtrlService.toggleIgnoreFirstClassMetric()"
+        matTooltip="Ignore the first class in the computation of the micro and macro scores"
+        [matTooltipPosition]="'right'"
+      >
+        Ignore first class
+      </mat-checkbox>
 
       <mat-checkbox *ngIf="UICtrlService.showMetrics" color="warn" class="example-margin"
         [checked]="UICtrlService.showBoundaryMetric" (change)="UICtrlService.toggleBoundaryMetric()"

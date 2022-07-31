@@ -25,6 +25,7 @@ import { WelcomeComponent } from './Components/welcome/welcome.component';
 import { MainPageComponent } from './Components/main-page/main-page.component';
 import { MathjaxModule } from 'mathjax-angular';
 import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {MatCardModule} from '@angular/material/card';
     MainPageComponent,
   ],
   imports: [
+    MatProgressSpinnerModule,
     MathjaxModule.forRoot(),
     MatIconModule,
     MatButtonToggleModule,

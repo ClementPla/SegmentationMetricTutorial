@@ -9,15 +9,15 @@ import { ControlUIService } from 'src/app/Services/control-ui.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class PresetsComponent implements OnInit {
-  @Output() setExampleByID = new EventEmitter<number>();
+  @Output() setExampleByID = new EventEmitter<string>();
 
   constructor(public UICtrlService:ControlUIService) { }
 
   ngOnInit(): void {
   }
 
-  getPreset(id:number){
-    this.setExampleByID.emit(id)
+  getPreset(value:string){
+    this.setExampleByID.emit(value)
   }
 
 }

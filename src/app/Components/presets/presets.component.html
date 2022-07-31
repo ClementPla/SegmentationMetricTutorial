@@ -1,79 +1,87 @@
 <div class="preset-container" [ngSwitch]="UICtrlService.currentPreset">
-
-  <!-- binary class segmentation presets -->
-
-  <div *ngSwitchCase="0" class="presets-buttons">
-
-    <button mat-raised-button class="presets-group-0" (click)="getPreset(0)" 
-    matTooltip="This is perfect. Perfect, perfect, perfect !"
-    matTooltipClass="blur-tooltip"
-    > Perfect segmentation
+  <div class="presets-buttons">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="getPreset('perfect')"
+      matTooltipClass="blur-tooltip"
+    >
+      Perfect segmentation
     </button>
-
-    <button mat-raised-button class="presets-group-0" (click)="getPreset(1)"
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="getPreset('halfSensitivity')"
+      matTooltipClass="blur-tooltip"
+    >
+      50% IoU
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="getPreset('swapLabels')"
+      matTooltipClass="blur-tooltip"
+    >
+      Swap labels
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="getPreset('perfectBoundaries')"
       matTooltip="We achieve high precision and specificity while only keeping the boundaries of the object. The accuracy is high on account of very few FP or FN in the segmentation. "
       matTooltipClass="blur-tooltip"
-      >Perfect boundaries
+    >
+      Perfect boundaries
     </button>
-
-    <button mat-raised-button class="presets-group-1" (click)="getPreset(2)" 
-    matTooltip="When the segmentation is conservative, there are very few FP, 
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="getPreset('badBoundaries')"
+      matTooltipClass="blur-tooltip"
+      matTooltip="When the segmentation is conservative, there are very few FP,
     and we achieve high precision and specificity."
-    matTooltipClass="blur-tooltip"
-    > Too conservative
+    >
+      Under segmented
     </button>
-
-    <button mat-raised-button class="presets-group-1" (click)="getPreset(3)" matTooltip="When the segmentation is too coarse, the TP are maximized 
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="getPreset('overSegment')"
+      matTooltipClass="blur-tooltip"
+      matTooltip="When the segmentation is too coarse, the TP are maximized
     and FN minimized, we achieve high sensitivity."
-    matTooltipClass="blur-tooltip"
-    > Too lazy
-    </button>
-
-    <button mat-raised-button class="presets-group-2" (click)="getPreset(4)" 
-      matTooltip="For the same amount of FN and FP, an unbalanced class gets lower dice, kappa and IoU."
-      matTooltipClass="blur-tooltip"
-      > Low imbalance
-    </button>
-
-    <button mat-raised-button class="presets-group-2" (click)="getPreset(5)" 
-      matTooltip="For the same amount of FN and FP, a balanced class gets higher dice, kappa and IoU." 
-      matTooltipClass="blur-tooltip"
-      > High imbalance
+    >
+      Over segmented
     </button>
   </div>
-
-  <!-- multi class segmentation presets -->
-  <div *ngSwitchCase="1" class="presets-buttons">
-    <button mat-raised-button class="presets-group-0" (click)="getPreset(0)" 
-    matTooltip="This is perfect. Perfect, perfect, perfect !"
-    matTooltipClass="blur-tooltip"
-    > Perfect segmentation
-    </button>
-
-    <button mat-raised-button class="presets-group-0" (click)="getPreset(1)"
-      matTooltip="We achieve high precision and specificity while only keeping the boundaries of the object. The accuracy is high on account of very few FP or FN in the segmentation. "
+  <div *ngSwitchCase="1" class="presets-buttons presets-group-1">
+    <button
+      color="warn"
+      mat-raised-button
+      (click)="getPreset('lowImbalance')"
       matTooltipClass="blur-tooltip"
-      >Perfect boundaries
+      matTooltip="Even though class 1 is never being segmented, the high imbalance leads to high scores (every other class is good)."
+    >
+    Fail class 1
     </button>
-
-    <button mat-raised-button class="presets-group-1" (click)="getPreset(6)" 
-      matTooltip="The imbalance of class 1 leads to high metrics even though that class is never segmented (every other class is good)."
+    <button
+      color="warn"
+      mat-raised-button
+      (click)="getPreset('highImbalance')"
       matTooltipClass="blur-tooltip"
-      > Low imbalance 
+      matTooltip="The high imbalance of class 4 (not segmented) leads to low metrics even though every other class is good."
+    >
+    Fail class 4
     </button>
-
-    <button mat-raised-button class="presets-group-1" (click)="getPreset(7)" 
-      matTooltip="The high imbalance of class 3 leads to low metrics even though every other class is good." 
+    <button
+      color="warn"
+      mat-raised-button
+      (click)="getPreset('worstKappa')"
       matTooltipClass="blur-tooltip"
-      > High imbalance
+      matTooltip="To understand the Kappa'score, we can search for its minimum. To get there, all positives classes have to be predicted negatives
+      and the negative class have to be predicted with the label of the biggest positive class"
+    >
+    Worst Kappa
     </button>
-
-    <button mat-raised-button class="presets-group-2" (click)="getPreset(8)" 
-      matTooltip="Even though only the background is correctly segmented, we still achieve relatively good accuracy and specificity." 
-      matTooltipClass="blur-tooltip"
-      > Wrong classes
-    </button>
-
   </div>
-
 </div>

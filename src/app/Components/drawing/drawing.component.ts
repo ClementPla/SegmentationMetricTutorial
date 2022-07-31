@@ -2,29 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { fromEvent, merge } from 'rxjs';
-import { Point2D, ArrayTool } from './utils';
+import { Point2D, ArrayTool, doubleDownsample } from '../../utils';
 import { SharpBrush } from './drawtools';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators';
 import { ScoresService } from 'src/app/Services/scores.service';
 import { ClassesService } from 'src/app/Services/classes.service';
 import { ControlUIService } from 'src/app/Services/control-ui.service';
 import { PresetDraw } from './presetdrawing';
-
-import "../../../variables.scss"
-
-const smallCircle = 20;
-const mediumCircle = 80;
-const largeCircle = 200;
-
-const multiPositionCircle = [25, 125, 400];
-const multiRadiusCircle = [25, 85, 265];
+import { DrawService } from 'src/app/Services/draw.service';
 
 @Component({
   selector: 'app-drawing',
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.scss'],
 })
-
 export class DrawingComponent implements OnInit {
   @Input() showTooltip: boolean;
   @Input() overlayOpacity: number = 80;
@@ -55,16 +46,17 @@ export class DrawingComponent implements OnInit {
   cursorPositionGT: Point2D = { x: 0, y: 0 };
   sharpBrush: SharpBrush;
   drawTool = 'draw';
-
   imgSrc = '';
 
   constructor(
+    private drawService: DrawService,
     private scoreService: ScoresService,
     public classService: ClassesService,
     public UICtrlService: ControlUIService
   ) {}
 
   ngOnInit(): void {
+    this.UICtrlService.setInferenceFunction(this.slowInference.bind(this));
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     const canvasBackground: HTMLCanvasElement = this.canvasBG.nativeElement;
     const canvasVisu: HTMLCanvasElement = this.canvasVisu.nativeElement;
@@ -103,208 +95,191 @@ export class DrawingComponent implements OnInit {
     this.ctx.globalCompositeOperation = 'source-over';
   }
   clearDrawing() {
+    var activeTool = this.drawTool;
+    var activeClass = this.classService.currentClass;
+
+    this.changeTool('draw');
     this.changeActiveClass(0);
-    var compo = this.ctx.globalCompositeOperation;
-    this.ctx.globalCompositeOperation = 'source-over'
     this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.globalCompositeOperation = compo
-
+    this.changeActiveClass(activeClass);
+    this.changeTool(activeTool);
+  }
+  resetPreset() {
+    var activeTool = this.drawTool;
+    var activeClass = this.classService.currentClass;
+    this.changeTool('draw');
+    this.changeActiveClass(0);
+    this.clearDrawing();
+    this.buildGroundtruth(this.UICtrlService.currentPreset);
+    this.slowInference();
+    this.changeActiveClass(activeClass);
+    this.changeTool(activeTool);
   }
 
-  clearCanvas(){
-    var activeTool = this.drawTool
-    var activeClass = this.classService.currentClass
-
-    this.changeTool('draw')
-    this.changeActiveClass(0)
-    this.clearDrawing()
-    this.buildGroundtruth(this.UICtrlService.currentPreset)
-
-    this.slowInference()
-
-    this.changeActiveClass(activeClass)
-    this.changeTool(activeTool)
+  clearCanvas(ctx: CanvasRenderingContext2D) {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, this.width, this.height);
   }
-
-  setupPresetExample(presetExample: number) {
-    this.UICtrlService.currentSubPreset = presetExample;
-    this.clearCanvas()
-    this.initBackgroundConstruction();
-
-    var ps = new Array<Promise<void | ImageBitmap>>()
-
-    // TODO : All of this is not optimal
+  setupPresetExample(presetExample: string) {
+    this.UICtrlService.isBusy = true;
+    this.clearDrawing();
+    var ps = new Array<Promise<void | ImageBitmap | HTMLImageElement>>();
     switch (presetExample) {
-
-      //Case 0 : Binary classification, perfect segmentation 
-      /* TODO : the background image is not updated ? When changing the reference, I have to click twice on the preset option */
-      case 0: {
-        PresetDraw.drawImage(this.ctx, this.backgroundImage, this.width, this.height);
-        break
+      case 'perfect': {
+        PresetDraw.drawImage(
+          this.ctx,
+          this.backgroundImage,
+          this.width,
+          this.height
+        );
+        break;
       }
-
-      //Case 1 : Binary classification, Perfect boundary, nothing inside 
-      /* TODO : the background image is not updated ? When changing the reference, I have to click twice on the preset option */
-      case 1: {
-        //this.UICtrlService.showBoundaryMetric = true
-        let kernel = this.scoreService.getKernel(this.UICtrlService.boundarySize)
-        let boundary = this.scoreService.convertImgToBoundaryRegion(this.backgroundImage, kernel,
-          this.width, this.height)
-        PresetDraw.drawImage(this.ctx, boundary, this.width, this.height)
-
-        break
+      case 'perfectBoundaries': {
+        this.UICtrlService.showBoundaryMetric = true;
+        let kernel = this.drawService.getKernel(
+          this.UICtrlService.boundarySize
+        );
+        let boundary = this.drawService.convertImgToBoundaryRegion(
+          this.backgroundImage,
+          kernel,
+          this.width,
+          this.height
+        );
+        PresetDraw.drawImage(this.ctx, boundary, this.width, this.height);
+        break;
       }
+      case 'badBoundaries': {
+        ps.push(
+          new Promise(() => {
+            this.UICtrlService.showBoundaryMetric = true;
+            let kernel = this.drawService.getKernel(
+              this.UICtrlService.boundarySize
+            );
+            let boundary = this.drawService.convertImgToBoundaryRegion(
+              this.backgroundImage,
+              kernel,
+              this.width,
+              this.height
+            );
+            let opposite_boundary = new Uint8ClampedArray(
+              this.backgroundImage.length
+            );
+            for (let i = 0; i < opposite_boundary.length; i += 4) {
+              if (
+                !(
+                  this.backgroundImage[i] == boundary[i] &&
+                  this.backgroundImage[i + 1] == boundary[i + 1] &&
+                  this.backgroundImage[i + 2] == boundary[i + 2]
+                )
+              ) {
+                opposite_boundary[i] = this.backgroundImage[i];
+                opposite_boundary[i + 1] = this.backgroundImage[i + 1];
+                opposite_boundary[i + 2] = this.backgroundImage[i + 2];
+              }
+              opposite_boundary[i + 3] = 255;
+            }
 
-      //Case 2 : Binary classification, smaller than boundary 
-      case 2: {
-        ps = DrawingComponent.drawCircles(this.ctx,
-          {
-            xs: [256 / this.upscaleFactor],
-            ys: [256 / this.upscaleFactor],
-            rs: [smallCircle / this.upscaleFactor],
-            cs: [this.classService.classToRGB[1]],
-          });
-        break
+            PresetDraw.drawImage(
+              this.ctx,
+              opposite_boundary,
+              this.width,
+              this.height
+            );
+            this.UICtrlService.isBusy = false
+          })
+        );
+        break;
       }
-
-      //Case 3 : Binary classification, over segmented 
-      case 3: {
-        ps = PresetDraw.drawCircles(this.ctx,
-          {
-            xs: [256 / this.upscaleFactor],
-            ys: [256 / this.upscaleFactor],
-            rs: [largeCircle / this.upscaleFactor],
-            cs: [this.classService.classToRGB[1]],
-          });
-        break
+      case 'swapLabels': {
+        let swappedLabels = this.drawService.shuffleLabels(
+          this.backgroundImage
+        );
+        PresetDraw.drawImage(this.ctx, swappedLabels, this.width, this.height);
+        break;
       }
-
-      //Case 4 : Binary classification, unbalanced (too small) 
-      case 4: {
-        ps = PresetDraw.drawCircles(this.ctx,
-          {
-            xs: [256 / this.upscaleFactor, 256 / this.upscaleFactor],
-            ys: [256 / this.upscaleFactor, 256 / this.upscaleFactor],
-            rs: [smallCircle / this.upscaleFactor, (smallCircle * 0.8) / this.upscaleFactor],
-            cs: [this.classService.classToRGB[1], this.classService.classToRGB[0]],
-          });
-        break
+      case 'halfSensitivity': {
+        PresetDraw.drawHalfClass(
+          this.ctx,
+          this.backgroundImage,
+          this.width,
+          this.height,
+          this.classService
+        );
+        break;
       }
-
-      //Case 5 : Binary classification, unbalanced (too big) 
-      case 5: {
-        ps = PresetDraw.drawCircles(this.ctx,
-          {
-            xs: [256 / this.upscaleFactor, 256 / this.upscaleFactor],
-            ys: [256 / this.upscaleFactor, 256 / this.upscaleFactor],
-            rs: [largeCircle / this.upscaleFactor, (smallCircle * 0.8) / this.upscaleFactor],
-            cs: [this.classService.classToRGB[1], this.classService.classToRGB[0]],
-          });
-        break
+      case 'overSegment': {
+        ps.push(
+          new Promise(() => {
+            let kernel = this.drawService.getKernel(5);
+            let overSegment = this.drawService.dilate(
+              this.backgroundImage,
+              kernel,
+              this.width,
+              this.height
+            );
+            PresetDraw.drawImage(
+              this.ctx,
+              overSegment,
+              this.width,
+              this.height
+            );
+            this.UICtrlService.isBusy = false
+          })
+        );
+        break;
       }
-
-      /* ------------------------------------------------------------------------------*/
-      /* Multi class presets */
-
-      //Case 6 : Multi class, every ok except class 1 (small class)
-      case 6: {
-        ps = DrawingComponent.drawCircles(this.ctx,
-          {
-            xs: [multiPositionCircle[0] / this.upscaleFactor, multiPositionCircle[1] / this.upscaleFactor, multiPositionCircle[2] / this.upscaleFactor],
-            ys: [multiPositionCircle[0] / this.upscaleFactor, multiPositionCircle[1] / this.upscaleFactor, multiPositionCircle[2] / this.upscaleFactor],
-            rs: [(multiRadiusCircle[0]) / this.upscaleFactor, (multiRadiusCircle[1]) / this.upscaleFactor, (multiRadiusCircle[2]) / this.upscaleFactor],
-            cs: [this.classService.classToRGB[0], this.classService.classToRGB[2], this.classService.classToRGB[3]],
-          });
-        break
+      case 'lowImbalance': {
+        let swapLabels = this.drawService.swapLabels(
+          this.backgroundImage,
+          [0, 0, 2, 3, 4]
+        );
+        PresetDraw.drawImage(this.ctx, swapLabels, this.width, this.height);
+        break;
       }
-
-      //Case 7 : Multi class, every ok except class 3 (big class)
-      case 7: {
-        ps = PresetDraw.drawCircles(this.ctx,
-          {
-            xs: [multiPositionCircle[0] / this.upscaleFactor, multiPositionCircle[1] / this.upscaleFactor, multiPositionCircle[2] / this.upscaleFactor],
-            ys: [multiPositionCircle[0] / this.upscaleFactor, multiPositionCircle[1] / this.upscaleFactor, multiPositionCircle[2] / this.upscaleFactor],
-            rs: [(multiRadiusCircle[0]) / this.upscaleFactor, (multiRadiusCircle[1]) / this.upscaleFactor, (multiRadiusCircle[2]) / this.upscaleFactor],
-            cs: [this.classService.classToRGB[1], this.classService.classToRGB[2], this.classService.classToRGB[0]],
-          });
-        break
+      case 'highImbalance': {
+        let swapLabels = this.drawService.swapLabels(
+          this.backgroundImage,
+          [0, 1, 2, 3, 0]
+        );
+        PresetDraw.drawImage(this.ctx, swapLabels, this.width, this.height);
+        break;
       }
-
-      //Case 8 : Wrong classes
-      case 8: {
-        ps = PresetDraw.drawCircles(this.ctx,
-          {
-            xs: [multiPositionCircle[0] / this.upscaleFactor, multiPositionCircle[1] / this.upscaleFactor, multiPositionCircle[2] / this.upscaleFactor],
-            ys: [multiPositionCircle[0] / this.upscaleFactor, multiPositionCircle[1] / this.upscaleFactor, multiPositionCircle[2] / this.upscaleFactor],
-            rs: [(multiRadiusCircle[0]) / this.upscaleFactor, (multiRadiusCircle[1]) / this.upscaleFactor, (multiRadiusCircle[2]) / this.upscaleFactor],
-            cs: [this.classService.classToRGB[2], this.classService.classToRGB[3], this.classService.classToRGB[1]],
-          });
-        break
+      case 'worstKappa': {
+        let swapLabels = this.drawService.swapLabels(
+          this.backgroundImage,
+          [4, 0, 0, 0, 0]
+        );
+        PresetDraw.drawImage(this.ctx, swapLabels, this.width, this.height);
+        break;
       }
     }
-
-    this.changeActiveClass(1)
-    Promise.all(ps).then(()=>{
-      this.slowInference()
-    })
+    this.changeActiveClass(1);
+    Promise.all(ps).then(() => {
+      this.updateGTCanvas();
+    });
   }
-
   buildGroundtruth(index: number) {
+    this.UICtrlService.isBusy = true;
+
     this.UICtrlService.currentPreset = index;
-    let promises = [];
+    var promises = new Array<Promise<void | ImageBitmap | HTMLImageElement>>();
     this.classService.setClasses([0, 1]);
+    this.imgSrc = '';
 
     this.initBackgroundConstruction();
     switch (index) {
       case 0:
-        this.imgSrc = '';
-        let radius = mediumCircle;
-        if (this.UICtrlService.currentSubPreset === 4) {
-          radius = smallCircle;
-        } else if (this.UICtrlService.currentSubPreset === 5) {
-          radius = largeCircle;
-        }
-
-        promises.push(
-          SharpBrush.drawCircle(
-            this.ctxBg,
-            256 / this.upscaleFactor,
-            256 / this.upscaleFactor,
-            radius / this.upscaleFactor,
-            this.classService.RGBFromClass(1)
-          )
+        promises = this.drawService.setCustomScenario(
+          0,
+          this.upscaleFactor,
+          this.ctxBg
         );
         break;
       case 1:
-        // TODO : I would remove the extra class here since we now have a custom option. 
-        this.classService.setClasses([0, 1, 2, 3]);
-        this.imgSrc = '';
-        promises.push(
-          SharpBrush.drawCircle(
-            this.ctxBg,
-            multiPositionCircle[0] / this.upscaleFactor,
-            multiPositionCircle[0] / this.upscaleFactor,
-            multiRadiusCircle[0] / this.upscaleFactor,
-            this.classService.RGBFromClass(1)
-          )
-        );
-        promises.push(
-          SharpBrush.drawCircle(
-            this.ctxBg,
-            multiPositionCircle[1] / this.upscaleFactor,
-            multiPositionCircle[1] / this.upscaleFactor,
-            multiRadiusCircle[1] / this.upscaleFactor,
-            this.classService.RGBFromClass(2)
-          )
-        );
-        promises.push(
-          SharpBrush.drawCircle(
-            this.ctxBg,
-            multiPositionCircle[2] / this.upscaleFactor,
-            multiPositionCircle[2] / this.upscaleFactor,
-            multiRadiusCircle[2] / this.upscaleFactor,
-            this.classService.RGBFromClass(3)
-          )
+        promises = this.drawService.setCustomScenario(
+          1,
+          this.upscaleFactor,
+          this.ctxBg
         );
         break;
       case 2:
@@ -352,52 +327,31 @@ export class DrawingComponent implements OnInit {
         );
         break;
       case 4: {
-        this.imgSrc = ''
-        this.ctxBg.fillStyle = 'black'
-        this.ctx.fillStyle = 'black'
-        this.ctxBg.fillRect(0, 0, this.width, this.height)
-        this.ctx.fillRect(0, 0, this.width, this.height)
+        this.imgSrc = '';
+        this.ctxBg.fillStyle = 'black';
+        this.ctx.fillStyle = 'black';
+        this.ctxBg.fillRect(0, 0, this.width, this.height);
+        this.ctx.fillRect(0, 0, this.width, this.height);
       }
     }
     this.changeActiveClass(1);
     this.scoreService.initConfMat();
     this.refreshBrush();
     Promise.all(promises).then(() => {
-      this.backgroundImage = this.ctxBg.getImageData(
-        0,
-        0,
-        this.width,
-        this.height
-      ).data;
-      this.changeActiveClass(1);
-      this.slowInference();
-      this.ctxVisu.drawImage(this.canvasBG.nativeElement, 0, 0);
+      this.updateGTCanvas();
     });
   }
-
-  static drawCircles(
-    ctx: CanvasRenderingContext2D,
-    options?: {
-      xs: Array<number>;
-      ys: Array<number>;
-      rs: Array<number>;
-      cs: Array<Uint8ClampedArray>;
-    }
-  ) {
-    var ps = new Array<Promise<void | ImageBitmap>>()
-    if (options) {
-      for (let i = 0; i < options?.xs.length; i++)
-        ps.push(SharpBrush.drawCircle(
-          ctx,
-          options?.xs[i],
-          options?.ys[i],
-          options?.rs[i],
-          options?.cs[i]
-        ));
-    }
-    return ps
+  updateGTCanvas() {
+    this.backgroundImage = this.ctxBg.getImageData(
+      0,
+      0,
+      this.width,
+      this.height
+    ).data;
+    this.changeActiveClass(1);
+    this.slowInference();
+    this.ctxVisu.drawImage(this.canvasBG.nativeElement, 0, 0);
   }
-
 
   private drawCustomImage(
     ctx: CanvasRenderingContext2D,
@@ -501,9 +455,8 @@ export class DrawingComponent implements OnInit {
   }
 
   addClass() {
-
-    this.classService.addClass()
-    this.scoreService.initConfMat()
+    this.classService.addClass();
+    this.scoreService.initConfMat();
   }
 
   fillOnCanvas(pos: Point2D) {
@@ -599,8 +552,8 @@ export class DrawingComponent implements OnInit {
     const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
     this.scoreService.updateConfusionMatrix(this.backgroundImage, imgData);
   }
-
   slowInference() {
+    this.UICtrlService.isBusy = true;
     this.inference();
     if (this.UICtrlService.showBoundaryMetric) {
       const imgData = this.ctx.getImageData(0, 0, this.width, this.height).data;
@@ -612,11 +565,13 @@ export class DrawingComponent implements OnInit {
         this.UICtrlService.boundarySize
       );
     }
+    this.UICtrlService.isBusy = false;
   }
 
   getCursorTransform(): string {
-    return `scale(${(1.25 * this.currentRadius) / this.initialRadius / 2
-      }) translate(-50%, -50%) `; // I have no idea why the 1.25 is needed here... To be inspected. TODO: Make it works with change of resolution
+    return `scale(${
+      (1.25 * this.currentRadius) / this.initialRadius / 2
+    }) translate(-50%, -50%) `; // I have no idea why the 1.25 is needed here... To be inspected. TODO: Make it works with change of resolution
   }
 
   changePreset(preset: number) {

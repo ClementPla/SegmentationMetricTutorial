@@ -1,4 +1,4 @@
-import { Point2D } from './utils';
+import { Point2D } from '../../utils';
 
 export class SharpBrush {
   currentBrush: ImageBitmap;
@@ -74,4 +74,7 @@ export class SharpBrush {
       this.currentBrush = imageBitmapData;
     });
   }
+
 }
+
+

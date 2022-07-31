@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Color } from '../Components/drawing/utils';
+import { Color } from '../utils';
 
 @Injectable({
   providedIn: 'root',
