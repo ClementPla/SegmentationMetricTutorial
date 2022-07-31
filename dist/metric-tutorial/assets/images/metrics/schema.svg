@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="230mm"
+   height="260mm"
+   viewBox="0 0 230 260"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="schema.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="409.06127"
+     inkscape:cy="220.26376"
+     inkscape:window-width="1902"
+     inkscape:window-height="983"
+     inkscape:window-x="11"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g28593-5" />
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient48551"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop48549" />
+    </linearGradient>
+    <rect
+       x="-453.43161"
+       y="424.40091"
+       width="193.53789"
+       height="197.68512"
+       id="rect45653" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter47145"
+       x="-6.9711359e-05"
+       y="-0.0003809275"
+       width="1.0001394"
+       height="1.0007619">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.0015166972"
+         id="feGaussianBlur47147" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#0fee14;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect882"
+       width="115"
+       height="220"
+       x="4.2790541e-07"
+       y="41.533684" />
+    <rect
+       style="fill:#d21d1b;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect882-3"
+       width="115"
+       height="220"
+       x="115"
+       y="41.533684" />
+    <g
+       id="g28593"
+       transform="translate(4.4901281,43.778749)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:12.3472px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
+         x="6.2200971"
+         y="15.874994"
+         id="text13817-9"
+         transform="scale(0.97395858,1.0267377)"><tspan
+           sodipodi:role="line"
+           id="tspan13815-4"
+           style="font-size:12.3472px;stroke-width:0.284534"
+           x="6.2200971"
+           y="15.874994">False negatives </tspan><tspan
+           sodipodi:role="line"
+           style="font-size:12.3472px;stroke-width:0.284534"
+           x="6.2200971"
+           y="31.308994"
+           id="tspan54329">(FN)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:12.3472px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
+         x="127.52944"
+         y="15.832496"
+         id="text13817-9-1"
+         transform="scale(0.97395858,1.0267377)"><tspan
+           sodipodi:role="line"
+           id="tspan13815-4-14"
+           style="font-size:12.3472px;stroke-width:0.284534"
+           x="127.52944"
+           y="15.832496">True negatives</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:12.3472px;stroke-width:0.284534"
+           x="127.52944"
+           y="31.266497"
+           id="tspan55183">(TN)</tspan></text>
+    </g>
+    <circle
+       style="fill:#ffffff;fill-opacity:0.5;stroke:#ffffed;stroke-width:0.811159;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path1036"
+       cx="116.48402"
+       cy="160.64658"
+       r="79.594421" />
+    <g
+       id="g28602"
+       transform="translate(21.328108,10.851143)">
+      <g
+         id="g19406"
+         transform="translate(5.1241963)">
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
+           x="95.397224"
+           y="140.61072"
+           id="text13817-4"
+           transform="scale(0.97395858,1.0267377)"><tspan
+             sodipodi:role="line"
+             id="tspan13815-6"
+             style="font-size:10.5833px;stroke-width:0.284534"
+             x="95.397224"
+             y="140.61072">False positives </tspan><tspan
+             sodipodi:role="line"
+             style="font-size:10.5833px;stroke-width:0.284534"
+             x="95.397224"
+             y="153.83984"
+             id="tspan51957">(FP)</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.284534"
+           x="15.003309"
+           y="140.61072"
+           id="text13817-4-3"
+           transform="scale(0.97395858,1.0267377)"><tspan
+             sodipodi:role="line"
+             id="tspan13815-6-6"
+             style="font-size:10.5833px;stroke-width:0.284534"
+             x="15.003309"
+             y="140.61072">True positives</tspan><tspan
+             sodipodi:role="line"
+             style="font-size:10.5833px;stroke-width:0.284534"
+             x="15.003309"
+             y="153.83984"
+             id="tspan50449">(TP)</tspan></text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text45651"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect45653);fill:#000000;fill-opacity:1;stroke:none" />
+    <g
+       id="g28593-5"
+       transform="translate(-1.7060485,2.6040832)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:12.3472px;line-height:1.25;font-family:sans-serif;mix-blend-mode:normal;fill:#0fee14;fill-opacity:1;stroke:none;stroke-width:0.284534;stroke-opacity:1;filter:url(#filter47145)"
+         x="35.005821"
+         y="18.409428"
+         id="text13817-9-7"
+         transform="matrix(0.97395858,0,0,1.0267377,2.0579742,1.5550981)"><tspan
+           sodipodi:role="line"
+           style="font-size:12.3472px;fill:#0fee14;fill-opacity:1;stroke:none;stroke-width:0.284534;stroke-opacity:1"
+           x="35.005821"
+           y="18.409428"
+           id="tspan54329-3">Positives</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:12.3472px;line-height:1.25;font-family:sans-serif;fill:#d21d1b;fill-opacity:1;stroke:none;stroke-width:0.284534;stroke-opacity:1"
+         x="149.17392"
+         y="19.920389"
+         id="text13817-9-1-3"
+         transform="scale(0.97395858,1.0267377)"><tspan
+           sodipodi:role="line"
+           style="font-size:12.3472px;fill:#d21d1b;fill-opacity:1;stroke:none;stroke-width:0.284534;stroke-opacity:1"
+           x="149.17392"
+           y="19.920389"
+           id="tspan55183-5">Negatives</tspan></text>
+    </g>
+  </g>
+</svg>
