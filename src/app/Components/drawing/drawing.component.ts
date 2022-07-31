@@ -135,7 +135,6 @@ export class DrawingComponent implements OnInit {
         break;
       }
       case 'perfectBoundaries': {
-        this.UICtrlService.showBoundaryMetric = true;
         let kernel = this.drawService.getKernel(
           this.UICtrlService.boundarySize
         );
@@ -151,7 +150,6 @@ export class DrawingComponent implements OnInit {
       case 'badBoundaries': {
         ps.push(
           new Promise(() => {
-            this.UICtrlService.showBoundaryMetric = true;
             let kernel = this.drawService.getKernel(
               this.UICtrlService.boundarySize
             );
