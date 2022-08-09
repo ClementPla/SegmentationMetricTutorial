@@ -6,7 +6,7 @@
     <div matTooltip="Reference" class="moving-shape circle"></div>
     <div matTooltip="Prediction" class="moving-shape square"></div>
   </div>
-  <span>
+  <p>
     <i>
       Semantic segmentation consists in classifying all the pixels of an image
       into different predefined classes. It has many usecases, in particular for
@@ -15,8 +15,8 @@
       pathological, have many shapes and sizes. A lot of research is dedicated
       to developping models for automatically segmenting these.
     </i>
-  </span>
-  <span>
+  </p>
+  <p>
     This website has been conceived to provide an intuitive understanding of
     different segmentation metrics. Two canvases are provided to draw a
     reference and a <i>simulated</i> prediction. Metrics are computed on the
@@ -31,14 +31,24 @@
     scenarios and see how the metrics behave. Create your own groundtruth. Check
     the confusion matrices and observe the metrics per class or in their micro
     and macro averages.
-  </span>
-  <span>
+  </p>
+  <p>
     This tool was made to provide total freedom to the experimenter. Feel free
     to twist it for your own usecase !
-  </span>
+  </p>
   <button class="start" mat-raised-button routerLink="/main" color="accent">
     START
   </button>
+  <div class="spacer"></div>
+
+
+  <div class="warning-panel">
+    <h3>Warning!</h3>
+    <p>Even if most functionalities <i>should</i> work on mobile devices, this tool is meant to be used on computers.
+      Most of the pedagogical content is provided by hovering over elements.
+    </p>
+  </div>
+
 
   <div class="spacer"></div>
   <mat-divider></mat-divider>
@@ -52,6 +62,8 @@
   <div class="spacer"></div>
   <mat-divider></mat-divider>
   <div class="spacer"></div>
+
+
 
   <h2>Sources</h2>
   <i

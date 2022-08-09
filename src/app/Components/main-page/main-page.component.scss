@@ -9,35 +9,45 @@ h1{
   }
 }
 
+@media screen and (max-width: 800px) {
+  mat-toolbar button{
+    font-size: 0;
+  }
+}
+
+mat-toolbar button{
+  max-width: 100px;
+
+}
+
+
+mat-toolbar h1{
+  margin: auto;
+}
+
+mat-toolbar{
+  justify-content: space-between;
+}
+
 mat-drawer{
   padding: 1rem;
-  width: fit-content;
 }
 
 mat-drawer-container{
   height: calc(100% - 64px);
 }
 
-mat-button-toggle-group{
-  width: fit-content;
-}
-
 .options{
   gap: 0.5rem;
 }
 
-mat-toolbar{
-  position: sticky;
-}
-
 .metric-drawer{
-  max-width: 25%;
-  width:fit-content;
+  max-width: 30vw;
   overflow-x: scroll;
-
   font-size: small;
 }
 
 .spacer{
   padding: 15px;
 }
+

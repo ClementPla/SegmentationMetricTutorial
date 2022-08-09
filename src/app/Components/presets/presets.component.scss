@@ -1,34 +1,93 @@
 @import "../../../variables.scss";
 
 
+$iconWidth: min(2rem, 20px);
+
+
+.btn-icon{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -2;
+  opacity: 30%;
+}
+
+.hide-text:hover  .btn-icon{
+  opacity: 95%;
+}
+@media screen and (max-width: 1200px) {
+  .hide-text{
+    font-size: 0;
+  }
+  .btn-icon{
+    left: 50%;
+    opacity: 100%;
+  }
+}
+
+
+.circle{
+  border-radius: 50%;
+}
+.gt{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: $iconWidth;
+  aspect-ratio: 1;
+  background-color: $light-green;
+  transform: translate(0, -50%);
+}
+.pred{
+  position: absolute;
+
+  top: 0%;
+  left: 0%;
+  width: $iconWidth;
+  aspect-ratio: 1;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  top: 0%;
+  background-color: $light-red;
+  transform: translateY(-50%);
+  animation-name: rightToLeft;
+  animation-duration: 2s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  opacity: 90%;
+
+}
+#midIoUPred{
+  border-radius: 0;
+  height: calc($iconWidth / 2)
+}
+#perfectBoundary{
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: inset 0px 0px 0px 4px $light-red;
+}
+#underSegmented{
+  width: calc($iconWidth / 2)
+}
+#overSegmented{
+  width: calc($iconWidth * 1.5 )
+}
+@keyframes rightToLeft {
+  from {transform: translate(0, -50%);}
+  to {transform: translate(calc(-1 * $iconWidth), -50%);}
+}
+
+
 .presets-buttons {
     display: flex;
-    margin: 2px;
     flex-direction: row;
-    align-items: stretch;
-    --height: 40px;
-    height: var(--height);
+    flex-wrap: wrap;
+
 }
 
 .blur-tooltip {
     backdrop-filter: blur(5px);
 }
 
-button {
-    width: 100%;
+.presets-buttons > * {
+  flex-grow: 2;
 }
 
-.presets-group-0 > button {
-    background-color: $light-gray;
-    border-color: $dark-gray;
-}
-
-.presets-group-1 > button {
-    background-color: $light-green;
-    border-color: $dark-green;
-}
-
-.presets-group-2 > button {
-    background-color: $light-blue;
-    border-color: $dark-blue;
-}

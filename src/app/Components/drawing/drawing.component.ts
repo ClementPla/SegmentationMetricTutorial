@@ -18,7 +18,7 @@ import { DrawService } from 'src/app/Services/draw.service';
 })
 export class DrawingComponent implements OnInit {
   @Input() showTooltip: boolean;
-  @Input() overlayOpacity: number = 80;
+  @Input() overlayOpacity: number = 65;
 
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -39,7 +39,7 @@ export class DrawingComponent implements OnInit {
   height = this.width;
   upscaleFactor = this.canvasScreenSize / this.width;
 
-  initialRadius = 5;
+  initialRadius = 10;
 
   currentRadius = this.initialRadius;
   cursorPosition: Point2D = { x: 0, y: 0 };
@@ -263,7 +263,6 @@ export class DrawingComponent implements OnInit {
   }
   buildGroundtruth(index: number) {
     this.UICtrlService.isBusy = true;
-
     this.UICtrlService.currentPreset = index;
     var promises = new Array<Promise<void | ImageBitmap | HTMLImageElement>>();
     this.classService.setClasses([0, 1]);
@@ -397,15 +396,14 @@ export class DrawingComponent implements OnInit {
     moveEvents.subscribe({
       next: (event: MouseEvent | TouchEvent) => {
         const rect = canvas.getBoundingClientRect();
-        var pos = this.getClientPosition(event);
-        cursorPoint.x = pos.clientX - rect.left;
-        cursorPoint.y = pos.clientY - rect.top;
+        var pos = this.getClientPosition(event)
+        cursorPoint.x = pos.clientX - rect.left
+        cursorPoint.y = pos.clientY - rect.top
       },
     });
     startEvents
       .pipe(
         switchMap((e) => {
-          e.preventDefault();
           const rect = canvas.getBoundingClientRect();
           const pos = this.getCoord(e, rect);
           hasChanged = true;
@@ -444,11 +442,23 @@ export class DrawingComponent implements OnInit {
     });
   }
 
+  getClientPosition(event: TouchEvent | MouseEvent) {
+    event.preventDefault();
+    if ('touches' in event) {
+      return {
+        clientX: event.touches[0].clientX,
+        clientY: event.touches[0].clientY,
+      };
+    } else {
+      return { clientX: event.clientX, clientY: event.clientY };
+    }
+  }
+
   getCoord(event: MouseEvent | TouchEvent, rect: DOMRect) {
     var pt = this.getClientPosition(event);
     return {
-      x: (pt.clientX - rect.left) / this.upscaleFactor,
-      y: (pt.clientY - rect.top) / this.upscaleFactor,
+      x: (pt.clientX - rect.left) * (this.width/rect.width),
+      y: (pt.clientY - rect.top) * (this.width/rect.width),
     };
   }
 
@@ -515,18 +525,6 @@ export class DrawingComponent implements OnInit {
     this.drawTool = tool;
   }
 
-  getClientPosition(event: TouchEvent | MouseEvent) {
-    event.preventDefault();
-    if ('touches' in event) {
-      return {
-        clientX: event.touches[0].clientX,
-        clientY: event.touches[0].clientY,
-      };
-    } else {
-      return { clientX: event.clientX, clientY: event.clientY };
-    }
-  }
-
   private drawOnGTCanvas(prevPos: Point2D, currentPos: Point2D) {
     this.drawOnCanvas(this.ctxBg, prevPos, currentPos);
     this.drawOnCanvas(this.ctxVisu, prevPos, currentPos);
@@ -571,13 +569,14 @@ export class DrawingComponent implements OnInit {
     this.UICtrlService.isBusy = false;
   }
 
-  getCursorTransform(): string {
-    return `scale(${
-      (1.25 * this.currentRadius) / this.initialRadius / 2
-    }) translate(-50%, -50%) `; // I have no idea why the 1.25 is needed here... To be inspected. TODO: Make it works with change of resolution
+  getCursorTransform(): number {
+    const rect = this.canvas.nativeElement.getBoundingClientRect();
+    let scaleFactor = (rect.width/this.width)*this.currentRadius*2
+    return scaleFactor
   }
 
   changePreset(preset: number) {
+
     this.UICtrlService.changeCurrentPreset(preset);
     this.buildGroundtruth(preset);
   }

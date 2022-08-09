@@ -1,39 +1,57 @@
 <div class="preset-container" [ngSwitch]="UICtrlService.currentPreset">
   <div class="presets-buttons">
     <button
+      class="hide-text"
       mat-raised-button
       color="primary"
       (click)="getPreset('perfect')"
       matTooltipClass="blur-tooltip"
     >
+    <div class="btn-icon">
+      <div class="circle gt"></div>
+      <div id="perfect" class="circle pred"></div>
+    </div>
       Perfect segmentation
     </button>
     <button
+      class="hide-text"
       mat-raised-button
       color="primary"
       (click)="getPreset('halfSensitivity')"
       matTooltipClass="blur-tooltip"
     >
+    <div class="btn-icon">
+      <div id="midIoUGT" class="gt"></div>
+      <div id="midIoUPred" class="circle pred"></div>
+    </div>
       50% IoU
     </button>
     <button
+      class="hide-text"
       mat-raised-button
       color="primary"
       (click)="getPreset('swapLabels')"
       matTooltipClass="blur-tooltip"
     >
+    <mat-icon>shuffle_on</mat-icon>
       Shuffle predicted labels
     </button>
     <button
+      class="hide-text"
       mat-raised-button
       color="primary"
       (click)="getPreset('perfectBoundaries')"
       matTooltip="We achieve high precision and specificity while only keeping the boundaries of the object. The accuracy is high on account of very few FP or FN in the segmentation. "
       matTooltipClass="blur-tooltip"
     >
+    <div class="btn-icon">
+      <div class="circle gt"></div>
+      <div id="perfectBoundary" class="circle pred"></div>
+    </div>
       Perfect boundaries
     </button>
     <button
+      class="hide-text"
       mat-raised-button
       color="primary"
       (click)="getPreset('badBoundaries')"
@@ -41,9 +59,14 @@
       matTooltip="When the segmentation is conservative, there are very few FP,
     and we achieve high precision and specificity."
     >
+    <div class="btn-icon">
+      <div class="circle gt"></div>
+      <div id="underSegmented" class="circle pred"></div>
+    </div>
       Under segmented
     </button>
     <button
+      class="hide-text"
       mat-raised-button
       color="primary"
       (click)="getPreset('overSegment')"
@@ -51,6 +74,10 @@
       matTooltip="When the segmentation is too coarse, the TP are maximized
     and FN minimized, we achieve high sensitivity."
     >
+    <div class="btn-icon">
+      <div class="circle gt"></div>
+      <div id="overSegmented" class="circle pred"></div>
+    </div>
       Over segmented
     </button>
   </div>

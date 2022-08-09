@@ -25,6 +25,11 @@ span{
 .container{
   width: 100%;
 }
+.warning-panel{
+  background-color: lightyellow;
+  border-radius: 0.25em;
+  border: solid gray 1px
+}
 
 .animation-container{
   margin: auto;

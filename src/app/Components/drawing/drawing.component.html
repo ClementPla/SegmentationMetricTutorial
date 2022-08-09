@@ -1,13 +1,21 @@
 <mat-toolbar color="accent" class="mat-toolbar-height">
   <mat-toolbar-row>
-    <button mat-button (click)="buildGroundtruth(0)">
-      Binary example
+    <span class="flexExpand"></span>
+
+    <button class='long-text' mat-button (click)="buildGroundtruth(0)">
+      Binary
+    </button>
+    <button class='short-text' mat-button (click)="buildGroundtruth(0)">
+      Bin.
     </button>
     <button mat-button (click)="buildGroundtruth(1)">
-      Multi class example
+      Multi-class
     </button>
-    <button mat-button (click)="buildGroundtruth(2)">
+    <button class='long-text' mat-button (click)="buildGroundtruth(2)">
       Optical Coherence Tomography
+    </button>
+    <button class='short-text' mat-button (click)="buildGroundtruth(2)">
+      OCT
     </button>
     <button mat-button (click)="buildGroundtruth(3)">
       Fundus
@@ -15,29 +23,29 @@
     <button mat-button (click)="buildGroundtruth(4)">
       Custom
     </button>
+    <span class="flexExpand"></span>
   </mat-toolbar-row>
 </mat-toolbar>
 
+<div >
 <div class="central-container">
   <div *ngIf="UICtrlService.isBusy" class="spinning-wheel">
     <mat-spinner></mat-spinner>
   </div>
-
-
   <app-presets (setExampleByID)="setupPresetExample($event)"></app-presets>
 
-  <div class="panel-options">
+  <div class="panel-options flex-horizontal">
     <div class="verticalGroup">
       <label>Tools</label>
       <mat-button-toggle-group>
-        <mat-button-toggle [checked]="drawTool == 'draw'" (change)="changeTool('draw')" class="sizeButton"
+        <mat-button-toggle [checked]="drawTool == 'draw'" (change)="changeTool('draw')"
           matTooltip="Draw on the reference or on the prediction images">
           <mat-icon>brush</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle [checked]="drawTool == 'drag'" (change)="changeTool('drag')" class="sizeButton"
+        <mat-button-toggle [checked]="drawTool == 'drag'" (change)="changeTool('drag')"
           matTooltip="Drag the cursor and see the evolution of the metrics while doing so (make sure to deactivate performance mode)">
           Drag</mat-button-toggle>
-        <mat-button-toggle [checked]="drawTool == 'fill'" (change)="changeTool('fill')" class="sizeButton"
+        <mat-button-toggle [checked]="drawTool == 'fill'" (change)="changeTool('fill')"
           matTooltip="Fill a region defined by the groundtruth's segmentation with the active class (only applicable on prediction image)">
           <mat-icon>colorize</mat-icon>
         </mat-button-toggle>
@@ -59,12 +67,11 @@
       </button>
     </div>
 
-    <div id="spacer"></div>
     <div class="verticalGroup growFlex">
-      <label>Choose the active class</label>
+      <label>Class</label>
 
-      <mat-button-toggle-group id="classSelector" class="growFlex" [value]="classService.currentClass">
-        <mat-button-toggle class="growFlex sizeButton" mat-list-item *ngFor="
+      <mat-button-toggle-group id="classSelector" [value]="classService.currentClass">
+        <mat-button-toggle mat-list-item *ngFor="
             let class of classService.classes;
             let i = index;
             last as last
@@ -83,21 +90,25 @@
     <div class="canvas-container" [style.display]="UICtrlService.showReference ? 'initial' : 'none'">
       <div class="canvas-label">Reference</div>
       <div #cursor class="cursor" [style.top.px]="cursorPositionGT.y" [style.left.px]="cursorPositionGT.x"
-        [style.transform]="getCursorTransform()">
-        <div class="cursor-radius" [style.border-color]="
+      [style.width.px]="getCursorTransform()"
+        >
+        <div class="cursor-radius"
+
+        [style.border-color]="
             classService.getRGBStyleFromClass(classService.currentClass)
           "></div>
         <mat-icon *ngIf="drawTool == 'draw'">brush</mat-icon>
       </div>
 
-      <canvas #canvasVisu id="canvasVisu" [style.opacity.%]="overlayOpacity"></canvas>
+      <canvas #canvasVisu id="canvasVisu"></canvas>
       <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
     </div>
 
     <div class="canvas-container">
       <div class="canvas-label">Prediction</div>
       <div #cursor class="cursor" [style.top.px]="cursorPosition.y" [style.left.px]="cursorPosition.x"
-        [style.transform]="getCursorTransform()">
+      [style.width.px]="getCursorTransform()"
+        >
         <div class="cursor-radius" [style.border-color]="
             classService.getRGBStyleFromClass(classService.currentClass)
           "></div>
@@ -108,8 +119,10 @@
       <canvas #canvas id="canvasDraw" [style.opacity.%]="overlayOpacity"></canvas>
       <canvas #canvasGroundtruth id="canvasGroundtruth" [style.display]="
           UICtrlService.showOverlayReference ? 'initial' : 'none'
-        "></canvas>
+        ">
+      </canvas>
       <img class="imgBackground" [src]="imgSrc" *ngIf="imgSrc != ''" />
     </div>
   </div>
 </div>
+

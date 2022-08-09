@@ -97,6 +97,11 @@ export class DrawService {
             output[index + 2] = rgb[2];
           }
         }
+        else{
+          output[index] = img[index];
+          output[index + 1] = img[index+1];
+          output[index + 2] = img[index+2];
+        }
       }
     }
     return output;
