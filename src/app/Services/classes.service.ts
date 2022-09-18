@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Color } from '../utils';
+import { ScoresService } from './scores.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,19 @@ export class ClassesService {
   currentClass: number;
   constructor() {}
 
+  setCurrentClass(index:number){
+    this.currentClass = index
+
+  }
   getClassColor(index: number, normalize:boolean=true): Uint8ClampedArray {
     if (index == 0) {
       var hsl = [0, 0, 0];
-    } else {
+    }
+    else {
       if(normalize)
         var h = (index)  * 360 / this.classes.length;
       else
-        var h = (index + 1)%360;
+        var h = (index + 1) % 360;
 
       let s = 50;
       let l = 50;
@@ -52,10 +58,9 @@ export class ClassesService {
   }
 
   addClass(){
-    if(this.classes.length<8){
+    if(this.classes.length<12){
       this.classes.push(this.classes.length)
       this.classToRGB.push(this.getClassColor(this.classes.length*80, false))
     }
-
   }
 }

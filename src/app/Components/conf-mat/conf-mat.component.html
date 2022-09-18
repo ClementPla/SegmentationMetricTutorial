@@ -7,7 +7,7 @@
     <tr>
       <th
         *ngFor="let class of classService.classes; let i = index"
-        (mouseenter)="changeActiveClass.emit(i)"
+        (mouseenter)="changeActiveClass(i)"
       >
         {{ class }}
       </th>
@@ -18,7 +18,7 @@
         let isFirst = first;
         let row = index
       "
-      (mouseenter)="changeActiveClass.emit(row)"
+      (mouseenter)="changeActiveClass(row)"
     >
       <th
         class="predictedCell"
@@ -45,7 +45,7 @@
     <tr>
       <th
         *ngFor="let class of classService.classes; let i = index"
-        (mouseenter)="changeActiveClass.emit(i)"
+        (mouseenter)="changeActiveClass(i)"
       >
         {{ class }}
       </th>
@@ -56,7 +56,7 @@
         let isFirst = first;
         let row = index
       "
-      (mouseenter)="changeActiveClass.emit(row)"
+      (mouseenter)="changeActiveClass(row)"
     >
       <th
         class="predictedCell"

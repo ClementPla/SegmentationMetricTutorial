@@ -1,5 +1,7 @@
 @import "variables";
 
+$panelToolGap: 1em;
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%;
@@ -11,6 +13,15 @@ body
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: $light-light-gray;
 
+}
+
+.panel-options {
+  width: 100%;
+  gap: $panelToolGap;
+  flex-wrap: wrap;
+  mat-slider {
+    width: 100%;
+  }
 }
 
 .flex-horizontal{
@@ -37,4 +48,19 @@ body
 
 .flexExpand {
   flex: 1 1 auto;
+}
+
+#classSelector{
+  border: none;
+  flex-wrap: wrap;
+
+}
+#classSelector .mat-button-toggle-checked {
+  filter: brightness(1);
+  border: white 1px solid;
+}
+
+#classSelector mat-button-toggle {
+  filter: brightness(0.5);
+  width: fit-content;
 }

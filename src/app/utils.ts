@@ -3,6 +3,29 @@ export interface Point2D{
   y:number
 }
 
+export function colorScore(score: number | undefined) {
+  if (score == undefined) {
+    return '';
+  }
+
+  let percent = score > 0 ? score * 100 : 0;
+  let h = 359;
+  let s = 60;
+  let l = 0;
+
+  if (percent < 25) {
+    l = percent + 12;
+  } else if (percent < 50) {
+    h = 25;
+    l = percent;
+  } else {
+    h = percent;
+    l = Math.min(percent, 50);
+  }
+  let rgb = Color.getRGBfromHSL([h, s, l]);
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
 export class Color{
   static getRGBfromHSL(hsl:Array<number>):Uint8ClampedArray{
     var r, g, b;

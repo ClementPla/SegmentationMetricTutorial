@@ -18,7 +18,6 @@ import { DrawService } from 'src/app/Services/draw.service';
 })
 export class DrawingComponent implements OnInit {
   @Input() showTooltip: boolean;
-  @Input() overlayOpacity: number = 65;
 
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -56,6 +55,7 @@ export class DrawingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.UICtrlService.isSegmentation = true;
     this.UICtrlService.setInferenceFunction(this.slowInference.bind(this));
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     const canvasBackground: HTMLCanvasElement = this.canvasBG.nativeElement;
@@ -334,6 +334,7 @@ export class DrawingComponent implements OnInit {
         this.ctx.fillStyle = 'black';
         this.ctxBg.fillRect(0, 0, this.width, this.height);
         this.ctx.fillRect(0, 0, this.width, this.height);
+        this.classService.setClasses([0, 1])
       }
     }
     this.changeActiveClass(1);
@@ -502,8 +503,8 @@ export class DrawingComponent implements OnInit {
     });
   }
 
-  changeActiveClass(class_index: number) {
-    this.classService.currentClass = class_index;
+  changeActiveClass(classIndex: number) {
+    this.classService.currentClass = classIndex;
     this.scoreService.updateStateMatrix();
     this.refreshBrush();
   }

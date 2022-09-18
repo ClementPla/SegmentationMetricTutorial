@@ -1,3 +1,38 @@
+export class Score {
+  score: number;
+  name: string;
+  perClassScore: Array<number>;
+  macroAverage: number;
+  microAverage: number;
+  constructor(setting: {
+    name: string;
+    score?: number;
+    perClassScore?: Array<number>;
+    macroAverage?: number;
+    microAverage?: number;
+  })
+  {
+    this.name = setting.name;
+    if (setting.score != undefined) this.score = setting.score;
+    if (setting.perClassScore) this.perClassScore = setting.perClassScore;
+    if (setting.macroAverage != undefined)
+      this.macroAverage = setting.macroAverage;
+    if (setting.microAverage != undefined)
+      this.microAverage = setting.microAverage;
+  }
+  update(other:{score?:number, perClassScore?:Array<number>; macroAverage?:number, microAverage?:number}){
+    if (other.score != undefined) this.score = other.score;
+    if (other.perClassScore) this.perClassScore = other.perClassScore;
+    if (other.macroAverage != undefined)
+      this.macroAverage = other.macroAverage;
+    if (other.microAverage != undefined)
+      this.microAverage = other.microAverage;
+  }
+  format(){
+    return {score:this.score, perClassScore:this.perClassScore, macroAverage:this.macroAverage, microAverage:this.microAverage}
+  }
+}
+
 export class Stats {
   cm: Array<Array<number>>;
   n_classes: number;
@@ -170,25 +205,4 @@ export class Stats {
   }
 }
 
-export class Score {
-  score: number;
-  name: string;
-  perClassScore: Array<number>;
-  macroAverage: number;
-  microAverage: number;
-  constructor(setting: {
-    name: string;
-    score?: number;
-    perClassScore?: Array<number>;
-    macroAverage?: number;
-    microAverage?: number;
-  }) {
-    this.name = setting.name;
-    if (setting.score != undefined) this.score = setting.score;
-    if (setting.perClassScore) this.perClassScore = setting.perClassScore;
-    if (setting.macroAverage != undefined)
-      this.macroAverage = setting.macroAverage;
-    if (setting.microAverage != undefined)
-      this.microAverage = setting.microAverage;
-  }
-}
+

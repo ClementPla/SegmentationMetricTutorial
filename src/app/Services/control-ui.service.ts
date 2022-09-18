@@ -13,6 +13,8 @@ export class ControlUIService {
 
   showMetrics: boolean = true;
 
+  showBarPlot: boolean = true;
+
   performanceMode: boolean = false;
   showPerClassMetrics: boolean = false;
 
@@ -25,7 +27,9 @@ export class ControlUIService {
   currentPreset:number=0;
   currentSubPreset?:number=0;
   boundarySize:number=5;
+  overlayOpacity:number = 80;
 
+  isSegmentation=true;
   isBusy=false;
 
   pos: Point2D = {x:-500, y:-500};
@@ -33,12 +37,12 @@ export class ControlUIService {
   private updateInference:() => void
   constructor() {}
 
-  activate(event: MouseEvent, type: string) {
+  activateTooltip(event: MouseEvent, type: string) {
     this.pos = { x: event.clientX-475-event.offsetX, y: event.clientY-event.offsetY};
     this.showTooltip = true && this.tooltipsActivated;
     this.tooltipType = type;
   }
-  deactivate() {
+  deactivateTooltip() {
     this.showTooltip = false;
   }
 
@@ -63,6 +67,9 @@ export class ControlUIService {
   }
   toggleReferenceDisplay() {
     this.showReference = !this.showReference;
+  }
+  toggleBarPlot(){
+    this.showBarPlot = !this.showBarPlot;
   }
   toggleOverlayReference() {
     this.showOverlayReference = !this.showOverlayReference;

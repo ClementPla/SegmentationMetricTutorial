@@ -30,7 +30,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div >
+
 <div class="central-container">
   <div *ngIf="UICtrlService.isBusy" class="spinning-wheel">
     <mat-spinner></mat-spinner>
@@ -119,7 +119,7 @@
         <mat-icon *ngIf="drawTool == 'fill'">colorize</mat-icon>
       </div>
 
-      <canvas #canvas id="canvasDraw" [style.opacity.%]="overlayOpacity"></canvas>
+      <canvas #canvas id="canvasDraw" [style.opacity.%]="UICtrlService.overlayOpacity"></canvas>
       <canvas #canvasGroundtruth id="canvasGroundtruth" [style.display]="
           UICtrlService.showOverlayReference ? 'initial' : 'none'
         ">

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ClassesService } from './classes.service';
 import { shuffle } from '../utils';
-import { SharpBrush } from '../Components/drawing/drawtools';
+import { SharpBrush } from '../Components/Segmentation/drawtools';
 @Injectable({
   providedIn: 'root',
 })

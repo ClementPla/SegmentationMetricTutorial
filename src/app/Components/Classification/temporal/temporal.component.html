@@ -1,0 +1,123 @@
+<div class="panel-options flex-horizontal">
+  <div class="verticalGroup growFlex">
+    <label>Class</label>
+    <mat-button-toggle-group
+      id="classSelector"
+      [value]="classService.currentClass"
+    >
+      <mat-button-toggle
+        mat-list-item
+        *ngFor="let class of classService.classes; let i = index; last as last"
+        [value]="i"
+        (click)="changeActiveClass(i)"
+        [style.background-color]="classService.getRGBStyleFromClass(i)"
+      >
+        {{ class }}
+      </mat-button-toggle>
+      <button
+        mat-button
+        (click)="addClass()"
+        matTooltip="Click to add one more class"
+      >
+        <mat-icon>plus_one</mat-icon>
+      </button>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="verticalGroup">
+    <mat-button-toggle-group>
+      <mat-button-toggle
+        [checked]="tool == 'grab'"
+        (change)="changeTool('grab')"
+        matTooltip=""
+      >
+        <mat-icon>pan_tool</mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle
+        [checked]="tool == 'cut'"
+        (change)="changeTool('cut')"
+        matTooltip=""
+      >
+        <mat-icon>unfold_less</mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle
+        [checked]="tool == 'fill'"
+        (change)="changeTool('fill')"
+        matTooltip=""
+      >
+        <mat-icon>colorize</mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle
+        [checked]="tool == 'delete'"
+        (change)="changeTool('delete')"
+        matTooltip=""
+      >
+        <mat-icon>delete</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="verticalGroup growFlex">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Number of frames</mat-label>
+        <input type="number" matInput
+               placeholder="20000" [(ngModel)]="nFrames" name="nFrames" (input)="updateScore()">
+      </mat-form-field>
+    </form>
+
+  </div>
+</div>
+<div class="timephase">
+  <label for="gt"> Groundtruth</label>
+  <div id="gt" class="horizontal-container" (mouseleave)="stopDragging()">
+    <div
+      *ngFor="let phase of listPhaseGt; let isLast = last"
+      class="phase"
+      [style.width.%]="phase.width"
+      [style.left.%]="phase.start"
+      (mouseup)="stopDragging()"
+      (mousedown)="phaseAction($event, phase, true)"
+      (mousemove)="dragPhase($event)"
+      [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
+      [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
+    >
+      <div
+        *ngIf="!isLast"
+        class="cursor"
+        (mousedown)="startDragging($event, phase)"
+        (mousemove)="dragPhase($event)"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<div class="timephase">
+  <label for="pred"> Prediction</label>
+  <div
+    id="timephase"
+    class="horizontal-container"
+    (mouseleave)="stopDragging()"
+  >
+    <div
+      *ngFor="let phase of listPhasePrediction; let isLast = last"
+      class="phase"
+      [style.width.%]="phase.width"
+      [style.left.%]="phase.start"
+      (mouseup)="stopDragging()"
+      (mousedown)="phaseAction($event, phase)"
+      (mousemove)="dragPhase($event)"
+      [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
+      [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
+    >
+      <div
+        *ngIf="!isLast"
+        class="cursor"
+        (mousedown)="startDragging($event, phase)"
+        (mousemove)="dragPhase($event)"
+      ></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+.horizontal-container{
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 50px;
+  align-items: center;
+  min-width: 50vw;
+}
+.verticalGroup{
+  margin: auto;
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+}
+
+.phase{
+  position: absolute;
+  height: 100%;
+  text-align: center;
+}
+.cursor{
+  --width: 4px;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  width: var(--width);
+  background-color: black;
+  cursor:grab;
+  z-index: 2;
+
+}
+.cursor::before,.cursor::after{
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background-color: black;
+  aspect-ratio: 1;
+  width: 6px;
+  left: 0;
+  z-index: 2;
+  transform: translate(calc(-50% + var(--width) / 2), 0);
+
+}
+cursor::after{
+  top: -3px;
+}
+.cursor::before{
+  bottom: 0;
+}

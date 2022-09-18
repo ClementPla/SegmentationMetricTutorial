@@ -10,7 +10,9 @@
     <mat-icon>menu</mat-icon>
     Options
   </button>
-  <h1><a routerLink="/welcome">Segmentation Metrics</a></h1>
+  <h1 *ngIf="UICtrlService.isSegmentation"><a routerLink="/welcome">Segmentation Metrics</a></h1>
+  <h1 *ngIf="!UICtrlService.isSegmentation"><a routerLink="/welcome">Classification Metrics</a></h1>
+
   <button
     mat-button
     aria-label="Example icon-button with menu icon"
@@ -25,6 +27,7 @@
 <mat-drawer-container class="drawer-container" hasBackdrop="false" autosize="true">
   <mat-drawer #optionsDrawer opened="true" mode="side">
     <div class="flex-vertical options">
+      <div *ngIf="UICtrlService.isSegmentation" class="flex-vertical options">
       <h2>Drawing</h2>
       <mat-slide-toggle
         class="example-margin"
@@ -70,6 +73,7 @@
       ></mat-slider>
 
       <mat-divider></mat-divider>
+    </div>
       <h2>Metrics</h2>
 
       <mat-slide-toggle
@@ -91,6 +95,17 @@
       >
         Metrics
       </mat-slide-toggle>
+
+      <mat-slide-toggle
+        class="example-margin"
+        [checked]="UICtrlService.showBarPlot"
+        (change)="UICtrlService.toggleBarPlot()"
+        matTooltip="Show the bar plot of selected metrics"
+        [matTooltipPosition]="'right'"
+      >
+        Bar plots
+      </mat-slide-toggle>
+
       <mat-checkbox
         *ngIf="UICtrlService.showMetrics"
         color="accent"
@@ -104,7 +119,7 @@
       </mat-checkbox>
 
       <mat-checkbox
-        *ngIf="UICtrlService.showMetrics"
+        *ngIf="UICtrlService.showMetrics && UICtrlService.isSegmentation"
         color="warn"
         class="example-margin"
         [checked]="UICtrlService.showBoundaryMetric"
@@ -153,7 +168,7 @@
   </mat-drawer>
 
   <mat-drawer-content>
-    <app-drawing [overlayOpacity]="overlayOpacity"></app-drawing>
+    <router-outlet ></router-outlet>
   </mat-drawer-content>
 
   <mat-drawer
@@ -163,9 +178,13 @@
     mode="side"
     position="end"
   >
+  <app-bar-plot
+  *ngIf="UICtrlService.showBarPlot"
+  ></app-bar-plot>
+  <mat-divider></mat-divider>
+
     <app-metrics
       *ngIf="UICtrlService.showMetrics"
-      (changeActiveClass)="changeActiveClass($event)"
     ></app-metrics>
 
     <div class="spacer"></div>
@@ -174,7 +193,6 @@
 
     <app-conf-mat
       *ngIf="UICtrlService.showConfMat"
-      (changeActiveClass)="changeActiveClass($event)"
     ></app-conf-mat>
   </mat-drawer>
 </mat-drawer-container>

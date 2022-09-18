@@ -10,10 +10,13 @@ import { ScoresService } from 'src/app/Services/scores.service';
 })
 export class ConfMatComponent implements OnInit {
 
-  @Output() changeActiveClass = new EventEmitter<number>();
-
   constructor(public scoresService:ScoresService, public classService:ClassesService, public UICtrlService:ControlUIService) { }
 
   ngOnInit(): void {
+  }
+
+  changeActiveClass(index:number){
+    this.classService.setCurrentClass(index);
+    this.scoresService.updateStateMatrix();
   }
 }

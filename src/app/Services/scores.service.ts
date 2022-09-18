@@ -3,7 +3,11 @@ import { Score, Stats } from '../statistic';
 import { ClassesService } from './classes.service';
 import { ControlUIService } from './control-ui.service';
 import { DrawService } from './draw.service';
-
+import { colorScore } from '../utils';
+export interface SelectedScore {
+  score: Score;
+  description: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -12,14 +16,23 @@ export class ScoresService {
   visibleScores: Array<boolean>;
   confusionMatrix: Array<Array<number>>;
   stateCMatrix: Array<Array<string>>;
+  selectedScores: Array<SelectedScore> = new Array<SelectedScore>();
 
-  constructor(private classService: ClassesService,
-    private UICtrlService:ControlUIService,
-    private drawService:DrawService) {}
+  constructor(
+    private classService: ClassesService,
+    private UICtrlService: ControlUIService,
+    private drawService: DrawService
+  ) {}
 
   getScores() {
     return this.scores;
   }
+
+  colorScore(score:number|undefined){
+    return colorScore(score);
+  }
+
+
 
   setScores(scores: Array<Score>) {
     this.scores = scores;
@@ -27,8 +40,31 @@ export class ScoresService {
   }
 
   updateScore() {
-    let statsComputer = new Stats(this.confusionMatrix, this.UICtrlService.ignoreFirstClassMetric);
-    this.setScores(statsComputer.updateScore());
+    let statsComputer = new Stats(
+      this.confusionMatrix,
+      this.UICtrlService.ignoreFirstClassMetric
+    );
+
+    let newScores = statsComputer.updateScore();
+    if (this.scores) {
+      let existingScoresNames: Array<string> = this.scores.map<string>(
+        (element) => {
+          return element.name;
+        }
+      );
+      for (let i = 0; i < newScores.length; i++) {
+        let name: string = newScores[i].name;
+        let indexOf = existingScoresNames.indexOf(name);
+        if (indexOf >= 0) {
+          this.scores[indexOf].update(newScores[i]);
+        } else {
+          this.scores.push(newScores[i]);
+        }
+      }
+      this.setScores(this.scores);
+    } else {
+      this.setScores(newScores);
+    }
   }
 
   initConfMat() {
@@ -69,6 +105,22 @@ export class ScoresService {
     this.initConfMat();
     this.computeConfMat(img1, img2, this.confusionMatrix);
 
+    this.updateScore();
+  }
+  computeConfMatFromArray(
+    pred: Array<number>,
+    gt: Array<number>,
+    confMat: Array<Array<number>>
+  ) {
+    for (let i = 0; i < pred.length; i++) {
+      let c_pred = pred[i];
+      let c_gt = gt[i];
+      confMat[c_pred][c_gt] += 1;
+    }
+  }
+  updateConfusionMatrixFromArray(pred: Array<number>, gt: Array<number>) {
+    this.initConfMat();
+    this.computeConfMatFromArray(pred, gt, this.confusionMatrix);
     this.updateScore();
   }
 
@@ -138,6 +190,4 @@ export class ScoresService {
     });
     this.setScores(this.scores);
   }
-
-
 }

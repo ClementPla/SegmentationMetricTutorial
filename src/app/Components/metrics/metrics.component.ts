@@ -2,7 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ClassesService } from 'src/app/Services/classes.service';
 import { ControlUIService } from 'src/app/Services/control-ui.service';
 import { ScoresService } from 'src/app/Services/scores.service';
-import { Color } from '../../utils';
+import { Score } from 'src/app/statistic';
+import { colorScore } from '../../utils';
 
 @Component({
   selector: 'app-metrics',
@@ -10,9 +11,8 @@ import { Color } from '../../utils';
   styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent implements OnInit {
-  boldMacro = -1;
 
-  @Output() changeActiveClass = new EventEmitter<number>();
+  boldMacro = -1;
 
   constructor(
     public scoresService: ScoresService,
@@ -21,6 +21,11 @@ export class MetricsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  changeActiveClass(index:number){
+    this.classService.setCurrentClass(index);
+    this.scoresService.updateStateMatrix()
+  }
 
   formatScore(score: number, percentage = true, digits = 1) {
     if (score == undefined) {
@@ -31,26 +36,32 @@ export class MetricsComponent implements OnInit {
     }
   }
 
-  colorScore(score: number | undefined) {
-    if (score == undefined) {
-      return '';
+  toggleScoreSetup(event:MouseEvent, score: Score, description:string) {
+    event.preventDefault();
+
+    let structure = {score:score, description:description}
+    let indexOf = -1
+    this.scoresService.selectedScores.forEach((el, index)=>{
+      let isSelected = ((el.score.name==score.name) && (el.description==description))
+      if(isSelected) {
+        indexOf = index
+      }
+    })
+    if(indexOf>=0){
+      this.scoresService.selectedScores.splice(indexOf, 1)
+    }
+    else{
+      this.scoresService.selectedScores.push(structure)
     }
 
-    let percent = score > 0 ? score * 100 : 0;
-    let h = 359;
-    let s = 60;
-    let l = 0;
-
-    if (percent < 25) {
-      l = percent + 12;
-    } else if (percent < 50) {
-      h = 25;
-      l = percent;
-    } else {
-      h = percent;
-      l = Math.min(percent, 50);
-    }
-    let rgb = Color.getRGBfromHSL([h, s, l]);
-    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
   }
+  isSelectedMetric(scoreName:string, description:string){
+    let isSelected = false;
+    this.scoresService.selectedScores.forEach((el)=>{
+      isSelected = ((el.score.name==scoreName) && (el.description==description)) || isSelected
+    })
+    return isSelected
+
+  }
+
 }

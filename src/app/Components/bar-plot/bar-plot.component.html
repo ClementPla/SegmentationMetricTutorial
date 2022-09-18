@@ -1,0 +1,16 @@
+<div class="graph-plot-container flex-horizontal">
+  <div *ngFor="let selectedScore of this.scoresService.selectedScores"
+  [style.height.%]="getHeight(selectedScore)"
+  [style.background-color]="this.scoresService.colorScore(selectScore(selectedScore))"
+
+  class="bar-plot">
+    <p class="bar-plot-label">
+      {{selectedScore.score.name}} <br> {{selectedScore.description}}
+    </p>
+
+    <p class="bar-plot-score">
+      {{(selectScore(selectedScore)*100).toFixed(1)}}
+    </p>
+  </div>
+
+</div>

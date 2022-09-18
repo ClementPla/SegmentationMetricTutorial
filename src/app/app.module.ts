@@ -6,7 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatIconModule} from '@angular/material/icon';
-import { DrawingComponent } from './Components/drawing/drawing.component';
+import { DrawingComponent } from './Components/Segmentation/drawing.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TooltipsComponent } from './Components/tooltips/tooltips.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -26,7 +26,11 @@ import { MainPageComponent } from './Components/main-page/main-page.component';
 import { MathjaxModule } from 'mathjax-angular';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { TemporalComponent } from './Components/Classification/temporal/temporal.component';
+import { BarPlotComponent } from './Components/bar-plot/bar-plot.component';
+import { ClassificationPageComponent } from './Components/Classification/classification-page/classification-page.component';
+import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,8 +41,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     PresetsComponent,
     WelcomeComponent,
     MainPageComponent,
+    TemporalComponent,
+    BarPlotComponent,
+    ClassificationPageComponent,
   ],
   imports: [
+    FormsModule,
+    MatInputModule,
     MatProgressSpinnerModule,
     MathjaxModule.forRoot(),
     MatIconModule,

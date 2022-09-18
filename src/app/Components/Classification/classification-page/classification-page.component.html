@@ -1,0 +1,18 @@
+<mat-toolbar color="accent" class="mat-toolbar-height">
+  <mat-toolbar-row>
+    <span class="flexExpand"></span>
+    <button class='long-text' routerLink="/main/classification/temporal" mat-button>
+      Temporal Phase Recognition
+    </button>
+    <span class="flexExpand"></span>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="central-container">
+  <div *ngIf="UICtrlService.isBusy" class="spinning-wheel">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <router-outlet ></router-outlet>
+
+</div>

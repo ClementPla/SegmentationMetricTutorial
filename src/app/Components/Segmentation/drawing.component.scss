@@ -4,7 +4,6 @@ $canvasMinSize: 300px;
 $toolbarHeight: 1vh;
 $canvasWidth: 30vw;
 $canvasGap: 0.5em;
-$panelToolGap: 1em;
 $marginLeft: 2em;
 $estimatedSize: calc(2 * $canvasWidth + $canvasGap);
 
@@ -74,32 +73,6 @@ mat-button-toggle {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-
-
-.panel-options {
-  width: 100%;
-  gap: $panelToolGap;
-  flex-wrap: wrap;
-  mat-slider {
-    width: 100%;
-  }
-  #classSelector{
-    border: none;
-    flex-wrap: wrap;
-    max-width: $estimatedSize;
-
-  }
-  #classSelector .mat-button-toggle-checked {
-    filter: brightness(1);
-    border: white 1px solid;
-  }
-
-  #classSelector mat-button-toggle {
-    filter: brightness(0.5);
-    width: fit-content;
-  }
 }
 
 .canvas-container {

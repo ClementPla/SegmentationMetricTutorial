@@ -4,26 +4,26 @@
     <!--Headers-->
     <tr>
       <th
-      (mouseenter)="UICtrlService.activate($event, 'Metric')"
-      (mouseleave)="UICtrlService.deactivate()"
+      (mouseenter)="UICtrlService.activateTooltip($event, 'Metric')"
+      (mouseleave)="UICtrlService.deactivateTooltip()"
       >
       {{ 'Metric' }}
       </th>
       <th
-      (mouseenter)="UICtrlService.activate($event, 'Score')"
-      (mouseleave)="UICtrlService.deactivate()"
+      (mouseenter)="UICtrlService.activateTooltip($event, 'Score')"
+      (mouseleave)="UICtrlService.deactivateTooltip()"
       >
       {{ 'Score' }}
       </th>
       <th
-      (mouseenter)="UICtrlService.activate($event, 'Micro')"
-      (mouseleave)="UICtrlService.deactivate()"
+      (mouseenter)="UICtrlService.activateTooltip($event, 'Micro')"
+      (mouseleave)="UICtrlService.deactivateTooltip()"
       >
       {{ 'Micro' }}
       </th>
       <th
-      (mouseenter)="UICtrlService.activate($event, 'Macro')"
-      (mouseleave)="UICtrlService.deactivate()"
+      (mouseenter)="UICtrlService.activateTooltip($event, 'Macro')"
+      (mouseleave)="UICtrlService.deactivateTooltip()"
       >
       {{ 'Macro' }}
       </th>
@@ -41,12 +41,15 @@
       [ngStyle]="{ display: scoresService.visibleScores[i] ? '' : 'none' }"
     >
       <th
-        (mouseenter)="UICtrlService.activate($event, score.name)"
-        (mouseleave)="UICtrlService.deactivate()"
+        (mouseenter)="UICtrlService.activateTooltip($event, score.name)"
+        (mouseleave)="UICtrlService.deactivateTooltip()"
       >
         {{ score.name }}
       </th>
-      <td [style.background-color]="colorScore(score.score)">
+      <td [style.background-color]="this.scoresService.colorScore(score.score)"
+      [ngClass]="{selected: isSelectedMetric(score.name, '')}"
+      (contextmenu)="toggleScoreSetup($event, score, '')"
+      >
         {{
           formatScore(
             score.score,
@@ -55,22 +58,30 @@
           )
         }}
       </td>
-      <td [style.background-color]="colorScore(score.microAverage)">
+      <td [style.background-color]="this.scoresService.colorScore(score.microAverage)"
+      [ngClass]="{selected: isSelectedMetric(score.name, 'micro')}"
+      (contextmenu)="toggleScoreSetup($event, score, 'micro')"
+      >
         {{ formatScore(score.microAverage) }}
       </td>
-      <td [style.background-color]="colorScore(score.macroAverage)">
+      <td [style.background-color]="this.scoresService.colorScore(score.macroAverage)"
+      [ngClass]="{selected: isSelectedMetric(score.name, 'macro')}"
+      (contextmenu)="toggleScoreSetup($event, score, 'macro')"
+      >
         {{ formatScore(score.macroAverage) }}
       </td>
       <td
-        [style.background-color]="colorScore(s)"
+        [style.background-color]="this.scoresService.colorScore(s)"
         *ngFor="let s of score.perClassScore; let j = index"
-        (mouseenter)="changeActiveClass.emit(j)"
+        (mouseenter)="changeActiveClass(j)"
         [ngClass]="{
+          selected: isSelectedMetric(score.name, j.toString()),
           highlight: classService.currentClass == j,
           fade: classService.currentClass != j,
           hide: !UICtrlService.showPerClassMetrics
         }"
-      >
+        (contextmenu)="toggleScoreSetup($event, score, j.toString())"
+        >
         {{ formatScore(s) }}
       </td>
     </tr>
@@ -80,30 +91,33 @@
   <table *ngSwitchCase="false">
     <tr>
       <th
-      (mouseenter)="UICtrlService.activate($event, 'Metric')"
-      (mouseleave)="UICtrlService.deactivate()"
+      (mouseenter)="UICtrlService.activateTooltip($event, 'Metric')"
+      (mouseleave)="UICtrlService.deactivateTooltip()"
       >
       {{ 'Metric' }}
       </th>
       <th
-      (mouseenter)="UICtrlService.activate($event, 'Score')"
-      (mouseleave)="UICtrlService.deactivate()"
+      (mouseenter)="UICtrlService.activateTooltip($event, 'Score')"
+      (mouseleave)="UICtrlService.deactivateTooltip()"
       >
       {{ 'Score' }}
       </th>
     </tr>
-    
+
     <tr
       *ngFor="let score of scoresService.scores; let i = index"
       [ngStyle]="{ display: scoresService.visibleScores[i] ? '' : 'none' }"
     >
       <th
-        (mouseenter)="UICtrlService.activate($event, score.name)"
-        (mouseleave)="UICtrlService.deactivate()"
+        (mouseenter)="UICtrlService.activateTooltip($event, score.name)"
+        (mouseleave)="UICtrlService.deactivateTooltip()"
       >
         {{ score.name }}
       </th>
-      <td [style.background-color]="colorScore(score.score)">
+      <td [style.background-color]="this.scoresService.colorScore(score.score)"
+      (contextmenu)="toggleScoreSetup($event, score, '')"
+      [ngClass]="{selected: isSelectedMetric(score.name, '')}"
+      >
         {{
           formatScore(
             score.score,
