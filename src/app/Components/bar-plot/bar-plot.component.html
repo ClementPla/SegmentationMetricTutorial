@@ -1,4 +1,7 @@
 <div class="graph-plot-container flex-horizontal">
+  <div *ngIf="this.scoresService.selectedScores.length==0">
+    Right click on a metric <br> in the table to anchor it.
+  </div>
   <div *ngFor="let selectedScore of this.scoresService.selectedScores"
   [style.height.%]="getHeight(selectedScore)"
   [style.background-color]="this.scoresService.colorScore(selectScore(selectedScore))"
