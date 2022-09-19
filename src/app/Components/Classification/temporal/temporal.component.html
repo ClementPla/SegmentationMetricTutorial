@@ -75,7 +75,7 @@
       </mat-form-field>
     </form>
   </div>
-  <div class="verticalGroup growFlex">
+  <div class="verticalGroup growFlex" *ngIf="localUrl">
     <form>
       <mat-form-field appearance="fill">
         <mat-label>Framerate</mat-label>
@@ -85,7 +85,7 @@
           placeholder="24"
           [(ngModel)]="framerate"
           name="framerate"
-          (input)="updateScore()"
+          (input)="updateFramerate()"
         />
       </mat-form-field>
     </form>
@@ -103,6 +103,9 @@
     (mouseup)="stopDragging()"
     (mousedown)="phaseAction($event, phase, true)"
     (mousemove)="dragPhase($event)"
+    (touchmove)="dragPhase($event)"
+    (touchstart)="phaseAction($event, phase)"
+    (touchstop)="stopDragging()"
     [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
     [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
   >
@@ -110,6 +113,7 @@
       *ngIf="!isLast"
       class="cursor"
       (mousedown)="startDragging($event, phase)"
+      (touchstart)="startDragging($event, phase)"
       (mousemove)="dragPhase($event)"
     ></div>
   </div>
@@ -124,8 +128,11 @@
     [style.width.%]="phase.width"
     [style.left.%]="phase.start"
     (mouseup)="stopDragging()"
+    (touchstop)="stopDragging()"
     (mousedown)="phaseAction($event, phase)"
+    (touchstart)="phaseAction($event, phase)"
     (mousemove)="dragPhase($event)"
+    (touchmove)="dragPhase($event)"
     [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
     [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
   >
@@ -133,7 +140,9 @@
       *ngIf="!isLast"
       class="cursor"
       (mousedown)="startDragging($event, phase)"
+      (touchstart)="startDragging($event, phase)"
       (mousemove)="dragPhase($event)"
+      (touchmove)="dragPhase($event)"
     ></div>
   </div>
 </div>
@@ -153,7 +162,6 @@
     *ngIf="localUrl"
     #videoPlayer
     controls
-    width="720px"
     [src]="localUrl"
     (loadeddata)="videoLoaded()"
     (timeupdate)="setCurrentTime($event)"

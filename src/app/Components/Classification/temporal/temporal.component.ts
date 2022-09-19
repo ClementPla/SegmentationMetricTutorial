@@ -102,13 +102,18 @@ export class TemporalComponent implements OnInit {
   }
     }
 
-  phaseAction(event: MouseEvent, activePhase: Phase, gt: boolean = false) {
+  phaseAction(event: MouseEvent | TouchEvent, activePhase: Phase, gt: boolean = false) {
     const container = document.getElementById('timephase');
     if (container && !this.isDragging) {
       if (this.tool == 'cut') {
         let width = container.clientWidth;
         let rect = container.getBoundingClientRect();
-        let offset = (100 * (event.clientX - rect.left)) / width;
+        if('touches' in event){
+          var offset = (100 * (event.touches[0].clientX - rect.left)) / width;
+        }
+        else{
+          var offset = (100 * (event.clientX - rect.left)) / width;
+        }
         let newWidth = offset - activePhase.start;
 
         let newPhase: Phase = {
@@ -145,7 +150,7 @@ export class TemporalComponent implements OnInit {
     this.updateScore();
   }
 
-  dragPhase(event: MouseEvent) {
+  dragPhase(event: MouseEvent | TouchEvent) {
     if (this.isDragging && this.activePhase) {
       const container = document.getElementById('timephase');
 
@@ -153,7 +158,14 @@ export class TemporalComponent implements OnInit {
 
       if (this.activePhase.next && container) {
         let width = container.clientWidth;
-        let offset = (100 * event.movementX) / width;
+        if('touches' in event){
+          let new_x = event.touches[0].pageX
+          var offset = (100 * (new_x - this.startPosition )) / width
+          this.startPosition = new_x
+        }
+        else{
+          var offset = (100 * event.movementX) / width;
+        }
 
         if (
           this.activePhase.width + offset > 0 &&
@@ -167,7 +179,7 @@ export class TemporalComponent implements OnInit {
       this.updateScore();
     }
   }
-  startDragging(event: MouseEvent, phase: Phase) {
+  startDragging(event: MouseEvent | TouchEvent, phase: Phase) {
     this.isDragging = true;
     this.activePhase = phase;
   }
@@ -240,6 +252,7 @@ export class TemporalComponent implements OnInit {
   videoLoaded() {
     this.videoPlayerCtx = this.videoplayer.nativeElement
     this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate)
+    this.updateScore()
 
   }
   setCurrentVideoFrame(){
@@ -266,5 +279,9 @@ export class TemporalComponent implements OnInit {
 
       reader.readAsArrayBuffer(inputNode.files[0]);
     }
+  }
+  updateFramerate(){
+    this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate)
+    this.updateScore()
   }
 }
