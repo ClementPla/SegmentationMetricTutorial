@@ -1,29 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ClassesService } from 'src/app/Services/classes.service';
 import { ControlUIService } from 'src/app/Services/control-ui.service';
 import { ScoresService } from 'src/app/Services/scores.service';
 import { Phase } from './phase';
-import { ErrorStateMatcher } from '@angular/material/core';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 
 @Component({
   selector: 'app-temporal',
@@ -31,13 +10,20 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./temporal.component.scss'],
 })
 export class TemporalComponent implements OnInit {
+
+
   isDragging: boolean = false;
   listPhasePrediction: Array<Phase>;
   listPhaseGt: Array<Phase>;
   activePhase?: Phase;
   startPosition: number;
   nFrames: number = 20000;
+  framerate = 24;
   tool: string = 'grab';
+  currentTime:number = 0;
+  localUrl: any[]
+  @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
+  videoPlayerCtx:HTMLVideoElement
 
   constructor(
     private scoreService: ScoresService,
@@ -45,8 +31,12 @@ export class TemporalComponent implements OnInit {
     public UICtrlService: ControlUIService
   ) {}
   ngOnInit(): void {
+    this.buildDefaultSetup()
+
     this.UICtrlService.isSegmentation = false;
 
+  }
+  buildDefaultSetup(){
     this.listPhasePrediction = new Array<Phase>(5);
     this.listPhaseGt = new Array<Phase>(5);
 
@@ -87,6 +77,7 @@ export class TemporalComponent implements OnInit {
 
     this.scoreService.initConfMat();
     this.updateScore();
+
   }
 
   addClass() {
@@ -101,10 +92,20 @@ export class TemporalComponent implements OnInit {
     this.tool = tool;
   }
 
+  loadSelectedFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+          this.localUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+  }
+    }
+
   phaseAction(event: MouseEvent, activePhase: Phase, gt: boolean = false) {
     const container = document.getElementById('timephase');
-    if (container) {
-      if (this.tool == 'cut' && !this.isDragging) {
+    if (container && !this.isDragging) {
+      if (this.tool == 'cut') {
         let width = container.clientWidth;
         let rect = container.getBoundingClientRect();
         let offset = (100 * (event.clientX - rect.left)) / width;
@@ -235,5 +236,35 @@ export class TemporalComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  videoLoaded() {
+    this.videoPlayerCtx = this.videoplayer.nativeElement
+    this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate)
+
+  }
+  setCurrentVideoFrame(){
+    if(this.videoPlayerCtx)
+      this.currentTime = this.videoPlayerCtx.currentTime
+    else{
+      this.currentTime = 0
+    }
+  }
+
+  setCurrentTime(data:Event){
+    this.currentTime = 100*this.videoPlayerCtx.currentTime / this.videoPlayerCtx.duration
+
+  }
+  onFileSelected() {
+    const inputNode: any = document.querySelector('#file');
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+
+        this.localUrl = e.target.result;
+      };
+
+      reader.readAsArrayBuffer(inputNode.files[0]);
+    }
   }
 }

@@ -12,9 +12,7 @@ body
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: $light-light-gray;
-
 }
-
 .panel-options {
   width: 100%;
   gap: $panelToolGap;
@@ -28,11 +26,24 @@ body
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 1em;
 }
-
+.vertical-center{
+  align-items: center;
+}
 .flex-vertical{
   display: flex;
   flex-direction: column;
+  gap: 1em;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 

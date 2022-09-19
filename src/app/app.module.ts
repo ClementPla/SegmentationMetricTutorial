@@ -31,6 +31,8 @@ import { BarPlotComponent } from './Components/bar-plot/bar-plot.component';
 import { ClassificationPageComponent } from './Components/Classification/classification-page/classification-page.component';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,7 @@ import { FormsModule } from '@angular/forms';
     ClassificationPageComponent,
   ],
   imports: [
+    MatFileUploadModule,
     FormsModule,
     MatInputModule,
     MatProgressSpinnerModule,

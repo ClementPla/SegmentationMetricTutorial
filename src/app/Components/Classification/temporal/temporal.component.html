@@ -1,6 +1,7 @@
-<div class="panel-options flex-horizontal">
+
+<div class="flex-horizontal">
   <div class="verticalGroup growFlex">
-    <label>Class</label>
+    <label class="unselectable" >Class</label>
     <mat-button-toggle-group
       id="classSelector"
       [value]="classService.currentClass"
@@ -60,64 +61,101 @@
     </mat-button-toggle-group>
   </div>
   <div class="verticalGroup growFlex">
-    <form class="example-form">
-      <mat-form-field class="example-full-width" appearance="fill">
+    <form>
+      <mat-form-field appearance="fill">
         <mat-label>Number of frames</mat-label>
-        <input type="number" matInput
-               placeholder="20000" [(ngModel)]="nFrames" name="nFrames" (input)="updateScore()">
+        <input
+          type="number"
+          matInput
+          placeholder="20000"
+          [(ngModel)]="nFrames"
+          name="nFrames"
+          (input)="updateScore()"
+        />
       </mat-form-field>
     </form>
-
+  </div>
+  <div class="verticalGroup growFlex">
+    <form>
+      <mat-form-field appearance="fill">
+        <mat-label>Framerate</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="24"
+          [(ngModel)]="framerate"
+          name="framerate"
+          (input)="updateScore()"
+        />
+      </mat-form-field>
+    </form>
   </div>
 </div>
-<div class="timephase">
-  <label for="gt"> Groundtruth</label>
-  <div id="gt" class="horizontal-container" (mouseleave)="stopDragging()">
-    <div
-      *ngFor="let phase of listPhaseGt; let isLast = last"
-      class="phase"
-      [style.width.%]="phase.width"
-      [style.left.%]="phase.start"
-      (mouseup)="stopDragging()"
-      (mousedown)="phaseAction($event, phase, true)"
-      (mousemove)="dragPhase($event)"
-      [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
-      [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
-    >
-      <div
-        *ngIf="!isLast"
-        class="cursor"
-        (mousedown)="startDragging($event, phase)"
-        (mousemove)="dragPhase($event)"
-      ></div>
-    </div>
-  </div>
-</div>
+<label class="unselectable" for="gt"> Groundtruth</label>
+<div id="gt" class="horizontal-container" (mouseleave)="stopDragging()">
+  <div class="time-cursor" [style.left.%]="currentTime"></div>
 
-<div class="timephase">
-  <label for="pred"> Prediction</label>
   <div
-    id="timephase"
-    class="horizontal-container"
-    (mouseleave)="stopDragging()"
+    *ngFor="let phase of listPhaseGt; let isLast = last"
+    class="phase"
+    [style.width.%]="phase.width"
+    [style.left.%]="phase.start"
+    (mouseup)="stopDragging()"
+    (mousedown)="phaseAction($event, phase, true)"
+    (mousemove)="dragPhase($event)"
+    [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
+    [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
   >
     <div
-      *ngFor="let phase of listPhasePrediction; let isLast = last"
-      class="phase"
-      [style.width.%]="phase.width"
-      [style.left.%]="phase.start"
-      (mouseup)="stopDragging()"
-      (mousedown)="phaseAction($event, phase)"
+      *ngIf="!isLast"
+      class="cursor"
+      (mousedown)="startDragging($event, phase)"
       (mousemove)="dragPhase($event)"
-      [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
-      [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
-    >
-      <div
-        *ngIf="!isLast"
-        class="cursor"
-        (mousedown)="startDragging($event, phase)"
-        (mousemove)="dragPhase($event)"
-      ></div>
-    </div>
+    ></div>
   </div>
+</div>
+
+<label class="unselectable" for="pred"> Prediction</label>
+<div id="timephase" class="horizontal-container" (mouseleave)="stopDragging()">
+  <div class="time-cursor" [style.left.%]="currentTime"></div>
+  <div
+    *ngFor="let phase of listPhasePrediction; let isLast = last"
+    class="phase"
+    [style.width.%]="phase.width"
+    [style.left.%]="phase.start"
+    (mouseup)="stopDragging()"
+    (mousedown)="phaseAction($event, phase)"
+    (mousemove)="dragPhase($event)"
+    [ngStyle]="{ cursor: !isDragging ? 'auto' : 'grabbing' }"
+    [style.background-color]="classService.getRGBStyleFromClass(phase.label)"
+  >
+    <div
+      *ngIf="!isLast"
+      class="cursor"
+      (mousedown)="startDragging($event, phase)"
+      (mousemove)="dragPhase($event)"
+    ></div>
+  </div>
+</div>
+
+<div class="flex-vertical vertical-center video-container">
+  <button type="button" mat-raised-button (click)="fileInput.click()">
+    Choose video file
+  </button>
+  <input
+    hidden
+    #fileInput
+    type="file"
+    (change)="loadSelectedFile($event)"
+    accept="video/*"
+  />
+  <video
+    *ngIf="localUrl"
+    #videoPlayer
+    controls
+    width="720px"
+    [src]="localUrl"
+    (loadeddata)="videoLoaded()"
+    (timeupdate)="setCurrentTime($event)"
+  ></video>
 </div>
