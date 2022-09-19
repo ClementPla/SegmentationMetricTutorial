@@ -66,6 +66,9 @@ MIT
 @angular/router
 MIT
 
+angular-material-fileupload
+MIT
+
 mathjax-angular
 MIT
 
