@@ -8,7 +8,11 @@ import { ControlUIService } from 'src/app/Services/control-ui.service';
 })
 export class ClassificationPageComponent implements OnInit {
 
-  constructor(public UICtrlService:ControlUIService) { }
+  constructor(public UICtrlService:ControlUIService) {
+    UICtrlService.ignoreFirstClassMetric = false
+    this.UICtrlService.isSegmentation = false;
+
+  }
 
   ngOnInit(): void {
   }

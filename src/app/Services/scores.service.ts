@@ -112,7 +112,8 @@ export class ScoresService {
     gt: Array<number>,
     confMat: Array<Array<number>>
   ) {
-    for (let i = 0; i < pred.length; i++) {
+    let min_length = Math.min(pred.length, gt.length)
+    for (let i = 0; i < min_length; i++) {
       let c_pred = pred[i];
       let c_gt = gt[i];
       confMat[c_pred][c_gt] += 1;

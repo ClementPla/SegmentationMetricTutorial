@@ -32,6 +32,7 @@ import { ClassificationPageComponent } from './Components/Classification/classif
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { ArrayComponent } from './Components/Classification/array/array.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     TemporalComponent,
     BarPlotComponent,
     ClassificationPageComponent,
+    ArrayComponent,
   ],
   imports: [
     MatFileUploadModule,

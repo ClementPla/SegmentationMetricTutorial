@@ -33,8 +33,6 @@ export class TemporalComponent implements OnInit {
   ngOnInit(): void {
     this.buildDefaultSetup()
 
-    this.UICtrlService.isSegmentation = false;
-
   }
   buildDefaultSetup(){
     this.listPhasePrediction = new Array<Phase>(5);
