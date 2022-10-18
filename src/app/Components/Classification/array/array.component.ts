@@ -27,14 +27,11 @@ export class ArrayComponent implements OnInit {
   ngOnInit(): void {}
 
   onChangeArray() {
-    this.predString = this.predString
-      .replace(/ /, ', ')
-      .replace(/[^0-9- ,]+/, '').replace(/,,/g, ', ')
-      .replace(/\s\s+/g, ' ');
-    this.gtString = this.gtString
-      .replace(/ /, ', ')
-      .replace(/[^0-9-,]+/, '').replace(/,,/g, ', ')
-      .replace(/\s\s+/g, ' ');
+
+    this.gtString = this.gtString.replace(/([^\d,]|^,|(,,+))/, '')
+
+    this.predString = this.predString.replace(/([^\d,]|^,|(,,+))/, '')
+
     let max_value = 0;
     this.gtArray = this.gtString
       .trim()

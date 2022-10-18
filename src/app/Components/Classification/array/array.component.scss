@@ -1,5 +1,5 @@
 .cell{
-  width: 2em;
+  width: 2rem;
   aspect-ratio: 1;
   text-align: center;
   border-radius: 50%;
@@ -9,9 +9,31 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
 }
+.central-panel{
+  --min-width-panel: 45vw
+}
+
+.description{
+  width: var(--min-width-panel);
+  text-align: center;
+}
+
+mat-form-field{
+  width: var(--min-width-panel);
+}
+
+.forms{
+  gap: 0;
+}
+
+mat-slider{
+  width: var(--min-width-panel);
+}
 
 .array-container{
-  width: 20em;
+  width: var(--min-width-panel);
+  max-height: 25vh;
+  overflow: scroll;
   gap: 0;
   flex-wrap: wrap;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;}

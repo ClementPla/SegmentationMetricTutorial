@@ -10,8 +10,6 @@ import { Phase } from './phase';
   styleUrls: ['./temporal.component.scss'],
 })
 export class TemporalComponent implements OnInit {
-
-
   isDragging: boolean = false;
   listPhasePrediction: Array<Phase>;
   listPhaseGt: Array<Phase>;
@@ -20,10 +18,10 @@ export class TemporalComponent implements OnInit {
   nFrames: number = 20000;
   framerate = 24;
   tool: string = 'grab';
-  currentTime:number = 0;
-  localUrl: any[]
-  @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
-  videoPlayerCtx:HTMLVideoElement
+  currentTime: number = 0;
+  localUrl: any[];
+  @ViewChild('videoPlayer', { static: false }) videoplayer: ElementRef;
+  videoPlayerCtx: HTMLVideoElement;
 
   constructor(
     private scoreService: ScoresService,
@@ -31,10 +29,9 @@ export class TemporalComponent implements OnInit {
     public UICtrlService: ControlUIService
   ) {}
   ngOnInit(): void {
-    this.buildDefaultSetup()
-
+    this.buildDefaultSetup();
   }
-  buildDefaultSetup(){
+  buildDefaultSetup() {
     this.listPhasePrediction = new Array<Phase>(5);
     this.listPhaseGt = new Array<Phase>(5);
 
@@ -75,7 +72,6 @@ export class TemporalComponent implements OnInit {
 
     this.scoreService.initConfMat();
     this.updateScore();
-
   }
 
   addClass() {
@@ -94,22 +90,25 @@ export class TemporalComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.onload = (event: any) => {
-          this.localUrl = event.target.result;
-      }
+        this.localUrl = event.target.result;
+      };
       reader.readAsDataURL(event.target.files[0]);
-  }
     }
+  }
 
-  phaseAction(event: MouseEvent | TouchEvent, activePhase: Phase, gt: boolean = false) {
+  phaseAction(
+    event: MouseEvent | TouchEvent,
+    activePhase: Phase,
+    gt: boolean = false
+  ) {
     const container = document.getElementById('timephase');
     if (container && !this.isDragging) {
       if (this.tool == 'cut') {
         let width = container.clientWidth;
         let rect = container.getBoundingClientRect();
-        if('touches' in event){
+        if ('touches' in event) {
           var offset = (100 * (event.touches[0].clientX - rect.left)) / width;
-        }
-        else{
+        } else {
           var offset = (100 * (event.clientX - rect.left)) / width;
         }
         let newWidth = offset - activePhase.start;
@@ -156,12 +155,11 @@ export class TemporalComponent implements OnInit {
 
       if (this.activePhase.next && container) {
         let width = container.clientWidth;
-        if('touches' in event){
-          let new_x = event.touches[0].pageX
-          var offset = (100 * (new_x - this.startPosition )) / width
-          this.startPosition = new_x
-        }
-        else{
+        if ('touches' in event) {
+          let new_x = event.touches[0].pageX;
+          var offset = (100 * (new_x - this.startPosition)) / width;
+          this.startPosition = new_x;
+        } else {
           var offset = (100 * event.movementX) / width;
         }
 
@@ -248,38 +246,35 @@ export class TemporalComponent implements OnInit {
     return true;
   }
   videoLoaded() {
-    this.videoPlayerCtx = this.videoplayer.nativeElement
-    this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate)
-    this.updateScore()
-
+    this.videoPlayerCtx = this.videoplayer.nativeElement;
+    this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate);
+    this.updateScore();
   }
-  setCurrentVideoFrame(){
-    if(this.videoPlayerCtx)
-      this.currentTime = this.videoPlayerCtx.currentTime
-    else{
-      this.currentTime = 0
+  setCurrentVideoFrame() {
+    if (this.videoPlayerCtx) this.currentTime = this.videoPlayerCtx.currentTime;
+    else {
+      this.currentTime = 0;
     }
   }
 
-  setCurrentTime(data:Event){
-    this.currentTime = 100*this.videoPlayerCtx.currentTime / this.videoPlayerCtx.duration
-
+  setCurrentTime(data: Event) {
+    this.currentTime =
+      (100 * this.videoPlayerCtx.currentTime) / this.videoPlayerCtx.duration;
   }
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
-    if (typeof (FileReader) !== 'undefined') {
+    if (typeof FileReader !== 'undefined') {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-
         this.localUrl = e.target.result;
       };
 
       reader.readAsArrayBuffer(inputNode.files[0]);
     }
   }
-  updateFramerate(){
-    this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate)
-    this.updateScore()
+  updateFramerate() {
+    this.nFrames = Math.round(this.videoPlayerCtx.duration * this.framerate);
+    this.updateScore();
   }
 }
